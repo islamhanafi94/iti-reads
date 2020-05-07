@@ -8,6 +8,7 @@ router.post('/register', userController.regesiter);
 router.post('/login', userController.login);
 // Customize auth message Protect the  routes
 // and prevent copy paste {passport.authenticate('jwt', { session: false }),}
+
 router.all('*', (req, res, next) => {
 
     passport.authenticate('jwt', { session: false }, (err, user) => {

@@ -9,11 +9,9 @@ app.listen(PORT, (err) => {
 
     }
     console.log('====================================');
-    console.log(`server is ready${PORT}`);
+    console.log(`server is ready ${PORT}`);
     console.log('====================================');
 })
-
-
 
 /** just in case some thing wrong happend in port
  * First, you would want to know which process is using port 5000/3000

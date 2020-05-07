@@ -7,7 +7,6 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true
-
     },
 
     firstName: { type: String, required: "Your first Name is required" },
@@ -28,7 +27,21 @@ const userSchema = new Schema({
 
     },
     password: { type: String, required: true }
-
+    ,
+    mybooks: [{
+        book: { type: mongoose.Schema.Types.ObjectId },
+        shelf: {
+            type: String, type: String,
+            enum: ['to-read', 'reading', 'done'],
+            default: 'to-read'
+        },
+        myRate: {
+            type: Number,
+            min: 0,
+            max: 5,
+            default: 0
+        }
+    }]
 })
 
 
@@ -37,7 +50,7 @@ const userSchema = new Schema({
 /**
  * Custom Functionality for Authntication System Using bcryptjs
  */
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
     console.log("this::", this);
     if (!this.isModified('password'))
         return next();
@@ -60,7 +73,7 @@ userSchema.pre('save', async function(next) {
  * @param {*} callback 
  * Check password with hashed password  using it in  User-Controller 
  */
-userSchema.methods.isPasswordMatch = function(password, hashed, callback) {
+userSchema.methods.isPasswordMatch = function (password, hashed, callback) {
     bcrypt.compare(password, hashed, (err, sucess) => {
         if (err) {
             return callback(err);
@@ -75,12 +88,12 @@ userSchema.methods.isPasswordMatch = function(password, hashed, callback) {
  * /// delete password and customize user 
  * override toJSON
  */
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
     const userObject = this.toObject();
     delete userObject.password;
     delete userObject.token;
     return userObject;
 }
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('user', userSchema);
 module.exports = User;
