@@ -1,2 +1,7 @@
-# iti-reads
-# iti-reads
+
+# API ENDPOINTS
+| Endpoint         |    Description     |
+| ---              |                --- |
+| /users/login | |
+| /users/register |
+
