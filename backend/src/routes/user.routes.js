@@ -3,26 +3,31 @@ const router = express.Router();
 const userController = require('../controllers/user.controller');
 const passport = require('passport');
 
-router.post('/register', userController.regesiter)
-router.post('/login', userController.login)
-    // router.all('*', (req, res, next) => {
-    //     passport.authenticate('jwt', { session: false }, (err, user) => {
-    //         if (err || !user) {
-    //             const err = new Error("You are not Authorized to access this page");
-    //             err.status = 401;
-    //             throw err;
+//Login and Sign up localhost:5000/user/login
+router.post('/register', userController.regesiter);
+router.post('/login', userController.login);
+// Customize auth message Protect the  routes
+// and prevent copy paste {passport.authenticate('jwt', { session: false }),}
+router.all('*', (req, res, next) => {
 
-//         }
-//         req.user = user;
-//         return next();
-//     })(req, res, next);
-// });
+    passport.authenticate('jwt', { session: false }, (err, user) => {
+        if (err || !user) {
+            const error = new Error('You are not authorized to access this area');
+            error.status = 401;
+            throw error;
+        }
 
-//_____________________________Protected route_____________
+        //
+        req.user = user;
+        return next();
+    })(req, res, next);
+});
+
+//_____________________________Protected route  (all user routes will be here )_____________________________________
 router.get('/me',
-    passport.authenticate('jwt', { session: false }, (req, res, next) => {
-        return res.send({ "message": "hey auth" })
-    }));
+    (req, res, next) => {
+        return res.send({ msg: "okey you are authorized now :)" })
+    });
 
 
 module.exports = router;

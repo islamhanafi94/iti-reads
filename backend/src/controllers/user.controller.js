@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const { response } = require('../middlewares');
-const { use } = require('../routes/user.routes');
+const { user } = require('../routes/user.routes');
 const jwt = require('jsonwebtoken');
 let userController = {};
 userController.regesiter = async(req, res, next) => {
@@ -38,13 +38,21 @@ userController.login = async(request, response, next) => {
 
         user.isPasswordMatch(password, user.password, (err, matched) => {
             if (matched) {
-                //Generate jwt
-                const secret = process.env.secretOrkey;
+                //Generate jwt if credintials okay
+                //secret 
+                const secret = process.env.secret;
+                //expiration
                 const expire = process.env.expirationDate;
+                //for now just id but we can pass all the user object {sub:user._id}
                 const token = jwt.sign({ _id: user._id }, secret, { expiresIn: expire });
+                /**
+                 * we will use this token with passport to make sure that the server can recognize the toke :)
+                 */
                 response.send({ token });
             } else {
-                response.status(401).send({ "error": "Invalid username or password" });
+                response.status(401).send({
+                    error: "Invalid username or password"
+                });
             }
 
         })
