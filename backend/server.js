@@ -2,6 +2,9 @@
 require('dotenv').config();
 
 const app = require('./src/middlewares');
+
+const Author = require('./src/models/author')
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (err) => {
     if (err) {
@@ -9,10 +12,9 @@ app.listen(PORT, (err) => {
 
     }
     console.log('====================================');
-    console.log(`server is ready${PORT}`);
+    console.log(`server is ready ${PORT}`);
     console.log('====================================');
 })
-
 
 
 /** just in case some thing wrong happend in port
