@@ -7,7 +7,6 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true
-
     },
     email: {
         type: String,
@@ -21,7 +20,20 @@ const userSchema = new Schema({
     },
     password: { type: String, required: true }
     ,
-    // mybooks:[{}]
+    mybooks: [{
+        book: { type: mongoose.Schema.Types.ObjectId },
+        shelf: {
+            type: String, type: String,
+            enum: ['to-read', 'reading', 'done'],
+            default: 'to-read'
+        },
+        myRate: {
+            type: Number,
+            min: 0,
+            max: 5,
+            default: 0
+        }
+    }]
 })
 
 

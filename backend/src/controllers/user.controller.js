@@ -3,7 +3,7 @@ const { response } = require('../middlewares');
 const { user } = require('../routes/user.routes');
 const jwt = require('jsonwebtoken');
 let userController = {};
-userController.regesiter = async(req, res, next) => {
+userController.regesiter = async (req, res, next) => {
     const { username, email, password } = req.body;
     const newUser = new User({
         username,
@@ -24,7 +24,7 @@ userController.regesiter = async(req, res, next) => {
     }
 };
 
-userController.login = async(request, response, next) => {
+userController.login = async (request, response, next) => {
     const { email, password } = request.body;
     try {
         const user = await User.findOne({ email });

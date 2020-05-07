@@ -1,0 +1,11 @@
+
+post http://localhost:5000/user/register
+Content-Type: application/json
+
+{
+    "username":"islamh",
+    "email":"islam@islamh.com",
+    "password":"1234"
+}
+
+###
