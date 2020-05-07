@@ -23,6 +23,12 @@ const userSchema = new Schema({
 
 })
 
+
+
+
+/**
+ * Custom Functionality for Authntication System Using bcryptjs
+ */
 userSchema.pre('save', async function(next) {
     console.log("this::", this);
     if (!this.isModified('password'))
@@ -36,10 +42,16 @@ userSchema.pre('save', async function(next) {
         return next(error)
     }
 
-
-
 });
 
+
+/**
+ * 
+ * @param {*} password 
+ * @param {*} hashed 
+ * @param {*} callback 
+ * Check password with hashed password  using it in  User-Controller 
+ */
 userSchema.methods.isPasswordMatch = function(password, hashed, callback) {
     bcrypt.compare(password, hashed, (err, sucess) => {
         if (err) {
