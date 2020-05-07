@@ -1,8 +1,12 @@
-const express = require("express");
-const mongoose = require("mongoose");
+require('dotenv').config({ path: '.env.example' });
+const app = require('./src/middlewares');
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, (err) => {
+    if (err) {
+        console.log(err);
 
-
-const connect = (url) => {
-    return mongoose.connect(url)
-}
-
+    }
+    console.log('====================================');
+    console.log(`server is ready${PORT}`);
+    console.log('====================================');
+})
