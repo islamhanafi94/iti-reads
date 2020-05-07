@@ -4,7 +4,6 @@ const User = require('../models/user');
 
 module.exports = (passport) => {
     //tokens from berrar auth
-
     let config = {};
     config.secretOrKey = process.env.secret;
     config.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();

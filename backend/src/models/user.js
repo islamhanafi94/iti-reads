@@ -9,10 +9,18 @@ const userSchema = new Schema({
         unique: true
 
     },
+
+    firstName: { type: String, required: "Your first Name is required" },
+    lastName: { type: String, required: "Your last Name is required" },
+    avatar: {
+        type: String,
+        trim: true,
+    },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
     isadmin: {
         type: Boolean,
@@ -70,6 +78,7 @@ userSchema.methods.isPasswordMatch = function(password, hashed, callback) {
 userSchema.methods.toJSON = function() {
     const userObject = this.toObject();
     delete userObject.password;
+    delete userObject.token;
     return userObject;
 }
 

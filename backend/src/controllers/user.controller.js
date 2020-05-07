@@ -4,11 +4,13 @@ const { user } = require('../routes/user.routes');
 const jwt = require('jsonwebtoken');
 let userController = {};
 userController.regesiter = async(req, res, next) => {
-    const { username, email, password } = req.body;
+    const { username, firstName, lastName, email, password } = req.body
     const newUser = new User({
         username,
         email,
-        password
+        password,
+        firstName,
+        lastName
     });
 
     try {
@@ -34,8 +36,6 @@ userController.login = async(request, response, next) => {
             return next(err);
         }
         // console.log("User", user);
-
-
         user.isPasswordMatch(password, user.password, (err, matched) => {
             if (matched) {
                 //Generate jwt if credintials okay
@@ -54,21 +54,14 @@ userController.login = async(request, response, next) => {
                     error: "Invalid username or password"
                 });
             }
-
         })
     } catch (error) {
-
         next(error);
     }
-
 }
-
-
 userController.me = (req, res, next) => {
     const { user } = req;
     console.log("req.body ::", req.body);
-
     res.send({ user });
 }
-
 module.exports = userController;

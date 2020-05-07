@@ -41,7 +41,10 @@ app.use(bodyParser.json());
 
 
 //________________________Routes___________________________________
-app.use('/user', userRoutes);
+//add Prefix Route
+app.use('/users', userRoutes);
+
+
 //___________________________ERRRORRS_____________________
 
 
