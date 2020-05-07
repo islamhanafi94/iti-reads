@@ -1,11 +1,7 @@
-# iti-reads
-# iti-reads
-
 
 # API ENDPOINTS
-| Endpoint | Description |
-| --- | --- |
+| Endpoint         |    Description     |
+| ---              |                --- |
+| /users/login | |
+| /users/register |
 
-| /users/login            | |
-| /users/register         | |
-| /users/me             | dummy route for testing tokens|
