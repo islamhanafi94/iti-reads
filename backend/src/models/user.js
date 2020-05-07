@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
+// const { delete } = require('../middlewares');
 const { Schema } = mongoose;
 const userSchema = new Schema({
     username: {
@@ -20,13 +21,10 @@ const userSchema = new Schema({
     },
     password: { type: String, required: true }
 
-
 })
 
 userSchema.pre('save', async function(next) {
-    // const user = this;
     console.log("this::", this);
-
     if (!this.isModified('password'))
         return next();
     try {
@@ -49,8 +47,18 @@ userSchema.methods.isPasswordMatch = function(password, hashed, callback) {
         }
         return callback(null, sucess);
     });
+}
 
 
+
+/**
+ * /// delete password and customize user 
+ * override toJSON
+ */
+userSchema.methods.toJSON = function() {
+    const userObject = this.toObject();
+    delete userObject.password;
+    return userObject;
 }
 
 const User = mongoose.model('User', userSchema);

@@ -14,19 +14,21 @@ router.all('*', (req, res, next) => {
         if (err || !user) {
             const error = new Error('You are not authorized to access this area');
             error.status = 401;
+            //in the middleware file  will catch it
             throw error;
         }
 
         //
         req.user = user;
+        //every loged in request we will get the user object
         return next();
-    })(req, res, next);
+    })(req, res, next); //miidleware of passport
 });
 
 //_____________________________Protected route  (all user routes will be here )_____________________________________
 router.get('/me',
     (req, res, next) => {
-        return res.send({ msg: "okey you are authorized now :)" })
+        return res.send({ msg: "okey you are authorized now :)", user: req.user })
     });
 
 
