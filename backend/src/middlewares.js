@@ -6,7 +6,9 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user.routes')
-    //______________________________________________DB Config__________________________________________
+const categoryRoutes = require('./routes/category.routes')
+
+//______________________________________________DB Config__________________________________________
 mongoose.connect(process.env.MONGO_DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -15,7 +17,7 @@ mongoose.connect(process.env.MONGO_DB_URL, {
 });
 mongoose.connection.on('connected', () => {
     console.log('====================================');
-    console.log('Database connrctd');
+    console.log('Database connectd');
     console.log('====================================');
 })
 mongoose.connection.on('error', () => {
@@ -24,7 +26,7 @@ mongoose.connection.on('error', () => {
     console.log('====================================');
 });
 
-//__________________________________MiidleWares_______________________________________________________
+//__________________________________MiddleWares_______________________________________________________
 //For logging 
 app.use(morgan('dev'));
 
@@ -43,7 +45,7 @@ app.use(bodyParser.json());
 //________________________Routes___________________________________
 //add Prefix Route
 app.use('/users', userRoutes);
-
+app.use('/category', categoryRoutes);
 
 //___________________________ERRRORRS_____________________
 
