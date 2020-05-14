@@ -1,9 +1,11 @@
 const User = require('../models/user');
+const Book = require('../models/book');
 const { response } = require('../middlewares');
 const { user } = require('../routes/user.routes');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 let userController = {};
-userController.regesiter = async(req, res, next) => {
+userController.regesiter = async (req, res, next) => {
     const { username, firstName, lastName, email, password } = req.body
     const newUser = new User({
         username,
@@ -26,7 +28,7 @@ userController.regesiter = async(req, res, next) => {
     }
 };
 
-userController.login = async(request, response, next) => {
+userController.login = async (request, response, next) => {
     const { email, password } = request.body;
     try {
         const user = await User.findOne({ email });
@@ -48,6 +50,8 @@ userController.login = async(request, response, next) => {
                 /**
                  * we will use this token with passport to make sure that the server can recognize the toke :)
                  */
+                // request.headers.authorization = token;
+
                 response.send({ token });
             } else {
                 response.status(401).send({
@@ -59,6 +63,46 @@ userController.login = async(request, response, next) => {
         next(error);
     }
 }
+// manageShelves
+userController.manageShelves = async (req, res, next) => {
+    const bookId = req.params.id;
+    const userId = req.params.user_id;
+    console.log("bookId:", bookId, "userId", userId);
+    const { body: { shelf } } = req;
+    console.log(shelf);
+    try {
+        const user = await User.findById(userId);
+        let bookIsExist = false;
+        user.mybooks = user.mybooks.map((book) => {
+            console.log("book.mybooks", book.mybooks);
+
+            if (book.mybooks.toString() === bookId) {
+                book.shelf = shelf;
+                bookIsExist = true;
+            }
+            return book;
+        });
+        if (!bookIsExist) {
+            console.log("Not exist");
+
+            user.mybooks = user.mybooks.concat({ book: mongoose.Types.ObjectId(bookId), shelf });
+            console.log("user.mybooks:::::", user.mybooks);
+
+            Book.findByIdAndUpdate(bookId, {
+                $inc: {
+                    popularity: 1
+                }
+            }, { new: true });
+        }
+        await user.save();
+        return res.send({ "message": "your Shelves  successfully added" });
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).end();
+    }
+};
+
 userController.me = (req, res, next) => {
     const { user } = req;
     console.log("req.body ::", req.body);

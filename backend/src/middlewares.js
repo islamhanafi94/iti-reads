@@ -7,6 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user.routes')
 const categoryRoutes = require('./routes/category.routes')
+const bookRoutes = require('./routes/book.routes')
 
 //______________________________________________DB Config__________________________________________
 mongoose.connect(process.env.MONGO_DB_URL, {
@@ -46,6 +47,7 @@ app.use(bodyParser.json());
 //add Prefix Route
 app.use('/users', userRoutes);
 app.use('/category', categoryRoutes);
+app.use('/books', bookRoutes);
 
 //___________________________ERRRORRS_____________________
 

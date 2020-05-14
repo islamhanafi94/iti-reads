@@ -29,11 +29,10 @@ const userSchema = new Schema({
     password: { type: String, required: true }
     ,
     mybooks: [{
-        book: { type: mongoose.Schema.Types.ObjectId },
+        book: { type: mongoose.Schema.Types.ObjectId, ref: "book", required: true },
         shelf: {
-            type: String, type: String,
+            type: String,
             enum: ['to-read', 'reading', 'done'],
-            default: 'to-read'
         },
         myRate: {
             type: Number,
