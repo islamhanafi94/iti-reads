@@ -67,32 +67,63 @@ userController.login = async (request, response, next) => {
 userController.manageShelves = async (req, res, next) => {
     const bookId = req.params.id;
     const userId = req.params.user_id;
-    console.log("bookId:", bookId, "userId", userId);
+    // console.log("bookId:", bookId, "userId", userId);
     const { body: { shelf } } = req;
-    console.log(shelf);
+    // console.log(shelf);
     try {
         const user = await User.findById(userId);
         let bookIsExist = false;
         user.mybooks = user.mybooks.map((book) => {
-            console.log("book.mybooks", book.mybooks);
+            // console.log('====================================');
+            // console.log("user.mybooks::::::::::::",user.mybooks);
+            // console.log('====================================');
+            // console.log("user.mybooks.book:::::::::::::",user.mybooks.book);
 
-            if (book.mybooks.toString() === bookId) {
+            // console.log("book.mybooks.toString()",book.mybooks[0].toString());
+
+            console.log('====================================');
+
+            
+           
+//  console.log("book.mybooks", book.mybooks);
+//             console.log("book.mybooks.toString()",book.mybooks.toString());
+//             console.log('====================================');
+            
+            
+console.log(book);
+
+            if (book.book.toString() === bookId) {
+                console.log('====================================');
+                console.log("in if ");
+                console.log('====================================');
                 book.shelf = shelf;
                 bookIsExist = true;
             }
             return book;
         });
+
         if (!bookIsExist) {
-            console.log("Not exist");
+            // console.log("Not exist");
 
             user.mybooks = user.mybooks.concat({ book: mongoose.Types.ObjectId(bookId), shelf });
-            console.log("user.mybooks:::::", user.mybooks);
+            // console.log("user.mybooks:::::", user.mybooks);
 
             Book.findByIdAndUpdate(bookId, {
                 $inc: {
                     popularity: 1
                 }
-            }, { new: true });
+            }, { new: true },(err,book)=>{
+                // console.log(book);
+// console.log('====================================');
+// console.log();
+// console.log('====================================');
+                if (err) {
+                    // console.log("('====================================');");
+                    
+                console.log(err);
+                    
+                }
+            });
         }
         await user.save();
         return res.send({ "message": "your Shelves  successfully added" });
@@ -105,7 +136,7 @@ userController.manageShelves = async (req, res, next) => {
 
 userController.me = (req, res, next) => {
     const { user } = req;
-    console.log("req.body ::", req.body);
+    // console.log("req.body ::", req.body);
     res.send({ user });
 }
 module.exports = userController;
