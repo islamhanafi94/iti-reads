@@ -4,7 +4,7 @@ const authorController = require('../controllers/author.controller');
 
 router.get('/', authorController.getAll);
 router.get('/:id', authorController.getOne);
-router.post('/new', authorController.create);
+router.post('/', authorController.create);
 router.delete('/:id', authorController.deleteById);
 router.put('/:id', authorController.updateById);
 

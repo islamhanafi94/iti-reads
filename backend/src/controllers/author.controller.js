@@ -1,10 +1,10 @@
 const Author = require('../models/author');
 const { response } = require('../middlewares');
 
-const categoryController = {};
+const authorController = {};
 
 
-categoryController.getAll = async (req, res) => {
+authorController.getAll = async (req, res) => {
     try {
         const allAuthors = await Author.find({}).exec();
         return res.json(allAuthors);
@@ -12,69 +12,45 @@ categoryController.getAll = async (req, res) => {
         console.log(error)
         return res.send(error);
     }
-
 };
 
-
-categoryController.create = async (req, res, next) => {
-    const { name } = req.body;
-    const newCategory = new Category({
-        name,
-    });
-
+authorController.getOne = async (req, res) => {
     try {
-        const category = await newCategory.save();
-        return res.send({ category });
+        const author = await Author.findOne({ _id: req.params.id }).exec();
+        return res.json(author);
     } catch (error) {
-        if (error.name === 'MongoError' && error.code === 11000) {
-            next(new Error('You must enter a category name.'));
-        } else {
-            next(error);
-        }
-
+        console.log(error)
+        return res.send(error);
     }
 };
 
-
-categoryController.getCategoryById = async (req, res, next) => {
+authorController.create = async (req, res) => {
+    const { firstName, lastName, dateOfBirth } = req.body;
     try {
-        const category = await Category.findById(req.params.id);
-        return res.send({ category });
+        const author = await Author.create({ firstName, lastName, dateOfBirth });
+        return res.status(201).send(author);
     } catch (error) {
-        if (error.name === 'CastError') {
-            next(new Error('No record with that id.'));
-        } else {
-            next(error);
-        }
+        console.log(error)
+        return res.send(error);
     }
 };
 
-categoryController.deleteById = async (req, res, next) => {
+authorController.deleteById = async (req, res) => {
     try {
-        const category = await Category.findByIdAndDelete(req.params.id, req.body);
-        return res.status(200).send('Record deleted successfully');
+        const author = await Author.findByIdAndDelete(req.params.id);
+        return res.send(author)
     } catch (error) {
-        if (error.name === 'CastError') {
-            next(new Error('No record with that id.'));
-        } else {
-            next(error);
-        }
+        return res.send(error);
     }
-};
+}
 
-categoryController.updateById = async (req, res, next) => {
-
+authorController.updateById = async (req, res) => {
     try {
-        const category = await Category.findByIdAndUpdate(req.params.id, req.body);
-        return res.status(200).send('Record updated successfully');
+        const newAuthor = await Author.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        return res.status(200).send(newAuthor);
     } catch (error) {
-        if (error.name === 'CastError') {
-            next(new Error('No record with that id.'));
-        } else {
-            next(error);
-        }
+        return res.send(error);
     }
+}
 
-};
-
-module.exports = categoryController;
+module.exports = authorController;
