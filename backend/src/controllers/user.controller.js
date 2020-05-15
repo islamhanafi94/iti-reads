@@ -67,64 +67,33 @@ userController.login = async (request, response, next) => {
 userController.manageShelves = async (req, res, next) => {
     const bookId = req.params.id;
     const userId = req.params.user_id;
-    // console.log("bookId:", bookId, "userId", userId);
-    const { body: { shelf } } = req;
-    // console.log(shelf);
+    const { shelf } = req.body;
     try {
         const user = await User.findById(userId);
+        //check if the user have the book in his my books array
+        //flag to check the book existeng in the my books :
+        //if book doesn't exist so change shelf and change flag to be existing 
         let bookIsExist = false;
+        // console.log(user.mybooks);
         user.mybooks = user.mybooks.map((book) => {
-            // console.log('====================================');
-            // console.log("user.mybooks::::::::::::",user.mybooks);
-            // console.log('====================================');
-            // console.log("user.mybooks.book:::::::::::::",user.mybooks.book);
-
-            // console.log("book.mybooks.toString()",book.mybooks[0].toString());
-
-            console.log('====================================');
-
-            
-           
-//  console.log("book.mybooks", book.mybooks);
-//             console.log("book.mybooks.toString()",book.mybooks.toString());
-//             console.log('====================================');
-            
-            
-console.log(book);
-
             if (book.book.toString() === bookId) {
-                console.log('====================================');
-                console.log("in if ");
-                console.log('====================================');
                 book.shelf = shelf;
                 bookIsExist = true;
             }
             return book;
-        });
-
+        })
+        // console.log("user.mybooks",user.mybooks);
+        //if book doesn't exist and not in mybooks so 
         if (!bookIsExist) {
-            // console.log("Not exist");
 
             user.mybooks = user.mybooks.concat({ book: mongoose.Types.ObjectId(bookId), shelf });
-            // console.log("user.mybooks:::::", user.mybooks);
-
-            Book.findByIdAndUpdate(bookId, {
-                $inc: {
-                    popularity: 1
-                }
-            }, { new: true },(err,book)=>{
-                // console.log(book);
-// console.log('====================================');
-// console.log();
-// console.log('====================================');
-                if (err) {
-                    // console.log("('====================================');");
-                    
-                console.log(err);
-                    
-                }
-            });
+            /**
+             *  findOneAndUpdate() returns the document as it was before update was applied. 
+             * If you set new: true, findOneAndUpdate() will instead give you the object after update was applied.
+             */
+            Book.findByIdAndUpdate(bookId, { $inc: { popularity: 1 } }, { new: true });
         }
+        //save user
         await user.save();
         return res.send({ "message": "your Shelves  successfully added" });
     } catch (error) {
@@ -132,11 +101,10 @@ console.log(book);
 
         return res.status(500).end();
     }
-};
+}
 
 userController.me = (req, res, next) => {
     const { user } = req;
-    // console.log("req.body ::", req.body);
     res.send({ user });
 }
 module.exports = userController;
