@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const bookModel = require("../models/book");
+const author = require('../models/author');
+const category = require('../models/category');
 // const bookController = require('../controllers/book.controller');
 
 //get popular books 
 router.get('/populars', (req, res) => {
+    console.log("in function");
+    
     // Retrieve books sorted by popularity and limited to 3 //desc 
     bookModel.find({}, null, { sort: { popularity: -1 }, limit: 3 }).populate('author').populate('category').then((books) => {
         console.log('====================================');
@@ -12,7 +16,6 @@ router.get('/populars', (req, res) => {
         res.status(200).json({ "data": books });
     }).catch((err) => {
         console.log(err);
-
         res.status(500).send({ err: err });
     });
 });
