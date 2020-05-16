@@ -29,10 +29,8 @@ bookController.getBookById = async (req, res, next) => {
 
 // Abb book
 bookController.createBook = async (req, res, next) => {
-    const { name } = req.body;
-    const newBook = new Book({
-        name,
-    });
+    const { body } = req.body;
+    const newBook = new Book(body);
 
     try {
         const book = await newBook.save();
