@@ -1,6 +1,5 @@
 // const Book = require('../models/book');
 // bookController = {};
-
 // bookController.popular = (req, res) => {
 //     // Retrieve books sorted by popularity and limited to 3 //desc 
 //     Book.find({}, null, { sort: { popularity: -1 }, limit: 3 }).populate('author').populate('category').then((books) => {
