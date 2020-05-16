@@ -31,6 +31,7 @@ bookController.getAllBooks = async (req, res, next) => {
     const allBooks = await Book.find({})
         .populate("author")
         .populate("category")
+        .populate("reviews")
         .exec((err, data) => {
             if (err) {
                 return res.send(err);
@@ -44,7 +45,8 @@ bookController.getBookById = async (req, res, next) => {
     try {
         const book = await Book.findById(req.params.id)
             .populate("author")
-            .populate("category");
+            .populate("category")
+            .populate("reviews");
         return res.send({ book });
     } catch (error) {
         if (error.name === "CastError") {
@@ -58,7 +60,7 @@ bookController.getBookById = async (req, res, next) => {
 // Abb book
 bookController.createBook = async (req, res, next) => {
     const { body } = req.body;
-    const newBook = new Book(body);
+    const newBook = new Book({ ...req.body });
 
     try {
         const book = await newBook.save();
