@@ -1,41 +1,50 @@
 const Book = require("../models/book");
-const author = require('../models/author');
-const category = require('../models/category')
+const author = require("../models/author");
+const category = require("../models/category");
 const { response } = require("../middlewares");
 
 const bookController = {};
 
 // const bookController = require('../controllers/book.controller');
 
-//get popular books 
-bookController.getPopularBooks=(req, res) => {
+//get popular books
+bookController.getPopularBooks = (req, res) => {
     console.log("in function");
-    
-    // Retrieve books sorted by popularity and limited to 3 //desc 
-    Book.find({}, null, { sort: { popularity: -1 }, limit: 3 }).populate('author').populate('category').then((books) => {
-        console.log('====================================');
-        console.log(books);
-        console.log('====================================');
-        res.status(200).json({ "data": books });
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).send({ err: err });
-    });
+
+    // Retrieve books sorted by popularity and limited to 3 //desc
+    Book.find({}, null, { sort: { popularity: -1 }, limit: 3 })
+        .populate("author")
+        .populate("category")
+        .then((books) => {
+            console.log("====================================");
+            console.log(books);
+            console.log("====================================");
+            res.status(200).json({ data: books });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send({ err: err });
+        });
 };
 // Get all books
 bookController.getAllBooks = async (req, res, next) => {
-    const allBooks = await Book.find({}).exec((err, data) => {
-        if (err) {
-            return res.send(err);
-        }
-        res.json(data);
-    });
+    const allBooks = await Book.find({})
+        .populate("author")
+        .populate("category")
+        .exec((err, data) => {
+            if (err) {
+                return res.send(err);
+            }
+            res.json(data);
+        });
 };
 
 // Get specific book
 bookController.getBookById = async (req, res, next) => {
     try {
-        const book = await Book.findById(req.params.id);
+        const book = await Book.findById(req.params.id)
+            .populate("author")
+            .populate("category");
         return res.send({ book });
     } catch (error) {
         if (error.name === "CastError") {
@@ -90,7 +99,5 @@ bookController.deleteById = async (req, res, next) => {
         }
     }
 };
-
-
 
 module.exports = bookController;
