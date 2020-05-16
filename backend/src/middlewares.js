@@ -68,6 +68,15 @@ app.use((err, req, res, next) => {
         error
     })
 });
+// app.use((err, req, res, next) => {
+//     const status = err.status || 401;
+//     const error = err.message || ' You are not authorized to access this area';
+
+//     res.status(status).send({
+//         error
+//     })
+// });
+
 
 
 
