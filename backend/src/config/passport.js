@@ -15,9 +15,8 @@ module.exports = (passport) => {
             );
 
             const user = await User.findById(jwtPayload._id);
-            // console.log("user::",user);
             
-            if (user ||user.isadmin) {
+            if (user) {
                 return done(null, user);
             } else {
                 return done(null, false);
