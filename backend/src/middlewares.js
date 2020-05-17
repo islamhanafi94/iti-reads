@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user.routes')
 const categoryRoutes = require('./routes/category.routes')
 const bookRoutes = require('./routes/book.routes')
 const authorRoutes = require('./routes/author.routes');
+const reviewRoutes = require('./routes/reviews.routes');
 //______________________________________________DB Config__________________________________________
 mongoose.connect(process.env.MONGO_DB_URL, {
     useNewUrlParser: true,
@@ -49,6 +50,7 @@ app.use('/users', userRoutes);
 app.use('/category', categoryRoutes);
 app.use('/books', bookRoutes);
 app.use('/author', authorRoutes);
+app.use('/review', reviewRoutes);
 
 
 //___________________________ERRRORRS_____________________
