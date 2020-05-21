@@ -6,6 +6,7 @@ const bookController = require("../controllers/book.controller");
 router.get("/popular", bookController.getPopularBooks);
 router.get("/", bookController.getAllBooks);
 router.get("/:id", bookController.getBookById);
+router.post("/:bookId", bookController.addRate);
 router.post("/new",adminAuth, bookController.createBook);
 router.delete("/:id",adminAuth, bookController.deleteById);
 router.put("/:id", adminAuth,bookController.updateById);
