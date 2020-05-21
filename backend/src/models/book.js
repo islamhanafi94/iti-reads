@@ -20,7 +20,7 @@ const bookSchema = new mongoose.Schema({
     popularity: {
         type: Number, default: 0
     },
-    category: [{ type: mongoose.Schema.Types.ObjectId, ref: 'category', require: true }],
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'category', require: true },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'review', require: true }]
 }, { timestamps: true })
 

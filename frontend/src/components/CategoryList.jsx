@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container } from 'reactstrap';
+import { Table, Container, Button, ButtonGroup } from 'reactstrap';
 import axios from 'axios';
+import CategoryItem from './categoryItem';
 const CategoryList = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -14,13 +15,21 @@ const CategoryList = (props) => {
             } catch (error) {
                 console.log(error);
             }
-
         })();
     }, [])
 
+    const deleteCategory = async (categoryID) => {
+        try {
+            setCategoryList(categorylist.filter((category) => category._id != categoryID));
+            const res = await axios.delete(`http://localhost:5000/category/${categoryID}`);
+        } catch (error) {
+
+        }
+    }
     return (
         <Container>
             <h1>Categories List</h1>
+            <Button >add</Button>
             <Table>
                 <thead>
                     <tr>
@@ -32,12 +41,7 @@ const CategoryList = (props) => {
                 <tbody>
                     {categorylist.map((category, index) => {
                         return (
-                            <tr key={index}>
-                                <th scope="row">{index + 1}</th>
-                                <td>{category.name}</td>
-                                <td>{category.name}</td>
-                            </tr>
-
+                            <CategoryItem key={index} index={index} category={category} deleteCategory={deleteCategory} />
                         )
                     })}
                 </tbody>
