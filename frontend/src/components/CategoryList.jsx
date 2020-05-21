@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
     Button,
     Table, Container,
-    Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input
+    Modal, ModalHeader, ModalBody, ModalFooter,
+    FormGroup, Input, Col, Row
 } from 'reactstrap';
 
 import axios from 'axios';
@@ -62,8 +63,12 @@ const CategoryList = (props) => {
     }
     return (
         <Container>
-            <h1>Categories List</h1>
-            <Button onClick={toggle}>add</Button>
+            <Container>
+                <Row>
+                    <Col><h1>Categories List</h1></Col>
+                    <Button color="primary" size="lg" onClick={ toggle }>Add</Button>
+                </Row>
+            </Container>
             <Table>
                 <thead>
                     <tr>
@@ -81,14 +86,14 @@ const CategoryList = (props) => {
                 </tbody>
             </Table>
             <Modal isOpen={modal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                <ModalHeader toggle={toggle}>Add Category</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Input text value={categoryName} onChange={(e) => { setCategoryName(e.target.value) }} placeholder="Category name" />
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => { addNewCategory(); toggle(); }}>Do Something</Button>{' '}
+                    <Button color="primary" onClick={() => { addNewCategory(); toggle(); }}>Add</Button>{' '}
                     <Button color="secondary" onClick={toggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
