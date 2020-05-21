@@ -22,7 +22,16 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:5000/category HTTP/1.1
+###
+POST http://localhost:5000/category/new HTTP/1.1
+Content-Type: application/json
 
+{
+    "name":"art"
+}
+
+###
 GET http://localhost:5000/author HTTP/1.1
 
 ###
