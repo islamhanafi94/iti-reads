@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container } from 'reactstrap';
-
+import axios from 'axios';
 const CategoryList = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [categorylist, setCategoryList] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:5000/category")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setCategoryList(result);
-                    console.log(result);
+        (async function () {
+            try {
+                let response = await axios.get("http://localhost:5000/category")
+                setIsLoaded(true);
+                setCategoryList(response.data);
+            } catch (error) {
+                console.log(error);
+            }
 
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
+        })();
     }, [])
 
     return (
