@@ -95,7 +95,7 @@ const AuthorList = (props) => {
                 <tbody>
                     {authorlist.map((author, index) => {
                         return (
-                            <authorItem
+                            <AuthorItem
                                 key={index}
                                 index={index}
                                 author={author}

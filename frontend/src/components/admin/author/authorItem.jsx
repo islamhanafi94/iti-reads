@@ -24,9 +24,9 @@ const AuthorItem = ({ author, index, deleteAuthor, updateAuthor }) => {
     return (
         <tr>
             <th scope="row">{index + 1}</th>
-            <td> author.name}</td>
-            <td> author.category.name}</td>
-            <td> author.author.firstName}</td>
+            <td> {author.firstName}</td>
+            <td> {author.lastName}</td>
+            <td> {author.dateOfBirth.split('T')[0]}</td>
             <td>
                 <ButtonToolbar>
                     <ButtonGroup>
