@@ -13,26 +13,29 @@ import {
 
 const AuthorItem = ({ author, index, deleteAuthor, updateAuthor }) => {
     const [modal, setModal] = useState(false);
-    const [categoryName, setCategoryName] = useState (author.name);
-
+    const [editedAuthor, setEditedAuthor] = useState(author);
     const toggle = () => setModal(!modal);
 
-    const changeCategory = (e) => {
-        setCategoryName(e.target.value);
+    const changeAuthorInput = (e) => {
+        const { name, value } = e.target;
+        setEditedAuthor((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
     return (
         <tr>
-            <th scope="row">{index + 1}</th>
-            <td> {author.firstName}</td>
-            <td> {author.lastName}</td>
-            <td> {author.dateOfBirth.split('T')[0]}</td>
+            <th scope="row">{ index + 1 }</th>
+            <td> { author.firstName }</td>
+            <td> { author.lastName }</td>
+            <td> { author.dateOfBirth.split('T')[0] }</td>
             <td>
                 <ButtonToolbar>
                     <ButtonGroup>
                         <Button
                             color="warning"
-                            onClick={toggle}
+                            onClick={ toggle }
                             className="mr-2"
                         >
                             Edit
@@ -41,9 +44,9 @@ const AuthorItem = ({ author, index, deleteAuthor, updateAuthor }) => {
                     <ButtonGroup>
                         <Button
                             color="danger"
-                            onClick={() => {
+                            onClick={ () => {
                                 deleteAuthor(author._id);
-                            }}
+                            } }
                         >
                             Delete
                         </Button>
@@ -51,28 +54,48 @@ const AuthorItem = ({ author, index, deleteAuthor, updateAuthor }) => {
                 </ButtonToolbar>
             </td>
 
-            <Modal isOpen={modal} toggle={toggle} className="">
-                <ModalHeader toggle={toggle}>Edit Category</ModalHeader>
+            <Modal isOpen={ modal } toggle={ toggle }>
+                <ModalHeader toggle={ toggle }>Edit Author</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Input
-                            plaintext
-                            value={categoryName}
-                            onChange={changeCategory}
+                            text
+                            name="firstName"
+                            value={ editedAuthor.firstName }
+                            onChange={ changeAuthorInput }
+                            placeholder="First name"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Input
+                            text
+                            name="lastName"
+                            value={ editedAuthor.lastName }
+                            onChange={ changeAuthorInput }
+                            placeholder="Last name"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Input
+                            type="date"
+                            value={ editedAuthor.dateOfBirth }
+                            onChange={ changeAuthorInput }
+                            name="dateOfBirth"
+                            placeholder="Date of Birth"
                         />
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         color="primary"
-                        onClick={() => {
-                            updateAuthor(author._id, categoryName);
+                        onClick={ () => {
+                            updateAuthor(author._id, editedAuthor);
                             toggle();
-                        }}
+                        } }
                     >
                         Edit
-                    </Button>{" "}
-                    <Button color="secondary" onClick={toggle}>
+                    </Button>{ " " }
+                    <Button color="secondary" onClick={ toggle }>
                         Cancel
                     </Button>
                 </ModalFooter>

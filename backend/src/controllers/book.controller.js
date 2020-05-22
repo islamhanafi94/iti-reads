@@ -67,8 +67,8 @@ bookController.createBook = async (req, res, next) => {
 
     try {
         const book = await newBook.save();
-        // return res.send({ book });
-        return res.status(200).send("Record added successfully");
+        return res.send({ book });
+        // return res.status(200).send("Record added successfully");
     } catch (error) {
         if (error.name === "MongoError" && error.code === 11000) {
             next(new Error("You must enter a book name."));

@@ -50,31 +50,39 @@ const AuthorList = (props) => {
         } catch (error) { }
     };
 
-    const updateAuthor = async (authorID, name) => {
+    const updateAuthor = async (authorID, editedAuthor) => {
         try {
             setAuthorList(
                 authorlist.map((author) => {
                     if (author._id === authorID) {
-                        author.name = name;
+                        author = editedAuthor;
                     }
                     return author;
                 })
             );
-            await axios.put(`http://localhost:5000/author/${authorID}`, {
-                name,
-            });
+            await axios.put(`http://localhost:5000/author/${authorID}`, editedAuthor);
         } catch (error) { }
     };
 
-    // const addNewauthor = async () => {
-    //     try {
-    //         const response = await axios.post(
-    //             "http://localhost:5000/author/new",
-    //             { name: categoryName }
-    //         );
-    //         setAuthorList([...categorylist, response.data.category]);
-    //     } catch (error) {}
-    // };
+    const addNewAuthor = async () => {
+        try {
+            const response = await axios.post(
+                "http://localhost:5000/author",
+                newAuthor
+            );
+            console.log(response);
+            setAuthorList([...authorlist, response.data]);
+        } catch (error) {}
+    };
+
+
+    const changeAuthorInput = (e) => {
+        const { name, value } = e.target;
+        setNewAuthor((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
 
     return (
         <Container>
@@ -119,33 +127,27 @@ const AuthorList = (props) => {
                     <FormGroup>
                         <Input
                             text
+                            name="firstName"
                             value={ newAuthor.firstName }
-                            onChange={ (e) => {
-                                console.log(newAuthor.firstName);
-                                
-                                newAuthor.firstName = e.target.value;
-                                // setNewAuthor(newAuthor);
-                            }
-                            }
+                            onChange={changeAuthorInput}
                             placeholder="First name"
                         />
                     </FormGroup>
                     <FormGroup>
                         <Input
                             text
-                            // value={ newAuthor.lastName }
-                            // onChange={ (e) => {
-                            //     newAuthor.lasttName = e.target.value;
-                            //     setNewAuthor(newAuthor);
-                            // }
-                            // }
+                            name="lastName"
+                            value={ newAuthor.lastName }
+                            onChange={changeAuthorInput}
                             placeholder="Last name"
                         />
                     </FormGroup>
                     <FormGroup>
                         <Input
                             type="date"
-                            // value={newAuthor.dateOfBirth}
+                            value={ newAuthor.dateOfBirth }
+                            onChange={changeAuthorInput}
+                            name="dateOfBirth"
                             placeholder="Date of Birth"
                         />
                     </FormGroup>
@@ -154,7 +156,7 @@ const AuthorList = (props) => {
                     <Button
                         color="primary"
                         onClick={ () => {
-                            // addNewCategory();
+                            addNewAuthor();
                             toggle();
                         } }
                     >

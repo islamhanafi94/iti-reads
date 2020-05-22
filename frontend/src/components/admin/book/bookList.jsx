@@ -99,6 +99,7 @@ const BookList = (props) => {
                 "http://localhost:5000/books/new",
                 book
             );
+            console.log(response.data.book);
             setBookList([...booklist, response.data.book]);
         } catch (error) {}
     };
@@ -149,6 +150,8 @@ const BookList = (props) => {
                             placeholder="Book name"
                             name="name"
                         />
+                    </FormGroup>
+                    <FormGroup>
                         <Input
                             type="select"
                             id="exampleSelect"
@@ -164,7 +167,8 @@ const BookList = (props) => {
                                 );
                             })}
                         </Input>
-
+                    </FormGroup>
+                    <FormGroup>
                         <Input
                             type="select"
                             id="exampleSelect"

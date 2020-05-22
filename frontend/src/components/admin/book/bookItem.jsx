@@ -98,6 +98,8 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                             onChange={changeBook}
                             name="name"
                         />
+                    </FormGroup>
+                    <FormGroup>
                         <Input
                             type="select"
                             id="exampleSelect"
@@ -113,7 +115,8 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                                 );
                             })}
                         </Input>
-
+                    </FormGroup>
+                    <FormGroup>
                         <Input
                             type="select"
                             id="exampleSelect"
@@ -129,7 +132,8 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                                 );
                             })}
                         </Input>
-
+                    </FormGroup>
+                    <FormGroup>
                         <Input
                             type="file"
                             onChange={changeBook}
