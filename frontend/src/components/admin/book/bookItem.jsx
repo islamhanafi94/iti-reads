@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Button,
     ButtonGroup,
@@ -10,23 +10,66 @@ import {
     FormGroup,
     Input,
 } from "reactstrap";
+import ImageUploader from "react-images-upload";
+import axios from "axios";
 
 const BookItem = ({ book, index, deleteBook, updateBook }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
     const [modal, setModal] = useState(false);
-    const [categoryName, setCategoryName] = useState(book.name);
+    const [bookstate, setBook] = useState(book);
+    const [categorylist, setCategoryList] = useState([]);
+    const [authorslist, setAutorsList] = useState([]);
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get(
+                    "http://localhost:5000/category"
+                );
+                setIsLoaded(true);
+                setCategoryList(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get("http://localhost:5000/author");
+                setIsLoaded(true);
+                setAutorsList(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
 
     const toggle = () => setModal(!modal);
 
-    const changeCategory = (e) => {
-        setCategoryName(e.target.value);
+    const changeBook = (e) => {
+        const { name, value } = e.target;
+        setBook((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
+
+    // onDrop(picture) {
+    //     this.setState({
+    //         pictures: this.state.pictures.concat(picture),
+    //     });
+    // }
 
     return (
         <tr>
             <th scope="row">{index + 1}</th>
             <td>{book.name}</td>
             <td>{book.category.name}</td>
-            <td>{book.author.firstName}</td>
+            <td>
+                {book.author.firstName} {book.author.lastName}
+            </td>
             <td>
                 <ButtonToolbar>
                     <ButtonGroup>
@@ -56,9 +99,44 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                 <ModalBody>
                     <FormGroup>
                         <Input
-                            plaintext
-                            value={categoryName}
-                            onChange={changeCategory}
+                            text
+                            value={bookstate.name}
+                            onChange={changeBook}
+                            name="name"
+                        />
+                        <Input
+                            type="select"
+                            id="exampleSelect"
+                            value={bookstate.category._id}
+                            onChange={changeBook}
+                            name="category"
+                        >
+                            {categorylist.map((category) => {
+                                return <option>{category.name}</option>;
+                            })}
+                        </Input>
+
+                        <Input
+                            type="select"
+                            id="exampleSelect"
+                            value={bookstate.author._id}
+                            onChange={changeBook}
+                            name="author"
+                        >
+                            {authorslist.map((author) => {
+                                return (
+                                    <option>
+                                        {author.firstName} {author.lastName}
+                                    </option>
+                                );
+                            })}
+                        </Input>
+                        <ImageUploader
+                            withIcon={true}
+                            buttonText="Choose images"
+                            // onChange={this.onDrop}
+                            imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                            maxFileSize={5242880}
                         />
                     </FormGroup>
                 </ModalBody>
@@ -66,7 +144,7 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                     <Button
                         color="primary"
                         onClick={() => {
-                            updateBook(book._id, categoryName);
+                            updateBook(book._id, bookstate);
                             toggle();
                         }}
                     >
