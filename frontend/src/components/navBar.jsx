@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
     Collapse,
     Navbar,
@@ -7,8 +7,8 @@ import {
     Nav,
     NavItem,
     NavLink,
-    NavbarText
-} from 'reactstrap';
+    NavbarText,
+} from "reactstrap";
 
 const NavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,10 +25,10 @@ const NavBar = (props) => {
                         <NavLink href="/components/">Home</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="">Categories</NavLink>
+                        <NavLink href="/CategoryList">Categories</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="">Books</NavLink>
+                        <NavLink href="/BooksList">Books</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink href="">Authors</NavLink>
@@ -38,6 +38,6 @@ const NavBar = (props) => {
             </Collapse>
         </Navbar>
     );
-}
+};
 
 export default NavBar;

@@ -60,12 +60,16 @@ bookController.getBookById = async (req, res, next) => {
 
 // Abb book
 bookController.createBook = async (req, res, next) => {
-    const { body } = req.body;
-    const newBook = new Book({ ...req.body });
+    console.log("here---------------------");
+
+    const { name, image, author, category } = req.body;
+    const newBook = new Book({ name, image, author, category });
 
     try {
         const book = await newBook.save();
-        return res.send({ book });
+        // return res.send({ book });
+        return res.status(200).send("Record added successfully");
+
     } catch (error) {
         if (error.name === "MongoError" && error.code === 11000) {
             next(new Error("You must enter a book name."));
@@ -103,18 +107,18 @@ bookController.deleteById = async (req, res, next) => {
     }
 };
 
-// Add Rating 
+// Add Rating
 bookController.addRate = async (req, res) => {
     try {
-        const {averageRating}  = req.body ;
-        const newRate = await Book.create({averageRating})
+        const { averageRating } = req.body;
+        const newRate = await Book.create({ averageRating });
         const book = await Book.findOneAndUpdate(req.params.bookId, req.body);
         book.rates.push(newRate._id);
         await book.save();
         console.log("Rating added to book");
         return res.status(201).send(newRate);
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return res.send(error);
     }
 };

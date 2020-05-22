@@ -5,7 +5,6 @@ import {
     Modal, ModalHeader, ModalBody, ModalFooter,
     FormGroup, Input,
 } from 'reactstrap';
-import axios from 'axios';
 
 const CategoryItem = ({ category, index, deleteCategory, updateCategory }) => {
     const [modal, setModal] = useState(false);

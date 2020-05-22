@@ -14,22 +14,19 @@ import {
 } from "reactstrap";
 
 import axios from "axios";
-import CategoryItem from "./categoryItem";
-const CategoryList = (props) => {
+import BookItem from "./bookItem";
+const BookList = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [categorylist, setCategoryList] = useState([]);
+    const [booklist, setBookList] = useState([]);
     const [modal, setModal] = useState(false);
-    const [categoryName, setCategoryName] = useState("");
 
     useEffect(() => {
         (async function () {
             try {
-                let response = await axios.get(
-                    "http://localhost:5000/category"
-                );
+                let response = await axios.get("http://localhost:5000/books");
                 setIsLoaded(true);
-                setCategoryList(response.data);
+                setBookList(response.data);
             } catch (error) {
                 console.log(error);
             }
@@ -38,48 +35,46 @@ const CategoryList = (props) => {
 
     const toggle = () => setModal(!modal);
 
-    const deleteCategory = async (categoryID) => {
+    const deleteBook = async (bookID) => {
         try {
-            setCategoryList(
-                categorylist.filter((category) => category._id !== categoryID)
-            );
+            setBookList(booklist.filter((book) => book._id != bookID));
             const res = await axios.delete(
-                `http://localhost:5000/category/${categoryID}`
+                `http://localhost:5000/books/${bookID}`
             );
         } catch (error) {}
     };
 
-    const updateCategory = async (categoryID, name) => {
+    const updateBook = async (bookID, name) => {
         try {
-            setCategoryList(
-                categorylist.map((category) => {
-                    if (category._id === categoryID) {
-                        category.name = name;
+            setBookList(
+                booklist.map((book) => {
+                    if (book._id === bookID) {
+                        book.name = name;
                     }
-                    return category;
+                    return book;
                 })
             );
-            await axios.put(`http://localhost:5000/category/${categoryID}`, {
+            await axios.put(`http://localhost:5000/books/${bookID}`, {
                 name,
             });
         } catch (error) {}
     };
 
-    const addNewCategory = async () => {
-        try {
-            const response = await axios.post(
-                "http://localhost:5000/category/new",
-                { name: categoryName }
-            );
-            setCategoryList([...categorylist, response.data.category]);
-        } catch (error) {}
-    };
+    // const addNewBook = async () => {
+    //     try {
+    //         const response = await axios.post(
+    //             "http://localhost:5000/books/new",
+    //             { name: categoryName }
+    //         );
+    //         setBookList([...categorylist, response.data.category]);
+    //     } catch (error) {}
+    // };
     return (
         <Container>
             <Container>
                 <Row>
                     <Col>
-                        <h1>Categories List</h1>
+                        <h1>Books List</h1>
                     </Col>
                     <Button color="primary" size="lg" onClick={toggle}>
                         Add
@@ -91,24 +86,26 @@ const CategoryList = (props) => {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Category</th>
+                        <th>Author</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {categorylist.map((category, index) => {
+                    {booklist.map((book, index) => {
                         return (
-                            <CategoryItem
+                            <BookItem
                                 key={index}
                                 index={index}
-                                category={category}
-                                updateCategory={updateCategory}
-                                deleteCategory={deleteCategory}
+                                book={book}
+                                updateBook={updateBook}
+                                deleteBook={deleteBook}
                             />
                         );
                     })}
                 </tbody>
             </Table>
-            <Modal isOpen={modal} toggle={toggle}>
+            {/* <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Add Category</ModalHeader>
                 <ModalBody>
                     <FormGroup>
@@ -136,9 +133,9 @@ const CategoryList = (props) => {
                         Cancel
                     </Button>
                 </ModalFooter>
-            </Modal>
+            </Modal> */}
         </Container>
     );
 };
 
-export default CategoryList;
+export default BookList;

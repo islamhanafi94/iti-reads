@@ -1,13 +1,13 @@
 const router = require("express").Router();
 // const passport = require('passport');
-const adminAuth = require('../config/adminAuth');
+const adminAuth = require('../config/adminAuth'); // DON'T FORGETTTTTT
 
 const bookController = require("../controllers/book.controller");
 router.get("/popular", bookController.getPopularBooks);
 router.get("/", bookController.getAllBooks);
 router.get("/:id", bookController.getBookById);
+router.post("/new", bookController.createBook);
 router.post("/:bookId", bookController.addRate);
-router.post("/new",adminAuth, bookController.createBook);
-router.delete("/:id",adminAuth, bookController.deleteById);
-router.put("/:id", adminAuth,bookController.updateById);
+router.delete("/:id", bookController.deleteById);
+router.put("/:id",bookController.updateById);
 module.exports=router;
