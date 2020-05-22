@@ -16,10 +16,11 @@ import {
 import axios from "axios";
 import BookItem from "./bookItem";
 const BookList = (props) => {
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [booklist, setBookList] = useState([]);
     const [modal, setModal] = useState(false);
+    const [book, setBook] = useState({});
 
     useEffect(() => {
         (async function () {
@@ -37,25 +38,25 @@ const BookList = (props) => {
 
     const deleteBook = async (bookID) => {
         try {
-            setBookList(booklist.filter((book) => book._id != bookID));
-            const res = await axios.delete(
+            setBookList(booklist.filter((book) => book._id !== bookID));
+            await axios.delete(
                 `http://localhost:5000/books/${bookID}`
             );
         } catch (error) {}
     };
 
-    const updateBook = async (bookID, name) => {
+    const updateBook = async (bookID, newbook) => {
         try {
             setBookList(
                 booklist.map((book) => {
                     if (book._id === bookID) {
-                        book.name = name;
+                        book = newbook;
                     }
                     return book;
                 })
             );
             await axios.put(`http://localhost:5000/books/${bookID}`, {
-                name,
+                newbook,
             });
         } catch (error) {}
     };

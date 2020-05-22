@@ -65,7 +65,7 @@ POST http://localhost:5000/books/new HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"book3",
+    "name":"book1",
     "image":"photo.jpg",
     "averageRating":3,
     "author": "5ec7d4a1b84a34568431cb7c",
