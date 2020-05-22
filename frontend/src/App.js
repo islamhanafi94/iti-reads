@@ -1,7 +1,8 @@
 import React from "react";
 import NavBar from "./components/navBar";
-import CategoryList from "./components/CategoryList";
-import BooksList from "./components/bookList";
+import CategoryList from "./components/admin/category/CategoryList";
+import BooksList from "./components/admin/book/bookList";
+import AuthorList from "./components/admin/author/authorList";
 import Register from "./components/auth/Register";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -12,21 +13,38 @@ function App() {
     return (
         <Router>
             <Switch>
-                <Route exact path="/">
+            <Route exact path="/">
                     <div>
                         <NavBar />
                     </div>
                 </Route>
-                <Route exact path="/CategoryList">
+                <Route exact path="/admin">
+                    <div>
+                        <NavBar />
+                    </div>
+                </Route>
+                <Route exact path="/admin/categories">
                     <div>
                         <NavBar />
                         <CategoryList/>
                     </div>
                 </Route>
-                <Route exact path="/BooksList">
+                <Route exact path="/admin/books">
                     <div>
                         <NavBar />
                         <BooksList/>
+                    </div>
+                </Route>
+                <Route exact path="/admin/authors">
+                    <div>
+                        <NavBar />
+                        <AuthorList />
+                    </div>
+                </Route>
+                <Route exact path="/register">
+                    <div>
+                        <NavBar />
+                        <Register />
                     </div>
                 </Route>
             </Switch>
