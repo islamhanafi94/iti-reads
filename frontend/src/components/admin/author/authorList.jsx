@@ -19,6 +19,11 @@ import AuthorItem from "./authorItem";
 const AuthorList = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [newAuthor, setNewAuthor] = useState({
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+    });
     const [authorlist, setAuthorList] = useState([]);
     const [modal, setModal] = useState(false);
 
@@ -42,7 +47,7 @@ const AuthorList = (props) => {
             const res = await axios.delete(
                 `http://localhost:5000/author/${authorID}`
             );
-        } catch (error) {}
+        } catch (error) { }
     };
 
     const updateAuthor = async (authorID, name) => {
@@ -58,7 +63,7 @@ const AuthorList = (props) => {
             await axios.put(`http://localhost:5000/author/${authorID}`, {
                 name,
             });
-        } catch (error) {}
+        } catch (error) { }
     };
 
     // const addNewauthor = async () => {
@@ -70,6 +75,7 @@ const AuthorList = (props) => {
     //         setAuthorList([...categorylist, response.data.category]);
     //     } catch (error) {}
     // };
+
     return (
         <Container>
             <Container>
@@ -77,7 +83,7 @@ const AuthorList = (props) => {
                     <Col>
                         <h1>Authors List</h1>
                     </Col>
-                    <Button color="primary" size="lg" onClick={toggle}>
+                    <Button size="lg" color="primary" onClick={ toggle }>
                         Add
                     </Button>
                 </Row>
@@ -93,48 +99,72 @@ const AuthorList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {authorlist.map((author, index) => {
+                    { authorlist.map((author, index) => {
                         return (
                             <AuthorItem
-                                key={index}
-                                index={index}
-                                author={author}
-                                updateAuthor={updateAuthor}
-                                deleteAuthor={deleteAuthor}
+                                key={ index }
+                                index={ index }
+                                author={ author }
+                                updateAuthor={ updateAuthor }
+                                deleteAuthor={ deleteAuthor }
                             />
                         );
-                    })}
+                    }) }
                 </tbody>
             </Table>
-            {/* <Modal isOpen={modal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Add Category</ModalHeader>
+
+            <Modal isOpen={ modal } toggle={ toggle }>
+                <ModalHeader toggle={ toggle }>Add Author</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Input
                             text
-                            value={categoryName}
-                            onChange={(e) => {
-                                setCategoryName(e.target.value);
-                            }}
-                            placeholder="Category name"
+                            value={ newAuthor.firstName }
+                            onChange={ (e) => {
+                                console.log(newAuthor.firstName);
+                                
+                                newAuthor.firstName = e.target.value;
+                                // setNewAuthor(newAuthor);
+                            }
+                            }
+                            placeholder="First name"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Input
+                            text
+                            // value={ newAuthor.lastName }
+                            // onChange={ (e) => {
+                            //     newAuthor.lasttName = e.target.value;
+                            //     setNewAuthor(newAuthor);
+                            // }
+                            // }
+                            placeholder="Last name"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Input
+                            type="date"
+                            // value={newAuthor.dateOfBirth}
+                            placeholder="Date of Birth"
                         />
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         color="primary"
-                        onClick={() => {
-                            addNewCategory();
+                        onClick={ () => {
+                            // addNewCategory();
                             toggle();
-                        }}
+                        } }
                     >
                         Add
-                    </Button>{" "}
-                    <Button color="secondary" onClick={toggle}>
+                    </Button>{ " " }
+                    <Button color="secondary" onClick={ toggle }>
                         Cancel
                     </Button>
                 </ModalFooter>
-            </Modal> */}
+            </Modal>
         </Container>
     );
 };
