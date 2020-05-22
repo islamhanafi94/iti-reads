@@ -30,8 +30,7 @@ mongoose.connection.on('error', () => {
 
 //__________________________________MiddleWares_______________________________________________________
 //For logging 
-app.use(cors())
-app.use(morgan('dev'));
+app.use(cors({origin: true, credentials: true}));app.use(morgan('dev'));
 
 //Passport
 app.use(passport.initialize());
