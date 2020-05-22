@@ -69,7 +69,6 @@ bookController.createBook = async (req, res, next) => {
         const book = await newBook.save();
         // return res.send({ book });
         return res.status(200).send("Record added successfully");
-
     } catch (error) {
         if (error.name === "MongoError" && error.code === 11000) {
             next(new Error("You must enter a book name."));
@@ -81,8 +80,12 @@ bookController.createBook = async (req, res, next) => {
 
 // Update specific book
 bookController.updateById = async (req, res, next) => {
+    console.log(req.body);
+
     try {
         const book = await Book.findByIdAndUpdate(req.params.id, req.body);
+        console.log(book);
+
         return res.status(200).send("Record updated successfully");
     } catch (error) {
         if (error.name === "CastError") {

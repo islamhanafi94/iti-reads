@@ -21,6 +21,34 @@ const BookList = (props) => {
     const [booklist, setBookList] = useState([]);
     const [modal, setModal] = useState(false);
     const [book, setBook] = useState({});
+    const [categorylist, setCategoryList] = useState([]);
+    const [authorslist, setAutorsList] = useState([]);
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get(
+                    "http://localhost:5000/category"
+                );
+                setIsLoaded(true);
+                setCategoryList(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get("http://localhost:5000/author");
+                setIsLoaded(true);
+                setAutorsList(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
 
     useEffect(() => {
         (async function () {
@@ -36,12 +64,18 @@ const BookList = (props) => {
 
     const toggle = () => setModal(!modal);
 
+    const changeBook = (e) => {
+        const { name, value } = e.target;
+        setBook((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
     const deleteBook = async (bookID) => {
         try {
             setBookList(booklist.filter((book) => book._id !== bookID));
-            await axios.delete(
-                `http://localhost:5000/books/${bookID}`
-            );
+            await axios.delete(`http://localhost:5000/books/${bookID}`);
         } catch (error) {}
     };
 
@@ -55,21 +89,19 @@ const BookList = (props) => {
                     return book;
                 })
             );
-            await axios.put(`http://localhost:5000/books/${bookID}`, {
-                newbook,
-            });
+            await axios.put(`http://localhost:5000/books/${bookID}`, newbook);
         } catch (error) {}
     };
 
-    // const addNewBook = async () => {
-    //     try {
-    //         const response = await axios.post(
-    //             "http://localhost:5000/books/new",
-    //             { name: categoryName }
-    //         );
-    //         setBookList([...categorylist, response.data.category]);
-    //     } catch (error) {}
-    // };
+    const addNewBook = async () => {
+        try {
+            const response = await axios.post(
+                "http://localhost:5000/books/new",
+                book
+            );
+            setBookList([...booklist, response.data.book]);
+        } catch (error) {}
+    };
     return (
         <Container>
             <Container>
@@ -106,25 +138,55 @@ const BookList = (props) => {
                     })}
                 </tbody>
             </Table>
-            {/* <Modal isOpen={modal} toggle={toggle}>
+            <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Add Category</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Input
                             text
-                            value={categoryName}
-                            onChange={(e) => {
-                                setCategoryName(e.target.value);
-                            }}
-                            placeholder="Category name"
+                            value={book.name}
+                            onChange={changeBook}
+                            placeholder="Book name"
+                            name="name"
                         />
+                        <Input
+                            type="select"
+                            id="exampleSelect"
+                            value={book.category}
+                            onChange={changeBook}
+                            name="category"
+                        >
+                            {categorylist.map((category) => {
+                                return (
+                                    <option value={category._id}>
+                                        {category.name}
+                                    </option>
+                                );
+                            })}
+                        </Input>
+
+                        <Input
+                            type="select"
+                            id="exampleSelect"
+                            value={book.author}
+                            onChange={changeBook}
+                            name="author"
+                        >
+                            {authorslist.map((author) => {
+                                return (
+                                    <option value={author._id}>
+                                        {author.firstName} {author.lastName}
+                                    </option>
+                                );
+                            })}
+                        </Input>
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         color="primary"
                         onClick={() => {
-                            addNewCategory();
+                            addNewBook();
                             toggle();
                         }}
                     >
@@ -134,7 +196,7 @@ const BookList = (props) => {
                         Cancel
                     </Button>
                 </ModalFooter>
-            </Modal> */}
+            </Modal>
         </Container>
     );
 };

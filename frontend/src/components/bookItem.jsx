@@ -56,12 +56,6 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
         }));
     };
 
-    // onDrop(picture) {
-    //     this.setState({
-    //         pictures: this.state.pictures.concat(picture),
-    //     });
-    // }
-
     return (
         <tr>
             <th scope="row">{index + 1}</th>
@@ -112,7 +106,11 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                             name="category"
                         >
                             {categorylist.map((category) => {
-                                return <option>{category.name}</option>;
+                                return (
+                                    <option value={category._id}>
+                                        {category.name}
+                                    </option>
+                                );
                             })}
                         </Input>
 
@@ -125,19 +123,28 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                         >
                             {authorslist.map((author) => {
                                 return (
-                                    <option>
+                                    <option value={author._id}>
                                         {author.firstName} {author.lastName}
                                     </option>
                                 );
                             })}
                         </Input>
-                        <ImageUploader
+
+                        <Input
+                            type="file"
+                            onChange={changeBook}
+                            name="image"
+                            id="exampleFile"
+                        />
+                        {/* <ImageUploader
                             withIcon={true}
                             buttonText="Choose images"
-                            // onChange={this.onDrop}
+                            value={bookstate.image}
+                            onChange={changeBook}
                             imgExtension={[".jpg", ".gif", ".png", ".gif"]}
                             maxFileSize={5242880}
-                        />
+                            name="image"
+                        /> */}
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
