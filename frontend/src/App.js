@@ -17,16 +17,13 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/">
-          <div >
+        <div style={{backgroundImage: `url(${authBackground})`}}>
             <NavBar/>
-          </div>
-        </Route>
-     
-        <Route exact path="/register">
-          <div style={{backgroundImage: `url(${authBackground})`}}>
             <Register/>
           </div>
         </Route>
+     
+   
       </Switch>
   </Router>
   );
