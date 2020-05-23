@@ -5,6 +5,7 @@ import BooksList from "./components/admin/book/bookList";
 import AuthorList from "./components/admin/author/authorList";
 import Register from "./components/auth/Register";
 import Login from "./components/login";
+import AdminLogin from "./components/adminLogin";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const authBackground =
@@ -22,6 +23,7 @@ function App() {
                 <Route exact path="/admin">
                     <div>
                         <NavBar />
+                        <AdminLogin />
                     </div>
                 </Route>
                 <Route exact path="/admin/categories">
