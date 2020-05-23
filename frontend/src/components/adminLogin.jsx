@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, FormGroup, Label, Input, Button, Jumbotron, Badge } from 'reactstrap';
-import "./css/adminLogin.css";
 const AdminLogin = (props) => {
     const [emailInput, setEmailInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
