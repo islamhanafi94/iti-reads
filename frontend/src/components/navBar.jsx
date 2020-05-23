@@ -7,8 +7,9 @@ import {
     Nav,
     NavItem,
     NavLink,
-    NavbarText,
+    Button,
 } from "reactstrap";
+import { Link } from 'react-router-dom';
 import Login from "./login";
 
 const NavBar = (props) => {
@@ -23,22 +24,20 @@ const NavBar = (props) => {
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
                     <NavItem>
-                        <NavLink href="/admin">Home</NavLink>
+                        <Link className="nav-link" to="/admin">Home</Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/admin/categories">Categories</NavLink>
+                        <Link className="nav-link" to="/admin/categories">Categories</Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/admin/books">Books</NavLink>
+                        <Link className="nav-link" to="/admin/books">Books</Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/admin/authors">Authors</NavLink>
+                        <Link className="nav-link" to="/admin/authors">Authors</Link>
                     </NavItem>
                 </Nav>
-                <NavbarText>Simple Text</NavbarText>
-                {/* <NavItem>
-                    <Login />
-                </NavItem> */}
+                <Button color="info">logout</Button>
+
             </Collapse>
         </Navbar>
     );

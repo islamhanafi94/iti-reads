@@ -12,15 +12,18 @@ import {
     Col,
     Row,
 } from "reactstrap";
-
+import Pagination from '../../common/pagination';
 import axios from "axios";
 import CategoryItem from "./categoryItem";
+import { paginate } from '../../../utils/paginate';
 const CategoryList = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [categorylist, setCategoryList] = useState([]);
     const [modal, setModal] = useState(false);
     const [categoryName, setCategoryName] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setpageSize] = useState(5);
 
     useEffect(() => {
         (async function () {
@@ -46,7 +49,7 @@ const CategoryList = (props) => {
             const res = await axios.delete(
                 `http://localhost:5000/category/${categoryID}`
             );
-        } catch (error) {}
+        } catch (error) { }
     };
 
     const updateCategory = async (categoryID, name) => {
@@ -62,7 +65,7 @@ const CategoryList = (props) => {
             await axios.put(`http://localhost:5000/category/${categoryID}`, {
                 name,
             });
-        } catch (error) {}
+        } catch (error) { }
     };
 
     const addNewCategory = async () => {
@@ -72,8 +75,13 @@ const CategoryList = (props) => {
                 { name: categoryName }
             );
             setCategoryList([...categorylist, response.data.category]);
-        } catch (error) {}
-    };
+        } catch (error) { }
+    }
+    const handlePageChange = (page) => {
+        setCurrentPage(page)
+    }
+
+    const paginatedCategoryList = paginate(categorylist, currentPage, pageSize)
     return (
         <Container>
             <Container>
@@ -95,11 +103,11 @@ const CategoryList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {categorylist.map((category, index) => {
+                    {paginatedCategoryList.map((category, index) => {
                         return (
                             <CategoryItem
                                 key={index}
-                                index={index}
+                                index={categorylist.indexOf(category)}
                                 category={category}
                                 updateCategory={updateCategory}
                                 deleteCategory={deleteCategory}
@@ -108,6 +116,15 @@ const CategoryList = (props) => {
                     })}
                 </tbody>
             </Table>
+
+            <Pagination
+                pageSize={pageSize}
+                itemsCount={categorylist.length}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
+
+
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Add Category</ModalHeader>
                 <ModalBody>
