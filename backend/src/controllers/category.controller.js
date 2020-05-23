@@ -46,10 +46,21 @@ categoryController.getCategoryById = async (req, res, next) => {
 
 categoryController.deleteById = async (req, res, next) => {
     try {
-        const category = await Category.findByIdAndDelete(
-            req.params.id,
-            req.body
-        );
+        // const category = await Category.findByIdAndDelete(
+        //     req.params.id,
+        //     req.body
+        // );
+        Category.findById(req.params.id, function(err, doc){
+            if(err){
+                next("cann't found category");
+            }
+            doc.deleteOne(function(err){
+                if(err){
+                    console.log(err);
+                    
+                }
+            })
+        });
         return res.status(200).send("Record deleted successfully");
     } catch (error) {
         if (error.name === "CastError") {

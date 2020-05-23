@@ -4,6 +4,7 @@ const bookSchema = new mongoose.Schema(
     {
         name: {
             type: String,
+            unique: [true, 'Name must be unique'],
             // required: true,
         },
         image: { type: String },

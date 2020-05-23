@@ -37,7 +37,18 @@ authorController.create = async (req, res) => {
 
 authorController.deleteById = async (req, res) => {
     try {
-        const author = await Author.findByIdAndDelete(req.params.id);
+        // const author = await Author.findByIdAndDelete(req.params.id);
+        Author.findById(req.params.id, function(err, doc){
+            if(err){
+                next("cann't found author");
+            }
+            doc.deleteOne(function(err){
+                if(err){
+                    console.log(err);
+                    
+                }
+            })
+        })
         return res.send(author)
     } catch (error) {
         return res.send(error);
