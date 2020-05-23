@@ -107,7 +107,7 @@ const CategoryList = (props) => {
                         return (
                             <CategoryItem
                                 key={index}
-                                index={index}
+                                index={categorylist.indexOf(category)}
                                 category={category}
                                 updateCategory={updateCategory}
                                 deleteCategory={deleteCategory}
