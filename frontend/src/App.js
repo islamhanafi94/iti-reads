@@ -1,8 +1,15 @@
 import React from "react";
 import NavBar from "./components/navBar";
+import UserNavBar from "./components/userNavBar";
 import CategoryList from "./components/admin/category/CategoryList";
 import BooksList from "./components/admin/book/bookList";
 import AuthorList from "./components/admin/author/authorList";
+
+import Categories from "./components/user/categories/categoriesList";
+import CategoryPage from "./components/user/categories/categoryPage";
+// import BooksList from "./components/admin/book/bookList";
+// import AuthorList from "./components/admin/author/authorList";
+
 import Register from "./components/auth/Register";
 import Login from "./components/login";
 import AdminLogin from "./components/adminLogin";
@@ -13,31 +20,58 @@ const authBackground =
 // style={{backgroundImage: `url(${authBackground})`}}
 function App() {
     return (
+        // Admin NavBar and routes
+
+        // <Router>
+        //     <NavBar />
+        //     <Switch>
+        //         <Route exact path="/">
+        //         </Route>
+        //         <Route exact path="/admin">
+        //             <AdminLogin />
+        //         </Route>
+        //         <Route exact path="/admin/categories">
+        //             <CategoryList />
+        //         </Route>
+        //         <Route exact path="/admin/books">
+        //             <BooksList />
+        //         </Route>
+        //         <Route exact path="/admin/authors">
+        //             <AuthorList />
+        //         </Route>
+        //         <Route exact path="/register">
+        //             <Register />
+        //         </Route>
+        //         <Route>
+        //             <NotFound />
+        //         </Route>
+        //     </Switch>
+        // </Router>
+
+
+        // User NavBar And routes.
         <Router>
-            <NavBar />
-            <Switch>
-                <Route exact path="/">
-                </Route>
-                <Route exact path="/admin">
-                    <AdminLogin />
-                </Route>
-                <Route exact path="/admin/categories">
-                    <CategoryList />
-                </Route>
-                <Route exact path="/admin/books">
-                    <BooksList />
-                </Route>
-                <Route exact path="/admin/authors">
-                    <AuthorList />
-                </Route>
-                <Route exact path="/register">
-                    <Register />
-                </Route>
-                <Route>
-                    <NotFound />
-                </Route>
-            </Switch>
-        </Router>
+        <UserNavBar />
+        <Switch>
+            <Route exact path="/">
+            </Route>
+            <Route exact path="/user/categories">
+                <Categories/>
+            </Route>
+            <Route exact path="/user/categories/:catId" component={CategoryPage}>
+                {/* <CategoryPage /> */}
+            </Route>
+            <Route exact path="/user/books">
+                <BooksList />
+            </Route>
+            <Route exact path="/user/authors">
+                <AuthorList />
+            </Route>
+            <Route>
+                <NotFound />
+            </Route>
+        </Switch>
+    </Router>
     );
 }
 
