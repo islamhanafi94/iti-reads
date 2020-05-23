@@ -14,51 +14,35 @@ const authBackground =
 function App() {
     return (
         <Router>
+            <NavBar />
             <Switch>
-            <Route exact path="/">
-                    <div>
-                        <NavBar />
-                    </div>
+                <Route exact path="/">
                 </Route>
                 <Route exact path="/admin">
-                    <div>
-                        <NavBar />
-                        <AdminLogin />
-                    </div>
+                    <AdminLogin />
                 </Route>
                 <Route exact path="/admin/categories">
-                    <div>
-                        <NavBar />
-                        <CategoryList/>
-                    </div>
+                    <CategoryList />
                 </Route>
                 <Route exact path="/admin/books">
-                    <div>
-                        <NavBar />
-                        <BooksList/>
-                    </div>
+                    <BooksList />
                 </Route>
                 <Route exact path="/admin/authors">
-                    <div>
-                        <NavBar />
-                        <AuthorList />
-                    </div>
+                    <AuthorList />
                 </Route>
                 <Route exact path="/register">
-                    <div>
-                        <NavBar />
-                        <Register />
-                    </div>
+                    <Register />
                 </Route>
-                {/* <Route exact path="/login">
-                    <div>
-                        <NavBar />
-                        <Login />
-                    </div>
-                </Route> */}
+                <Route>
+                    <NotFound />
+                </Route>
             </Switch>
         </Router>
     );
+}
+
+const NotFound = () => {
+    return (<h1>Page Not found</h1>);
 }
 
 export default App;
