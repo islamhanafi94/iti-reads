@@ -4,6 +4,7 @@ import CategoryList from "./components/admin/category/CategoryList";
 import BooksList from "./components/admin/book/bookList";
 import AuthorList from "./components/admin/author/authorList";
 import Register from "./components/auth/Register";
+import Login from "./components/login";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const authBackground =
@@ -47,6 +48,12 @@ function App() {
                         <Register />
                     </div>
                 </Route>
+                {/* <Route exact path="/login">
+                    <div>
+                        <NavBar />
+                        <Login />
+                    </div>
+                </Route> */}
             </Switch>
         </Router>
     );

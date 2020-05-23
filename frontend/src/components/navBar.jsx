@@ -9,6 +9,7 @@ import {
     NavLink,
     NavbarText,
 } from "reactstrap";
+import Login from "./login";
 
 const NavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +36,9 @@ const NavBar = (props) => {
                     </NavItem>
                 </Nav>
                 <NavbarText>Simple Text</NavbarText>
+                {/* <NavItem>
+                    <Login />
+                </NavItem> */}
             </Collapse>
         </Navbar>
     );
