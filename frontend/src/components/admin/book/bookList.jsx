@@ -53,7 +53,7 @@ const BookList = (props) => {
     useEffect(() => {
         (async function () {
             try {
-                let response = await axios.get("http://localhost:5000/books");
+                let response = await axios.get("http://localhost:5000/books/all");
                 setIsLoaded(true);
                 setBookList(response.data);
             } catch (error) {

@@ -5,6 +5,7 @@ const adminAuth = require('../config/adminAuth'); // DON'T FORGETTTTTT
 const bookController = require("../controllers/book.controller");
 router.get("/popular", bookController.getPopularBooks);
 router.get("/", bookController.getAllBooks);
+router.get("/all", bookController.display);
 router.get("/:id", bookController.getBookById);
 router.post("/new", bookController.createBook);
 router.post("/:bookId", bookController.addRate);

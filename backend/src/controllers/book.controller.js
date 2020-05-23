@@ -41,6 +41,16 @@ bookController.getAllBooks = async (req, res, next) => {
         });
 };
 
+// get all for display
+bookController.display = async (req, res, next) => {
+    const allBooks = await Book.find({}).exec((err, data) => {
+        if (err) {
+            return res.send(err);
+        }
+        res.json(data);
+    });
+};
+
 // Get specific book
 bookController.getBookById = async (req, res, next) => {
     try {
@@ -67,6 +77,8 @@ bookController.createBook = async (req, res, next) => {
 
     try {
         const book = await newBook.save();
+        console.log(book);
+
         return res.send({ book });
         // return res.status(200).send("Record added successfully");
     } catch (error) {

@@ -60,9 +60,9 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
         <tr>
             <th scope="row">{index + 1}</th>
             <td>{book.name}</td>
-            <td>{book.category.name}</td>
+            <td>{book.category}</td>
             <td>
-                {book.author.firstName} {book.author.lastName}
+                {book.author}
             </td>
             <td>
                 <ButtonToolbar>
