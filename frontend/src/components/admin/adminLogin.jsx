@@ -5,8 +5,8 @@ import { Form, FormGroup, Label, Input, Button, Jumbotron, Badge } from 'reactst
 const AdminLogin = (props) => {
     const [emailInput, setEmailInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    let s = false;
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loginMsg, setLoginMsg] = useState('');
     useEffect(() => {
         (async function () {
             try {
@@ -16,9 +16,7 @@ const AdminLogin = (props) => {
                     }
                 }).then((response) => {
                     if (response.data.status === 200) {
-                        setIsLoggedIn(false);
-                        console.log("status :", isLoggedIn);
-                        
+                        setIsLoggedIn(true);
                     }
                 });
 
@@ -26,7 +24,7 @@ const AdminLogin = (props) => {
                 console.log(error);
             }
         })();
-    }, [isLoggedIn]);
+    }, []);
 
     const hanleEmailChange = (e) => {
         const { target: { value } } = e;
@@ -49,20 +47,31 @@ const AdminLogin = (props) => {
             }
         }).then((response) => {
             const { token } = response.data;
-            localStorage.setItem("token", token);
-            console.log(response.data)
-            window.location.reload(false);
+            console.log("response", response.data)
+            if (response.data.user.isadmin == true) {
+                localStorage.setItem("token", token);
+                window.location.href = "http://localhost:3000/admin";
+            }
+            else {
+                setLoginMsg("You are not authorized to login to admin panel...");
+                console.log("not admin...");
+            }
+
         }, (error) => {
+            setLoginMsg("Email or Password is incorrect...");
             console.log(error);
         });
 
         setEmailInput('');
         setPasswordInput('');
     }
-    if (isLoggedIn == true) {
+
+
+    if (isLoggedIn == false) {
         return (
             <div className="container">
                 <Jumbotron>
+                    <h3 style={{ textAlign: "center" }}><Badge color="danger">{loginMsg}</Badge></h3>
                     <h1 style={{ textAlign: "center" }}><Badge color="secondary" >Welcome to Admin Panel</Badge></h1>
                     <Form>
                         <FormGroup>

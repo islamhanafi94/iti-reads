@@ -16,7 +16,6 @@ import Pagination from '../../common/pagination';
 import axios from "axios";
 import CategoryItem from "./categoryItem";
 import { paginate } from '../../../utils/paginate';
-import { Redirect } from 'react-router-dom'
 
 const CategoryList = (props) => {
     const [error, setError] = useState(null);
@@ -26,6 +25,29 @@ const CategoryList = (props) => {
     const [categoryName, setCategoryName] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setpageSize] = useState(5);
+
+
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get(
+                    "http://localhost:5000/users/admin", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                }
+                );
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+                if (error.toString().includes("Request failed with status code 401")) {
+                    localStorage.setItem("token", "");
+                    window.location.href = "http://localhost:3000/admin";
+                }
+            }
+        })();
+    }, []);
 
     useEffect(() => {
         (async function () {
@@ -39,6 +61,7 @@ const CategoryList = (props) => {
                 );
                 setIsLoaded(true);
                 setCategoryList(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.log(error);
             }

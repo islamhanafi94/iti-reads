@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Collapse,
     Navbar,
@@ -10,13 +10,42 @@ import {
     Button,
 } from "reactstrap";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 import Login from "../login";
+import Logout from "../user/logout";
 
 const NavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
 
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get(
+                    "http://localhost:5000/users/logincheck", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                }
+                ).then((response) => {
+                    if (response.status === 200) {
+                        setIsLoggedIn(true);
+                        console.log("changed...");
+                    }
+                    console.log("isin : ", response.data.user)
+                });
+
+
+            } catch (error) {
+                console.log("error is ...", error);
+            }
+        })();
+    }, []);
     return (
         <Navbar color="light" light expand="md">
             <NavbarBrand href="/">itiReads</NavbarBrand>
@@ -35,13 +64,17 @@ const NavBar = (props) => {
                     <NavItem>
                         <Link className="nav-link" to="/authors">Authors</Link>
                     </NavItem>
-                    <NavItem>
-                        <Login />
-                    </NavItem>
+                    {
+                        isLoggedIn == false ? (
+                            <NavItem>
+                                <Login />
+                            </NavItem>
+                        ) : <Logout />
+                    }
                 </Nav>
                 {/* <Button color="info">logout</Button> */}
 
-                
+
             </Collapse>
         </Navbar>
     );

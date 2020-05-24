@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container } from "reactstrap";
+import { useParams } from "react-router-dom";
 
 
-class CategoryPage extends React.Component {
-    state = { booklist: [] };
+const CategoryPage = (props) => {
 
+<<<<<<< HEAD
     componentDidMount() {
         axios
             .get("http://localhost:5000/books")
@@ -21,11 +22,37 @@ class CategoryPage extends React.Component {
                 {this.state.booklist.map((book) => {
                     if (book.category._id === catId) {
                         return <h1>{book.name}</h1>;
+=======
+    const catId = useParams()['catId'];
+    const [booklist, setBookList] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get("http://localhost:5000/books", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+>>>>>>> 9cd6842b4b53065bd6b5b883daca0c9981d43aa7
                     }
-                })}
-            </Container>
-        );
-    }
-}
+                });
+                setIsLoaded(true);
+                setBookList(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
+
+    return (
+        <Container>
+            { booklist.map((book) => {
+                if (book.category._id === catId) {
+                    return <h1>{ book.name }</h1>;
+                }
+            }) }
+        </Container>
+    );
+};
 
 export default CategoryPage;
