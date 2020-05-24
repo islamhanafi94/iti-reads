@@ -5,6 +5,7 @@ import CategoryList from "./components/admin/category/CategoryList";
 import BooksList from "./components/admin/book/bookList";
 import AuthorList from "./components/admin/author/authorList";
 import AuthorsMenu from "./components/user/author/authorMenu";
+import AuthorPage from "./components/user/author/authorPage";
 import Home from "./components/user/Home";
 
 import Categories from "./components/user/categories/categoriesList";
@@ -116,6 +117,10 @@ function App() {
                 <Route exact path="/authors">
                     <UserNavBar />
                     <AuthorsMenu />
+                </Route>
+                <Route exact path="/authors/:authorId">
+                    <UserNavBar />
+                    <AuthorPage />
                 </Route>
                 <Route path="/testUserPage" component={ UserPage } />
                 <Route>
