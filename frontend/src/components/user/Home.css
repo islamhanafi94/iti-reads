@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     flex-direction: row ;
     justify-content: left;
-     background-color: rgba(59, 52, 52, 0.4);
+     /* background-color: rgba(59, 52, 52, 0.4); */
  }
  .left-div{
      width: 20%;
