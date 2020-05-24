@@ -4,12 +4,12 @@ import UserNavBar from "./components/user/userNavBar";
 import CategoryList from "./components/admin/category/CategoryList";
 import BooksList from "./components/admin/book/bookList";
 import AuthorList from "./components/admin/author/authorList";
+import AuthorsMenu from "./components/user/author/authorMenu";
 import Home from "./components/user/Home";
 
 import Categories from "./components/user/categories/categoriesList";
 import CategoryPage from "./components/user/categories/categoryPage";
 // import BooksList from "./components/admin/book/bookList";
-// import AuthorList from "./components/admin/author/authorList";
 
 import Register from "./components/auth/Register";
 import Login from "./components/login";
@@ -61,7 +61,7 @@ function App() {
                     <BooksList />
                 </Route>
                 <Route exact path="/authors">
-                    
+                    <AuthorsMenu />
                 </Route>
                 <Route path="/testUserPage" component={UserPage} />
                 <Route>
