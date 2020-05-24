@@ -7,7 +7,9 @@ class CategoryPage extends React.Component {
     state = { booklist: [] };
 
     componentDidMount() {
-        axios.get("http://localhost:5000/books").then(result => this.setState({ booklist: result.data }));
+        axios
+            .get("http://localhost:5000/books")
+            .then((result) => this.setState({ booklist: result.data }));
     }
 
     render() {
@@ -18,7 +20,7 @@ class CategoryPage extends React.Component {
             <Container>
                 {this.state.booklist.map((book) => {
                     if (book.category._id === catId) {
-                    return <h1>{book.name}</h1> ;
+                        return <h1>{book.name}</h1>;
                     }
                 })}
             </Container>

@@ -27,7 +27,7 @@ router.get("/popular", bookController.getPopularBooks);
 router.get("/", bookController.getAllBooks);
 router.get("/all", bookController.display);
 router.get("/:id", bookController.getBookById);
-router.post("/new", adminAuth, bookController.createBook);
+router.post("/new",  bookController.createBook);
 router.post("/:bookId", bookController.addRate);
 router.delete("/:id", adminAuth, bookController.deleteById);
 router.put("/:id", adminAuth, bookController.updateById);

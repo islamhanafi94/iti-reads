@@ -21,6 +21,7 @@ const BookList = (props) => {
     const [booklist, setBookList] = useState([]);
     const [modal, setModal] = useState(false);
     const [book, setBook] = useState({});
+    const [image, setImage] = useState();
     const [categorylist, setCategoryList] = useState([]);
     const [authorslist, setAutorsList] = useState([]);
 
@@ -28,11 +29,13 @@ const BookList = (props) => {
         (async function () {
             try {
                 let response = await axios.get(
-                    "http://localhost:5000/category", {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    "http://localhost:5000/category",
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
                     }
-                }
                 );
                 setIsLoaded(true);
                 setCategoryList(response.data);
@@ -47,8 +50,9 @@ const BookList = (props) => {
             try {
                 let response = await axios.get("http://localhost:5000/author", {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem("token")
-                    }
+                        Authorization:
+                            "Bearer " + localStorage.getItem("token"),
+                    },
                 });
                 setIsLoaded(true);
                 setAutorsList(response.data);
@@ -61,11 +65,15 @@ const BookList = (props) => {
     useEffect(() => {
         (async function () {
             try {
-                let response = await axios.get("http://localhost:5000/books/all", {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                let response = await axios.get(
+                    "http://localhost:5000/books/all",
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
                     }
-                });
+                );
                 setIsLoaded(true);
                 setBookList(response.data);
             } catch (error) {
@@ -83,16 +91,20 @@ const BookList = (props) => {
             [name]: value,
         }));
     };
+    const onChangeImage = (e) => {
+        const imagefile = e.target.files[0];
+        setImage(imagefile);
+    };
 
     const deleteBook = async (bookID) => {
         try {
             setBookList(booklist.filter((book) => book._id !== bookID));
             await axios.delete(`http://localhost:5000/books/${bookID}`, {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem("token")
-                }
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                },
             });
-        } catch (error) { }
+        } catch (error) {}
     };
 
     const updateBook = async (bookID, newbook) => {
@@ -107,25 +119,34 @@ const BookList = (props) => {
             );
             await axios.put(`http://localhost:5000/books/${bookID}`, newbook, {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem("token")
-                }
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                },
             });
-        } catch (error) { }
+        } catch (error) {}
     };
 
     const addNewBook = async () => {
         try {
+            // console.log(book);
+            // book['image']=image;
+            // console.log(book);
+            // console.log(book.image);
+
+            
             const response = await axios.post(
                 "http://localhost:5000/books/new",
-                book, {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                book,
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("token"),
+                    },
+                    
                 }
-            }
             );
             console.log(response.data.book);
             setBookList([...booklist, response.data.book]);
-        } catch (error) { }
+        } catch (error) {}
     };
     return (
         <Container>
@@ -143,6 +164,7 @@ const BookList = (props) => {
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Cover</th>
                         <th>Name</th>
                         <th>Category</th>
                         <th>Author</th>
@@ -209,6 +231,14 @@ const BookList = (props) => {
                             })}
                         </Input>
                     </FormGroup>
+                    {/* <FormGroup>
+                        <Input
+                            type="file"
+                            value={book.image}
+                            onChange={onChangeImage}
+                            name="image"
+                        />
+                    </FormGroup> */}
                 </ModalBody>
                 <ModalFooter>
                     <Button

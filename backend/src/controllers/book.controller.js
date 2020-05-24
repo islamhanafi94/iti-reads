@@ -2,6 +2,7 @@ const Book = require("../models/book");
 const author = require("../models/author");
 const category = require("../models/category");
 const review = require("../models/review");
+const imageUpload = require("../imageUpload");
 const { response } = require("../middlewares");
 
 const bookController = {};
@@ -13,15 +14,14 @@ bookController.getPopularBooks = (req, res) => {
     console.log("in function");
 
     // Retrieve books sorted by popularity and limited to 3 //desc
-    Book.find({}, null, { sort: { popularity: -1 }, limit: 4
-    })
+    Book.find({}, null, { sort: { popularity: -1 }, limit: 4 })
         .populate("author")
         .populate("category")
         .then((books) => {
             console.log("====================================");
             console.log(books);
             console.log("====================================");
-            res.status(200).json( books );
+            res.status(200).json(books);
         })
         .catch((err) => {
             console.log(err);
@@ -72,23 +72,32 @@ bookController.getBookById = async (req, res, next) => {
 // Abb book
 bookController.createBook = async (req, res, next) => {
     console.log("here---------------------");
-
-    const { name, image, author, category } = req.body;
-    const newBook = new Book({ name, image, author, category });
-
+    // console.log(req.body);
+    // console.log(req.body.image);
+    
     try {
-        const book = await newBook.save();
-        console.log(book);
-
-        return res.send({ book });
-        // return res.status(200).send("Record added successfully");
-    } catch (error) {
-        if (error.name === "MongoError" && error.code === 11000) {
-            next(new Error("You must enter a book name."));
-        } else {
-            next(error);
-        }
-    }
+        imageUpload(req, res, async () => {
+            try {
+                // if (req.body.image == undefined) {
+                //     return res.status(400).send("Entre your image");
+                // } else {
+                    // const image = req.body.image.name;
+                    const { name, author, category } = req.body;
+                    const newBook = new Book({ name, author, category }); // add image
+                    const book = await newBook.save();
+                    // console.log(book);
+                    return res.send({ book });
+                
+                // return res.status(200).send("Record added successfully");
+            } catch (error) {
+                if (error.name === "MongoError" && error.code === 11000) {
+                    next(new Error("You must enter a book name."));
+                } else {
+                    next(error);
+                }
+            }
+        });
+    } catch (error) {}
 };
 
 // Update specific book

@@ -9,6 +9,7 @@ import {
     ModalFooter,
     FormGroup,
     Input,
+    Media,
 } from "reactstrap";
 import ImageUploader from "react-images-upload";
 import axios from "axios";
@@ -20,15 +21,21 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
     const [categorylist, setCategoryList] = useState([]);
     const [authorslist, setAutorsList] = useState([]);
 
+    var imgStyle = {
+        minWidth: "128px",
+    };
+
     useEffect(() => {
         (async function () {
             try {
                 let response = await axios.get(
-                    "http://localhost:5000/category", {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    "http://localhost:5000/category",
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
                     }
-                }
                 );
                 setIsLoaded(true);
                 setCategoryList(response.data);
@@ -43,8 +50,9 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
             try {
                 let response = await axios.get("http://localhost:5000/author", {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem("token")
-                    }
+                        Authorization:
+                            "Bearer " + localStorage.getItem("token"),
+                    },
                 });
                 setIsLoaded(true);
                 setAutorsList(response.data);
@@ -64,14 +72,17 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
         }));
     };
 
+    const imagepath = `./../../../../backend/public/images/${book.image}`;
     return (
         <tr>
             <th scope="row">{index + 1}</th>
+            <td>
+                {/* <Media style={imgStyle} object src={imagepath} /> */}
+                <img style={imgStyle} src={imagepath}/>
+            </td>
             <td>{book.name}</td>
             <td>{book.category}</td>
-            <td>
-                {book.author}
-            </td>
+            <td>{book.author}</td>
             <td>
                 <ButtonToolbar>
                     <ButtonGroup>
@@ -142,12 +153,7 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                         </Input>
                     </FormGroup>
                     <FormGroup>
-                        <Input
-                            type="file"
-                            onChange={changeBook}
-                            name="image"
-                            id="exampleFile"
-                        />
+                        
                         {/* <ImageUploader
                             withIcon={true}
                             buttonText="Choose images"

@@ -23,53 +23,53 @@ function App() {
     return (
         // Admin NavBar and routes
 
-        // <Router>
-        //     <NavBar />
-        //     <Switch>
-        //         <Route exact path="/admin">
-        //             <AdminLogin />
-        //         </Route>
-        //         <Route exact path="/admin/categories">
-        //             <CategoryList />
-        //         </Route>
-        //         <Route exact path="/admin/books">
-        //             <BooksList />
-        //         </Route>
-        //         <Route exact path="/admin/authors">
-        //             <AuthorList />
-        //         </Route>
-        //         <Route exact path="/register">
-        //             <Register />
-        //         </Route>
-        //         <Route>
-        //             <NotFound />
-        //         </Route>
-        //     </Switch>
-        // </Router>
-
-
-        // User NavBar And routes.
-            <Router>
-            <UserNavBar />
+        <Router>
+            <NavBar />
             <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route exact path="/register" component={Register}/>
-                <Route exact path="/categories">
-                    <Categories/>
+                <Route exact path="/admin">
+                    <AdminLogin />
                 </Route>
-                <Route exact path="/categories/:catId" component={CategoryPage} />
-                <Route exact path="/books">
+                <Route exact path="/admin/categories">
+                    <CategoryList />
+                </Route>
+                <Route exact path="/admin/books">
                     <BooksList />
                 </Route>
-                <Route exact path="/authors">
-                    
+                <Route exact path="/admin/authors">
+                    <AuthorList />
                 </Route>
-                <Route path="/testUserPage" component={UserPage} />
+                <Route exact path="/register">
+                    <Register />
+                </Route>
                 <Route>
                     <NotFound />
                 </Route>
             </Switch>
         </Router>
+
+
+        // User NavBar And routes.
+        //     <Router>
+        //     <UserNavBar />
+        //     <Switch>
+        //         <Route exact path="/" component={Home}/>
+        //         <Route exact path="/register" component={Register}/>
+        //         <Route exact path="/categories">
+        //             <Categories/>
+        //         </Route>
+        //         <Route exact path="/categories/:catId" component={CategoryPage} />
+        //         <Route exact path="/books">
+        //             <BooksList />
+        //         </Route>
+        //         <Route exact path="/authors">
+                    
+        //         </Route>
+        //         <Route path="/testUserPage" component={UserPage} />
+        //         <Route>
+        //             <NotFound />
+        //         </Route>
+        //     </Switch>
+        // </Router>
     );
 }
 
