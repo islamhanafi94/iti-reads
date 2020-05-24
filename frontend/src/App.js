@@ -15,6 +15,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/login";
 import AdminLogin from "./components/adminLogin";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import UserPage from './components/user/userPage/userPage';
 const authBackground =
     "https://images.unsplash.com/photo-1458571037713-913d8b481dc6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=1080&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=1920";
 // style={{backgroundImage: `url(${authBackground})`}}
@@ -25,7 +26,7 @@ function App() {
         <Router>
             <NavBar />
             <Switch>
-                <Route exact path="/" component={Home}/>
+                <Route exact path="/" component={Home} />
 
                 <Route exact path="/admin">
                     <AdminLogin />
@@ -42,6 +43,7 @@ function App() {
                 <Route exact path="/register">
                     <Register />
                 </Route>
+                <Route path="/testUserPage" component={UserPage} />
                 <Route>
                     <NotFound />
                 </Route>
