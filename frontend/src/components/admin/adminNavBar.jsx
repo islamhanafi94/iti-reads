@@ -10,7 +10,7 @@ import {
     Button,
 } from "reactstrap";
 import { Link } from 'react-router-dom';
-import Login from "./login";
+import Login from "../login";
 
 const NavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,13 +19,13 @@ const NavBar = (props) => {
 
     return (
         <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">itiReads</NavbarBrand>
+            <NavbarBrand >itiReads</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
-                    <NavItem>
+                    {/* <NavItem>
                         <Link className="nav-link" to="/admin">Home</Link>
-                    </NavItem>
+                    </NavItem> */}
                     <NavItem>
                         <Link className="nav-link" to="/admin/categories">Categories</Link>
                     </NavItem>

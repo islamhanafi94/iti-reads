@@ -1,10 +1,10 @@
 import React from "react";
-import NavBar from "./components/navBar";
-import UserNavBar from "./components/userNavBar";
+import NavBar from "./components/admin/adminNavBar";
+import UserNavBar from "./components/user/userNavBar";
 import CategoryList from "./components/admin/category/CategoryList";
 import BooksList from "./components/admin/book/bookList";
 import AuthorList from "./components/admin/author/authorList";
-import Home from "./components/Home";
+import Home from "./components/user/Home";
 
 import Categories from "./components/user/categories/categoriesList";
 import CategoryPage from "./components/user/categories/categoryPage";
@@ -13,7 +13,7 @@ import CategoryPage from "./components/user/categories/categoryPage";
 
 import Register from "./components/auth/Register";
 import Login from "./components/login";
-import AdminLogin from "./components/adminLogin";
+import AdminLogin from "./components/admin/adminLogin";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UserPage from './components/user/userPage/userPage';
 const authBackground =
@@ -23,25 +23,45 @@ function App() {
     return (
         // Admin NavBar and routes
 
-        <Router>
-            <NavBar />
-            <Switch>
-                <Route exact path="/" component={Home} />
+        // <Router>
+        //     <NavBar />
+        //     <Switch>
+        //         <Route exact path="/admin">
+        //             <AdminLogin />
+        //         </Route>
+        //         <Route exact path="/admin/categories">
+        //             <CategoryList />
+        //         </Route>
+        //         <Route exact path="/admin/books">
+        //             <BooksList />
+        //         </Route>
+        //         <Route exact path="/admin/authors">
+        //             <AuthorList />
+        //         </Route>
+        //         <Route exact path="/register">
+        //             <Register />
+        //         </Route>
+        //         <Route>
+        //             <NotFound />
+        //         </Route>
+        //     </Switch>
+        // </Router>
 
-                <Route exact path="/admin">
-                    <AdminLogin />
+
+        // User NavBar And routes.
+            <Router>
+            <UserNavBar />
+            <Switch>
+                <Route exact path="/" component={Home}/>
+                <Route exact path="/categories">
+                    <Categories/>
                 </Route>
-                <Route exact path="/admin/categories">
-                    <CategoryList />
-                </Route>
-                <Route exact path="/admin/books">
+                <Route exact path="/categories/:catId" component={CategoryPage} />
+                <Route exact path="/books">
                     <BooksList />
                 </Route>
-                <Route exact path="/admin/authors">
-                    <AuthorList />
-                </Route>
-                <Route exact path="/register">
-                    <Register />
+                <Route exact path="/authors">
+                    
                 </Route>
                 <Route path="/testUserPage" component={UserPage} />
                 <Route>
@@ -49,31 +69,6 @@ function App() {
                 </Route>
             </Switch>
         </Router>
-
-
-        // User NavBar And routes.
-        //     <Router>
-        //     <UserNavBar />
-        //     <Switch>
-        //         <Route exact path="/">
-        //         </Route>
-        //         <Route exact path="/user/categories">
-        //             <Categories/>
-        //         </Route>
-        //         <Route exact path="/user/categories/:catId" component={CategoryPage}>
-        //             {/* <CategoryPage /> */}
-        //         </Route>
-        //         <Route exact path="/user/books">
-        //             <BooksList />
-        //         </Route>
-        //         <Route exact path="/user/authors">
-        //             <AuthorList />
-        //         </Route>
-        //         <Route>
-        //             <NotFound />
-        //         </Route>
-        //     </Switch>
-        // </Router>
     );
 }
 

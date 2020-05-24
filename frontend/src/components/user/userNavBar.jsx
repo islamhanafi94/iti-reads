@@ -10,7 +10,7 @@ import {
     Button,
 } from "reactstrap";
 import { Link } from 'react-router-dom';
-import Login from "./login";
+import Login from "../login";
 
 const NavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,13 +27,13 @@ const NavBar = (props) => {
                         <Link className="nav-link" to="/">Home</Link>
                     </NavItem>
                     <NavItem>
-                        <Link className="nav-link" to="/user/categories">Categories</Link>
+                        <Link className="nav-link" to="/categories">Categories</Link>
                     </NavItem>
                     <NavItem>
-                        <Link className="nav-link" to="/user/books">Books</Link>
+                        <Link className="nav-link" to="/books">Books</Link>
                     </NavItem>
                     <NavItem>
-                        <Link className="nav-link" to="/user/authors">Authors</Link>
+                        <Link className="nav-link" to="/authors">Authors</Link>
                     </NavItem>
                     <NavItem>
                         <Login />
