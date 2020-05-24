@@ -16,6 +16,8 @@ import Pagination from '../../common/pagination';
 import axios from "axios";
 import CategoryItem from "./categoryItem";
 import { paginate } from '../../../utils/paginate';
+import { Redirect } from 'react-router-dom'
+
 const CategoryList = (props) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -29,7 +31,11 @@ const CategoryList = (props) => {
         (async function () {
             try {
                 let response = await axios.get(
-                    "http://localhost:5000/category"
+                    "http://localhost:5000/category", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                }
                 );
                 setIsLoaded(true);
                 setCategoryList(response.data);
@@ -47,7 +53,11 @@ const CategoryList = (props) => {
                 categorylist.filter((category) => category._id !== categoryID)
             );
             const res = await axios.delete(
-                `http://localhost:5000/category/${categoryID}`
+                `http://localhost:5000/category/${categoryID}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            }
             );
         } catch (error) { }
     };
@@ -62,9 +72,13 @@ const CategoryList = (props) => {
                     return category;
                 })
             );
-            await axios.put(`http://localhost:5000/category/${categoryID}`, {
-                name,
-            });
+            await axios.put(`http://localhost:5000/category/${categoryID}`,
+                { name }, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            }
+            );
         } catch (error) { }
     };
 
@@ -72,7 +86,11 @@ const CategoryList = (props) => {
         try {
             const response = await axios.post(
                 "http://localhost:5000/category/new",
-                { name: categoryName }
+                { name: categoryName }, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            }
             );
             setCategoryList([...categorylist, response.data.category]);
         } catch (error) { }

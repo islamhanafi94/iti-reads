@@ -35,9 +35,13 @@ const NavBar = (props) => {
                     <NavItem>
                         <Link className="nav-link" to="/user/authors">Authors</Link>
                     </NavItem>
+                    <NavItem>
+                        <Login />
+                    </NavItem>
                 </Nav>
-                <Button color="info">logout</Button>
+                {/* <Button color="info">logout</Button> */}
 
+                
             </Collapse>
         </Navbar>
     );

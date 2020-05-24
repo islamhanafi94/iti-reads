@@ -30,7 +30,11 @@ const AuthorList = (props) => {
     useEffect(() => {
         (async function () {
             try {
-                let response = await axios.get("http://localhost:5000/author");
+                let response = await axios.get("http://localhost:5000/author", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                });
                 setIsLoaded(true);
                 setAuthorList(response.data);
             } catch (error) {
@@ -45,7 +49,11 @@ const AuthorList = (props) => {
         try {
             setAuthorList(authorlist.filter((author) => author._id != authorID));
             const res = await axios.delete(
-                `http://localhost:5000/author/${authorID}`
+                `http://localhost:5000/author/${authorID}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            }
             );
         } catch (error) { }
     };
@@ -60,7 +68,11 @@ const AuthorList = (props) => {
                     return author;
                 })
             );
-            await axios.put(`http://localhost:5000/author/${authorID}`, editedAuthor);
+            await axios.put(`http://localhost:5000/author/${authorID}`, editedAuthor, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            });
         } catch (error) { }
     };
 
@@ -68,11 +80,15 @@ const AuthorList = (props) => {
         try {
             const response = await axios.post(
                 "http://localhost:5000/author",
-                newAuthor
+                newAuthor, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            }
             );
             console.log(response);
             setAuthorList([...authorlist, response.data]);
-        } catch (error) {}
+        } catch (error) { }
     };
 
 
@@ -91,7 +107,7 @@ const AuthorList = (props) => {
                     <Col>
                         <h1>Authors List</h1>
                     </Col>
-                    <Button size="lg" color="primary" onClick={ toggle }>
+                    <Button size="lg" color="primary" onClick={toggle}>
                         Add
                     </Button>
                 </Row>
@@ -107,28 +123,28 @@ const AuthorList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    { authorlist.map((author, index) => {
+                    {authorlist.map((author, index) => {
                         return (
                             <AuthorItem
-                                key={ index }
-                                index={ index }
-                                author={ author }
-                                updateAuthor={ updateAuthor }
-                                deleteAuthor={ deleteAuthor }
+                                key={index}
+                                index={index}
+                                author={author}
+                                updateAuthor={updateAuthor}
+                                deleteAuthor={deleteAuthor}
                             />
                         );
-                    }) }
+                    })}
                 </tbody>
             </Table>
 
-            <Modal isOpen={ modal } toggle={ toggle }>
-                <ModalHeader toggle={ toggle }>Add Author</ModalHeader>
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>Add Author</ModalHeader>
                 <ModalBody>
                     <FormGroup>
                         <Input
                             text
                             name="firstName"
-                            value={ newAuthor.firstName }
+                            value={newAuthor.firstName}
                             onChange={changeAuthorInput}
                             placeholder="First name"
                         />
@@ -137,7 +153,7 @@ const AuthorList = (props) => {
                         <Input
                             text
                             name="lastName"
-                            value={ newAuthor.lastName }
+                            value={newAuthor.lastName}
                             onChange={changeAuthorInput}
                             placeholder="Last name"
                         />
@@ -145,7 +161,7 @@ const AuthorList = (props) => {
                     <FormGroup>
                         <Input
                             type="date"
-                            value={ newAuthor.dateOfBirth }
+                            value={newAuthor.dateOfBirth}
                             onChange={changeAuthorInput}
                             name="dateOfBirth"
                             placeholder="Date of Birth"
@@ -155,14 +171,14 @@ const AuthorList = (props) => {
                 <ModalFooter>
                     <Button
                         color="primary"
-                        onClick={ () => {
+                        onClick={() => {
                             addNewAuthor();
                             toggle();
-                        } }
+                        }}
                     >
                         Add
-                    </Button>{ " " }
-                    <Button color="secondary" onClick={ toggle }>
+                    </Button>{" "}
+                    <Button color="secondary" onClick={toggle}>
                         Cancel
                     </Button>
                 </ModalFooter>

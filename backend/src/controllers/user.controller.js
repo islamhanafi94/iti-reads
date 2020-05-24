@@ -52,7 +52,7 @@ userController.login = async (request, response, next) => {
                  */
                 // request.headers.authorization = token;
 
-                response.send({ token });
+                response.send({ token, user });
             } else {
                 response.status(401).send({
                     error: "Invalid username or password"

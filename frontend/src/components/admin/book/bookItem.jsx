@@ -24,7 +24,11 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
         (async function () {
             try {
                 let response = await axios.get(
-                    "http://localhost:5000/category"
+                    "http://localhost:5000/category", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                }
                 );
                 setIsLoaded(true);
                 setCategoryList(response.data);
@@ -37,7 +41,11 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
     useEffect(() => {
         (async function () {
             try {
-                let response = await axios.get("http://localhost:5000/author");
+                let response = await axios.get("http://localhost:5000/author", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                });
                 setIsLoaded(true);
                 setAutorsList(response.data);
             } catch (error) {

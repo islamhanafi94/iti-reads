@@ -28,7 +28,11 @@ const BookList = (props) => {
         (async function () {
             try {
                 let response = await axios.get(
-                    "http://localhost:5000/category"
+                    "http://localhost:5000/category", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                }
                 );
                 setIsLoaded(true);
                 setCategoryList(response.data);
@@ -41,7 +45,11 @@ const BookList = (props) => {
     useEffect(() => {
         (async function () {
             try {
-                let response = await axios.get("http://localhost:5000/author");
+                let response = await axios.get("http://localhost:5000/author", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                });
                 setIsLoaded(true);
                 setAutorsList(response.data);
             } catch (error) {
@@ -53,7 +61,11 @@ const BookList = (props) => {
     useEffect(() => {
         (async function () {
             try {
-                let response = await axios.get("http://localhost:5000/books/all");
+                let response = await axios.get("http://localhost:5000/books/all", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                });
                 setIsLoaded(true);
                 setBookList(response.data);
             } catch (error) {
@@ -75,8 +87,12 @@ const BookList = (props) => {
     const deleteBook = async (bookID) => {
         try {
             setBookList(booklist.filter((book) => book._id !== bookID));
-            await axios.delete(`http://localhost:5000/books/${bookID}`);
-        } catch (error) {}
+            await axios.delete(`http://localhost:5000/books/${bookID}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            });
+        } catch (error) { }
     };
 
     const updateBook = async (bookID, newbook) => {
@@ -89,19 +105,27 @@ const BookList = (props) => {
                     return book;
                 })
             );
-            await axios.put(`http://localhost:5000/books/${bookID}`, newbook);
-        } catch (error) {}
+            await axios.put(`http://localhost:5000/books/${bookID}`, newbook, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            });
+        } catch (error) { }
     };
 
     const addNewBook = async () => {
         try {
             const response = await axios.post(
                 "http://localhost:5000/books/new",
-                book
+                book, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
+                }
+            }
             );
             console.log(response.data.book);
             setBookList([...booklist, response.data.book]);
-        } catch (error) {}
+        } catch (error) { }
     };
     return (
         <Container>

@@ -5,6 +5,7 @@ const { response } = require("../middlewares");
 let categoryController = {};
 
 categoryController.create = async (req, res, next) => {
+    console.log("req.body = : ", req.body);
     const { name } = req.body;
     const newCategory = new Category({
         name,
@@ -50,14 +51,14 @@ categoryController.deleteById = async (req, res, next) => {
         //     req.params.id,
         //     req.body
         // );
-        Category.findById(req.params.id, function(err, doc){
-            if(err){
+        Category.findById(req.params.id, function (err, doc) {
+            if (err) {
                 next("cann't found category");
             }
-            doc.deleteOne(function(err){
-                if(err){
+            doc.deleteOne(function (err) {
+                if (err) {
                     console.log(err);
-                    
+
                 }
             })
         });
@@ -72,6 +73,8 @@ categoryController.deleteById = async (req, res, next) => {
 };
 
 categoryController.updateById = async (req, res, next) => {
+    console.log("params :", req.params.id);
+    console.log("req.body : ", req.body);
     try {
         const category = await Category.findByIdAndUpdate(
             req.params.id,
