@@ -28,6 +28,29 @@ const BookList = (props) => {
         (async function () {
             try {
                 let response = await axios.get(
+                    "http://localhost:5000/users/admin", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                }
+                );
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+                if (error.toString().includes("Request failed with status code 401")) {
+                    localStorage.setItem("token", "");
+                    window.location.href = "http://localhost:3000/admin";
+                }
+            }
+        })();
+    }, []);
+
+
+
+    useEffect(() => {
+        (async function () {
+            try {
+                let response = await axios.get(
                     "http://localhost:5000/category", {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")

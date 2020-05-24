@@ -37,9 +37,9 @@ router.get('/admin', adminAuth,
         return res.send({ status: 200, user: req.user })
     });
 
-router.get('/me',
+router.get('/logincheck',
     (req, res, next) => {
-        return res.send({ msg: "okey you are authorized now :)", user: req.user })
+        return res.send({ msg: "okey you are authorized user now :)", user: req.user })
     });
 
 

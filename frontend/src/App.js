@@ -49,32 +49,87 @@ function App() {
 
 
         // User NavBar And routes.
-            <Router>
-            <UserNavBar />
+        //     <Router>
+        //     <UserNavBar />
+        //     <Switch>
+        //         <Route exact path="/" component={Home}/>
+        //         <Route exact path="/register" component={Register}/>
+        //         <Route exact path="/categories">
+        //             <Categories/>
+        //         </Route>
+        //         <Route exact path="/categories/:catId" component={CategoryPage} />
+        //         <Route exact path="/books">
+        //             <BooksList />
+        //         </Route>
+        //         <Route exact path="/authors">
+
+        //         </Route>
+        //         <Route path="/testUserPage" component={UserPage} />
+        //         <Route>
+        //             <NotFound />
+        //         </Route>
+        //     </Switch>
+        // </Router>
+
+
+
+        // User NavBar And routes.
+        <Router>
             <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route exact path="/register" component={Register}/>
-                <Route exact path="/categories">
-                    <Categories/>
+                <Route exact path="/admin">
+                    <NavBar />
+                    <AdminLogin />
                 </Route>
-                <Route exact path="/categories/:catId" component={CategoryPage} />
+                <Route exact path="/admin/categories">
+                    <NavBar />
+                    <CategoryList />
+                </Route>
+                <Route exact path="/admin/books">
+                    <NavBar />
+                    <BooksList />
+                </Route>
+                <Route exact path="/admin/authors">
+                    <NavBar />
+                    <AuthorList />
+                </Route>
+                <Route exact path="/register">
+                    <NavBar />
+                    <Register />
+                </Route>
+                <Route exact path="/" >
+                    <UserNavBar />
+                    <Home />
+                </Route>
+                <Route exact path="/register" component={ Register } />
+                <Route exact path="/categories">
+                    <UserNavBar />
+                    <Categories />
+                </Route>
+                <Route exact path="/categories/:catId">
+                    <UserNavBar />
+                    <CategoryPage />
+                </Route>
                 <Route exact path="/books">
+                    <UserNavBar />
                     <BooksList />
                 </Route>
                 <Route exact path="/authors">
+                    <UserNavBar />
                     <AuthorsMenu />
                 </Route>
-                <Route path="/testUserPage" component={UserPage} />
+                <Route path="/testUserPage" component={ UserPage } />
                 <Route>
+                    <UserNavBar />
                     <NotFound />
                 </Route>
             </Switch>
         </Router>
+
     );
 }
 
 const NotFound = () => {
     return (<h1>Page Not found</h1>);
-}
+};
 
 export default App;
