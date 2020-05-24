@@ -37,7 +37,7 @@ const Authentication = (props) => {
 				}else if(response.status==200){
 					console.log("good");
 					
-					// history.push("/login");
+					history.push("/login");
 				}	
 			})
 			// .catch(error => {
