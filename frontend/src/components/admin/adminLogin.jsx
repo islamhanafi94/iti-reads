@@ -5,8 +5,7 @@ import { Form, FormGroup, Label, Input, Button, Jumbotron, Badge } from 'reactst
 const AdminLogin = (props) => {
     const [emailInput, setEmailInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    let s = false;
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     useEffect(() => {
         (async function () {
             try {
@@ -16,9 +15,8 @@ const AdminLogin = (props) => {
                     }
                 }).then((response) => {
                     if (response.data.status === 200) {
-                        setIsLoggedIn(false);
+                        setIsLoggedIn(true);
                         console.log("status :", isLoggedIn);
-                        
                     }
                 });
 
@@ -26,7 +24,7 @@ const AdminLogin = (props) => {
                 console.log(error);
             }
         })();
-    }, [isLoggedIn]);
+    }, []);
 
     const hanleEmailChange = (e) => {
         const { target: { value } } = e;
@@ -50,8 +48,8 @@ const AdminLogin = (props) => {
         }).then((response) => {
             const { token } = response.data;
             localStorage.setItem("token", token);
-            console.log(response.data)
-            window.location.reload(false);
+            console.log("response",response.data)
+            window.location.href = "http://localhost:3000/admin";
         }, (error) => {
             console.log(error);
         });
@@ -59,7 +57,9 @@ const AdminLogin = (props) => {
         setEmailInput('');
         setPasswordInput('');
     }
-    if (isLoggedIn == true) {
+
+
+    if (isLoggedIn == false) {
         return (
             <div className="container">
                 <Jumbotron>
