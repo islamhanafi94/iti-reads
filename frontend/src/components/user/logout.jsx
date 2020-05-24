@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button } from 'reactstrap';
 
-const AdminLogout = (props) => {
+const Logout = (props) => {
 
     const handleClick = () => {
         localStorage.setItem("token", "");
-        window.location.href = "http://localhost:3000/admin";
+        window.location.href = "http://localhost:3000/";
     }
 
     return (
@@ -16,4 +16,4 @@ const AdminLogout = (props) => {
 
 }
 
-export default AdminLogout;
+export default Logout;

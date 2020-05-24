@@ -29,6 +29,7 @@ const Login = (props) => {
         }).then((response) => {
             const { token } = response.data;
             localStorage.setItem("token", token);
+            window.location.href = "http://localhost:3000/";
         }, (error) => {
             console.log(error);
         });

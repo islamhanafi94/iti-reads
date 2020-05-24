@@ -16,9 +16,7 @@ const AdminLogin = (props) => {
                     }
                 }).then((response) => {
                     if (response.data.status === 200) {
-                        console.log(response.data);
                         setIsLoggedIn(true);
-                        console.log("status :", isLoggedIn);
                     }
                 });
 
