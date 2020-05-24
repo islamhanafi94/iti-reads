@@ -23,8 +23,6 @@ const UserPage = (props) => {
         const books = booksList.filter((book) => book.shelve === shelve.name);
         setBooksList(books)
         // console.log(books);
-
-
     }
 
     // setBooksList()

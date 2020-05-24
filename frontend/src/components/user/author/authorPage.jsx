@@ -11,7 +11,9 @@ const AuthorPage = (props) => {
     const authorId = useParams()['authorId'];
     const [author, setAuthor] = useState({});
     const [booksList, setBooksList] = useState([]);
+    const [isauthorLoaded, setIsAuthorLoaded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+
 
     useEffect(() => {
         (async function () {
@@ -37,13 +39,20 @@ const AuthorPage = (props) => {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")
                     }
                 });
-                setIsLoaded(true);
                 setAuthor(response.data);
+                setIsAuthorLoaded(true);
             } catch (error) {
                 console.log(error);
             }
         })();
     }, []);
+
+    const splitDate = () => {
+        if (isauthorLoaded) {
+            return author.dateOfBirth.split('T')[0];
+        }
+        else return "Loading Date of birth...";
+    }
 
 
     console.log(authorId);
@@ -51,15 +60,11 @@ const AuthorPage = (props) => {
     return (
         <Container>
             <br />
-            {/* <Card width="50px" height="50px"> */}
                 <Media left>
                     <Media object src="https://source.unsplash.com/random/64x64" alt="Book Image" />
                 </Media>
             <h3>{ author.firstName + " " + author.lastName }</h3>
-                {/* <CardImg
-                    src="https://source.unsplash.com/random/64x64"
-                    alt="Author Image" /> */}
-            {/* </Card> */}
+            <h5>{ splitDate() }</h5>
             <br />
             <Container>
                 <Card>
@@ -78,10 +83,10 @@ const AuthorPage = (props) => {
                                                 <Media object src="https://source.unsplash.com/random/64x64" alt="Book Image" />
                                             </Media>
                                             <CardBody>
-                                                <CardTitle>
-                                                    { book.name }
+                                                <CardTitle h4>
+                                                    { book.name }<br/>
+                                                    { book.averageRating }
                                                 </CardTitle>
-                                                <h4>{ book.averageRating }</h4>
                                             </CardBody>
                                         {/* </div> */}
                                         <hr />

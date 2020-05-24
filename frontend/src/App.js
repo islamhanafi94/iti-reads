@@ -112,7 +112,7 @@ function App() {
                 </Route>
                 <Route exact path="/books">
                     <UserNavBar />
-                    <BooksList />
+                    <UserPage />
                 </Route>
                 <Route exact path="/authors">
                     <UserNavBar />
@@ -122,7 +122,8 @@ function App() {
                     <UserNavBar />
                     <AuthorPage />
                 </Route>
-                <Route path="/testUserPage" component={ UserPage } />
+                {/* <Route path="/testUserPage" /> */}
+                    
                 <Route>
                     <UserNavBar />
                     <NotFound />
