@@ -3,6 +3,15 @@ const { response } = require('../middlewares');
 
 const authorController = {};
 
+authorController.popularAuthor = (req, res) => {
+    // Retrieve books sorted by popularity and limited to
+    Author.find({}, null, {sort: {popularity: -1}, limit: 4}).then((authors) => {
+        res.status(200).json(authors);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).end();
+    });
+};
 
 authorController.getAll = async (req, res) => {
     try {

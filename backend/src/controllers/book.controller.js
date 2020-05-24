@@ -13,14 +13,15 @@ bookController.getPopularBooks = (req, res) => {
     console.log("in function");
 
     // Retrieve books sorted by popularity and limited to 3 //desc
-    Book.find({}, null, { sort: { popularity: -1 }, limit: 3 })
+    Book.find({}, null, { sort: { popularity: -1 }, limit: 4
+    })
         .populate("author")
         .populate("category")
         .then((books) => {
             console.log("====================================");
             console.log(books);
             console.log("====================================");
-            res.status(200).json({ data: books });
+            res.status(200).json( books );
         })
         .catch((err) => {
             console.log(err);

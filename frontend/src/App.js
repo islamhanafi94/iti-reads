@@ -4,6 +4,7 @@ import UserNavBar from "./components/userNavBar";
 import CategoryList from "./components/admin/category/CategoryList";
 import BooksList from "./components/admin/book/bookList";
 import AuthorList from "./components/admin/author/authorList";
+import Home from "./components/Home";
 
 import Categories from "./components/user/categories/categoriesList";
 import CategoryPage from "./components/user/categories/categoryPage";
@@ -24,8 +25,8 @@ function App() {
         <Router>
             <NavBar />
             <Switch>
-                <Route exact path="/">
-                </Route>
+                <Route exact path="/" component={Home}/>
+
                 <Route exact path="/admin">
                     <AdminLogin />
                 </Route>

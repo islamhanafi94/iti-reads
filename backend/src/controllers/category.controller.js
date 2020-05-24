@@ -3,7 +3,15 @@ const { response } = require("../middlewares");
 // const jwt = require('jsonwebtoken');
 
 let categoryController = {};
-
+categoryController.popular = (req, res) => {
+    // Retrieve books sorted by popularity and limited to 9
+    Category.find({}, null, {sort: {popularity: -1}, limit: 5}).then((categories) => {
+        res.status(200).json(categories);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).end();
+    });
+};
 categoryController.create = async (req, res, next) => {
     console.log("req.body = : ", req.body);
     const { name } = req.body;
