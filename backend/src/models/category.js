@@ -7,10 +7,19 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: [true, 'Name must be unique'],
-    }
+    },
+    popularity: {
+        type: Number,
+        default: 0
+    },
 
 }, { timestamps: true });
 
+categorySchema.virtual('books', {
+    ref: 'book',
+    localField: '_id',
+    foreignField: 'category'
+})
 
 categorySchema.pre("deleteOne", {document: true}, function(next){
 

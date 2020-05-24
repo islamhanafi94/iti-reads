@@ -56,7 +56,7 @@ const Home = () => {
       popularBooks.map(book => {
           return(
             <li className="popular-list-item">
-              <Link title={`By: ${book.author.name}`} key={book.name} to="/unauthorized">{book.name}</Link>
+              <Link title={`By: ${book.author.firstName}`} key={book.firstName} to="/unauthorized">{book.name}</Link>
             </li>
           )
       })   
@@ -72,7 +72,7 @@ const Home = () => {
       popularAuthors.map(author => {
           return(
             <li className="popular-list-item">
-              <Link key={author.name} to="/unauthorized">{author.name}</Link>
+              <Link key={author.firstName} to="/unauthorized">{author.firstName}</Link>
             </li>
           )
       })   

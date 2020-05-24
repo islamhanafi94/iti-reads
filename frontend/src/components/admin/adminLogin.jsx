@@ -6,6 +6,7 @@ const AdminLogin = (props) => {
     const [emailInput, setEmailInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loginMsg, setLoginMsg] = useState('');
     useEffect(() => {
         (async function () {
             try {
@@ -15,6 +16,7 @@ const AdminLogin = (props) => {
                     }
                 }).then((response) => {
                     if (response.data.status === 200) {
+                        console.log(response.data);
                         setIsLoggedIn(true);
                         console.log("status :", isLoggedIn);
                     }
@@ -47,10 +49,18 @@ const AdminLogin = (props) => {
             }
         }).then((response) => {
             const { token } = response.data;
-            localStorage.setItem("token", token);
-            console.log("response",response.data)
-            window.location.href = "http://localhost:3000/admin";
+            console.log("response", response.data)
+            if (response.data.user.isadmin == true) {
+                localStorage.setItem("token", token);
+                window.location.href = "http://localhost:3000/admin";
+            }
+            else {
+                setLoginMsg("You are not authorized to login to admin panel...");
+                console.log("not admin...");
+            }
+
         }, (error) => {
+            setLoginMsg("Email or Password is incorrect...");
             console.log(error);
         });
 
@@ -63,6 +73,7 @@ const AdminLogin = (props) => {
         return (
             <div className="container">
                 <Jumbotron>
+                    <h3 style={{ textAlign: "center" }}><Badge color="danger">{loginMsg}</Badge></h3>
                     <h1 style={{ textAlign: "center" }}><Badge color="secondary" >Welcome to Admin Panel</Badge></h1>
                     <Form>
                         <FormGroup>

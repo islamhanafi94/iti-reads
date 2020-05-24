@@ -26,20 +26,20 @@ const NavBar = (props) => {
         (async function () {
             try {
                 let response = await axios.get(
-                    "http://localhost:5000/users/logincheck", {
+                    "http://localhost:5000/users/admin", {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")
                     }
                 }
-                );
-                setIsLoggedIn(true);
+                ).then((response) => {
+                    console.log(response.status);
+                    setIsLoggedIn(true);
+                    console.log("isin : ", isLoggedIn)
+                });
+
                 console.log(response.data);
             } catch (error) {
-                console.log(error);
-                // if (error.toString().includes("Request failed with status code 401")) {
-                //     localStorage.setItem("token", "");
-                //     window.location.href = "http://localhost:3000/admin";
-                // }
+                console.log("error is ...", error);
             }
         })();
     }, []);
@@ -64,7 +64,8 @@ const NavBar = (props) => {
                     </NavItem>
                 </Nav>
                 {/* <Button color="info">logout</Button> */}
-                {isLoggedIn == true ? (<AdminLogout />) : null}
+                {console.log("is logged in : ", isLoggedIn)}
+                {isLoggedIn === true ? (<AdminLogout />) : null}
 
             </Collapse>
         </Navbar>

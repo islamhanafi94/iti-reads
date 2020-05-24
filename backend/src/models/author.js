@@ -18,6 +18,10 @@ const authorSchema = new mongoose.Schema(
         photo: {
             type: String,
         },
+        popularity: {
+            type: Number,
+            default: 0
+        },
     },
     { timestamps: true }
 );

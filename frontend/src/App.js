@@ -49,12 +49,13 @@ function App() {
 
 
         // User NavBar And routes.
-        // <Router>
+        //     <Router>
         //     <UserNavBar />
         //     <Switch>
-        //         <Route exact path="/" component={Home} />
+        //         <Route exact path="/" component={Home}/>
+        //         <Route exact path="/register" component={Register}/>
         //         <Route exact path="/categories">
-        //             <Categories />
+        //             <Categories/>
         //         </Route>
         //         <Route exact path="/categories/:catId" component={CategoryPage} />
         //         <Route exact path="/books">
@@ -71,8 +72,8 @@ function App() {
         // </Router>
 
 
-        // main router for all users...
-        
+
+        // User NavBar And routes.
         <Router>
             <Switch>
                 <Route exact path="/admin">
@@ -95,8 +96,8 @@ function App() {
                     <NavBar />
                     <Register />
                 </Route>
-
                 <Route exact path="/" component={Home} />
+                <Route exact path="/register" component={Register} />
                 <Route exact path="/categories">
                     <UserNavBar />
                     <Categories />
@@ -111,10 +112,12 @@ function App() {
                 </Route>
                 <Route path="/testUserPage" component={UserPage} />
                 <Route>
+                    <UserNavBar />
                     <NotFound />
                 </Route>
             </Switch>
         </Router>
+
     );
 }
 
