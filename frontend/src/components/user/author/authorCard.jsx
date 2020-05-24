@@ -30,7 +30,7 @@ const AuthorCard = ({ author, index}) => {
 
     return (
         <div>
-            <Card>
+            <Card width="318px" height="180px">
                 <CardImg top width="318px" height="180px" src="https://source.unsplash.com/random" alt="Author Image" />
                 <CardBody>
                     <CardTitle>{author.firstName + " " + author.lastName}</CardTitle>
