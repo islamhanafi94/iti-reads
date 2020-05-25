@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Badge } from "reactstrap";
-import StarRatingComponent from "react-star-rating-component";
-import Shelves from './changeShelf';
+import BookData from "./bookData";
+
 const BookTable = (props) => {
     const { booksList } = props;
-
 
     return (
         <div style={{ paddingTop: 30 }}>
@@ -25,31 +24,7 @@ const BookTable = (props) => {
                 <tbody>
                     {booksList.map((item, index) => {
                         return (
-                            <tr key={index}>
-                                <th>{item.book.cover}</th>
-                                <td>{item.book.name}</td>
-                                <td>
-                                    {item.book.author.firstName[0].toUpperCase() +
-                                        ". " +
-                                        item.book.author.lastName}
-                                </td>
-                                <td>
-                                    <StarRatingComponent
-                                        name="avgRate"
-                                        editing={false}
-                                        starCount={5}
-                                        value={item.book.averageRating}
-                                    />
-                                </td>
-                                <td>{item.myRate}</td>
-                                <td>
-                                    <Shelves
-                                        currentItemID={item._id}
-                                        currentShelf={item.shelf}
-                                        handleShelfChange={props.handleShelfChange}
-                                    />
-                                </td>
-                            </tr>
+                        <BookData item={item} key={index} index={index}/>
                         );
                     })}
                 </tbody>
