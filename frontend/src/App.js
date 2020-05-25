@@ -112,7 +112,7 @@ function App() {
                 </Route>
                 <Route exact path="/books">
                     <UserNavBar />
-                    <UserPage />
+                    {/* <UserPage /> */}
                 </Route>
                 <Route exact path="/authors">
                     <UserNavBar />
@@ -122,7 +122,10 @@ function App() {
                     <UserNavBar />
                     <AuthorPage />
                 </Route>
-                {/* <Route path="/testUserPage" /> */}
+                <Route path="/testUserPage" >
+                    <UserNavBar />
+                    <UserPage />
+                </Route>
                     
                 <Route>
                     <UserNavBar />
