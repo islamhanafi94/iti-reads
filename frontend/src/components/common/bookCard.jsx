@@ -36,7 +36,7 @@ const BookCard = ({ book }) => {
                             value={book.averageRating}
                         />
                     </CardText>
-                    <Link className="btn btn-primary" to={`books/${book._id}`}>
+                    <Link className="btn btn-primary" to={`/books/${book._id}`}>
                         View
                     </Link>
                 </CardBody>
