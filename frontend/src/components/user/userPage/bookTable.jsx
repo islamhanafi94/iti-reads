@@ -22,7 +22,7 @@ const BookTable = (props) => {
                             <tr key={index}>
                                 <th >{item.book.cover}</th>
                                 <td>{item.book.name}</td>
-                                <td>{item.book.author.firstName + ' ' + item.book.author.lastName}</td>
+                                <td>{item.book.author.firstName[0].toUpperCase() + '. ' + item.book.author.lastName}</td>
                                 <td>{item.book.averageRating}</td>
                                 <td>{item.myRate}</td>
                                 <td>{item.shelf}</td>
