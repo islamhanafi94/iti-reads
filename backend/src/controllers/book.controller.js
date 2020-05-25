@@ -2,6 +2,7 @@ const Book = require("../models/book");
 const author = require("../models/author");
 const category = require("../models/category");
 const review = require("../models/review");
+const userRate = require("../models/usersBooks");
 const imageUpload = require("../imageUpload");
 const { response } = require("../middlewares");
 
@@ -147,5 +148,15 @@ bookController.addRate = async (req, res) => {
         return res.send(error);
     }
 };
+
+// bookController.updateAvgRate = async (req, res) => {    
+//     const usersRate = userRate.find({ book: req.body.book._id });
+//     let res = 0;
+//     usersRate.forEach(user => {
+//         res = res + user.myRate; 
+//     });
+//     const avg = res / (await usersRate).length;
+//     await Book.findOneAndUpdate(req.body.book._id, {averageRating: avg});
+// }
 
 module.exports = bookController;

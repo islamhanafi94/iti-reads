@@ -128,14 +128,4 @@ userController.addUserBook = async (req, res) => {
 }
 
 
-// userController.getUserBooks = async (req, res) => {
-//     const allUserBooks = await User.findById(req.user._id).select('mybooks').populate('book');
-//     return res.json(allUserBooks);
-// }
-
-// userController.addUserBook = async (req, res) => {
-//     await User.findByIdAndUpdate(req.user._id, { $push: { mybooks: req.body } })
-//     return res.status(201).send('successfully created');
-// }
-
 module.exports = userController;
