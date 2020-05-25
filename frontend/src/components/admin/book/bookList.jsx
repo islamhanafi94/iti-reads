@@ -15,6 +15,9 @@ import {
 
 import axios from "axios";
 import BookItem from "./bookItem";
+import Pagination from "../../common/pagination";
+import { paginate } from "../../../utils/paginate";
+
 const BookList = (props) => {
     // const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -24,6 +27,8 @@ const BookList = (props) => {
     const [image, setImage] = useState();
     const [categorylist, setCategoryList] = useState([]);
     const [authorslist, setAutorsList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setpageSize] = useState(5);
 
     useEffect(() => {
         (async function () {
@@ -173,6 +178,13 @@ const BookList = (props) => {
             setBookList([...booklist, response.data.book]);
         } catch (error) {}
     };
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const paginatedBooksList = paginate(booklist, currentPage, pageSize);
+
     return (
         <Container>
             <Container>
@@ -197,7 +209,7 @@ const BookList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {booklist.map((book, index) => {
+                    {paginatedBooksList.map((book, index) => {
                         return (
                             <BookItem
                                 key={index}
@@ -210,6 +222,14 @@ const BookList = (props) => {
                     })}
                 </tbody>
             </Table>
+
+            <Pagination
+                pageSize={pageSize}
+                itemsCount={booklist.length}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
+
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Add Category</ModalHeader>
                 <ModalBody>
@@ -230,6 +250,7 @@ const BookList = (props) => {
                             onChange={changeBook}
                             name="category"
                         >
+                            <option disabled selected>Select Category</option>
                             {categorylist.map((category) => {
                                 return (
                                     <option value={category._id}>
@@ -247,6 +268,7 @@ const BookList = (props) => {
                             onChange={changeBook}
                             name="author"
                         >
+                            <option disabled selected>Select Author</option>
                             {authorslist.map((author) => {
                                 return (
                                     <option value={author._id}>

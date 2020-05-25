@@ -4,7 +4,7 @@ const BookTable = (props) => {
     const { booksList } = props
     return (
         <div style={{ paddingTop: 30 }}>
-            <h1><Badge color="secondary">Current Shelve</Badge></h1>
+            <h1><Badge color="secondary">{props.selectedShelf}</Badge></h1>
             <table className="table">
                 <thead>
                     <tr>
@@ -17,15 +17,15 @@ const BookTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {booksList.map((book, index) => {
+                    {booksList.map((item, index) => {
                         return (
                             <tr key={index}>
-                                <th >{book.cover}</th>
-                                <td>{book.title}</td>
-                                <td>{book.author}</td>
-                                <td>{book.avgRate}</td>
-                                <td>{book.rating}</td>
-                                <td>{book.shelve}</td>
+                                <th >{item.book.cover}</th>
+                                <td>{item.book.name}</td>
+                                <td>{item.book.author.firstName[0].toUpperCase() + '. ' + item.book.author.lastName}</td>
+                                <td>{item.book.averageRating}</td>
+                                <td>{item.myRate}</td>
+                                <td>{item.shelf}</td>
                             </tr>
                         )
                     })}

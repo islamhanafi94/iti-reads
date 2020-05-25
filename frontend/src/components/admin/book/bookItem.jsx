@@ -126,6 +126,7 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                             onChange={changeBook}
                             name="category"
                         >
+                            <option disabled>Select Category</option>
                             {categorylist.map((category) => {
                                 return (
                                     <option value={category._id}>
@@ -143,6 +144,7 @@ const BookItem = ({ book, index, deleteBook, updateBook }) => {
                             onChange={changeBook}
                             name="author"
                         >
+                            <option disabled>Select Author</option>
                             {authorslist.map((author) => {
                                 return (
                                     <option value={author._id}>
