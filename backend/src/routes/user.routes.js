@@ -43,4 +43,8 @@ router.get('/logincheck',
     });
 
 
+router.get('/mybooks', userController.getUserBooks);
+router.post('/mybooks/new', userController.addUserBook);
+
+
 module.exports = router;

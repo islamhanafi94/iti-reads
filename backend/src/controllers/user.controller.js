@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const UsersBooks = require('../models/usersBooks');
 const Book = require('../models/book');
 const { response } = require('../middlewares');
 const { user } = require('../routes/user.routes');
@@ -107,4 +108,32 @@ userController.me = (req, res, next) => {
     const { user } = req;
     res.send({ user });
 }
+
+userController.getUserBooks = async (req, res) => {
+    const allUserBooks = await UsersBooks.find({ user: req.user._id }).populate(
+        {
+            path: 'book',
+            populate: { path: 'author', model: 'author' }
+        }
+    );
+    return res.json(allUserBooks);
+}
+
+userController.addUserBook = async (req, res) => {
+    const newRecord = { user: req.user._id, ...req.body }
+    const result = await UsersBooks.create(newRecord)
+    return res.status(201).send('successfully created');
+}
+
+
+// userController.getUserBooks = async (req, res) => {
+//     const allUserBooks = await User.findById(req.user._id).select('mybooks').populate('book');
+//     return res.json(allUserBooks);
+// }
+
+// userController.addUserBook = async (req, res) => {
+//     await User.findByIdAndUpdate(req.user._id, { $push: { mybooks: req.body } })
+//     return res.status(201).send('successfully created');
+// }
+
 module.exports = userController;
