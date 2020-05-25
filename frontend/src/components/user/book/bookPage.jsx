@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle, CardSubtitle, Button, ListGroup, ListGroupItem, Badge
 } from 'reactstrap';
 import { useParams, Link } from 'react-router-dom';
 
@@ -12,7 +12,6 @@ const BookPage = (props) => {
     const { bookId } = useParams();
     const [book, setBook] = useState({});
     const [isLoaded, setIsLoaded] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
     useEffect(() => {
@@ -36,37 +35,6 @@ const BookPage = (props) => {
         })();
     }, []);
 
-    // useEffect(() => {
-    //     (async function () {
-    //         try {
-    //             let response = await axios.get(
-    //                 "http://localhost:5000/users/logincheck", {
-    //                 headers: {
-    //                     'Authorization': 'Bearer ' + localStorage.getItem("token")
-    //                 }
-    //             }
-    //             ).then((response) => {
-    //                 if (response.status === 200) {
-    //                     setIsLoggedIn(true);
-    //                     setIsLoaded(true);
-    //                 }
-    //             });
-
-
-    //         } catch (error) {
-    //             console.log("error is ...", error);
-    //         }
-    //     })();
-    // }, []);
-
-    const renderAddReview = () => {
-        if (isLoaded && isLoggedIn) {
-            return (<AddReview />)
-        }
-        else
-            return null;
-    }
-
     const getAuthor = () => {
         if (isLoaded) {
             return book.author;
@@ -83,6 +51,20 @@ const BookPage = (props) => {
             return {};
     }
 
+    const getReviews = () => {
+        let reviewsList = [];
+        if (isLoaded) {
+            reviewsList = book.reviews.map((item) => {
+                return item;
+            })
+            return reviewsList;
+        }
+        else
+            return [];
+    }
+
+    console.log("book is : ", book);
+
     return (
         <div className="container">
             <Card>
@@ -93,7 +75,16 @@ const BookPage = (props) => {
                     <CardText>Category :<Link to={`/categories/${getCategory()._id}`}>{getCategory().name}</Link></CardText>
                     <CardText>Average Rating : {book.averageRating}</CardText>
                     {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? <AddReview /> : null}
-                    {/* {renderAddReview()} */}
+                    <CardText></CardText>
+                    <ListGroup>
+                        <ListGroupItem color="info">Reviews</ListGroupItem>
+                        {
+                            getReviews().map(item => {
+                                return (
+                                    <ListGroupItem><Badge>{item.user.username}</Badge>{" : " + item.review}</ListGroupItem>
+                                )
+                            })
+                        }</ListGroup>
                 </CardBody>
             </Card>
         </div>
