@@ -225,7 +225,7 @@ const BookList = (props) => {
 
             <Pagination
                 pageSize={pageSize}
-                itemsCount={categorylist.length}
+                itemsCount={booklist.length}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
             />
@@ -250,6 +250,7 @@ const BookList = (props) => {
                             onChange={changeBook}
                             name="category"
                         >
+                            <option disabled selected>Select Category</option>
                             {categorylist.map((category) => {
                                 return (
                                     <option value={category._id}>
@@ -267,6 +268,7 @@ const BookList = (props) => {
                             onChange={changeBook}
                             name="author"
                         >
+                            <option disabled selected>Select Author</option>
                             {authorslist.map((author) => {
                                 return (
                                     <option value={author._id}>

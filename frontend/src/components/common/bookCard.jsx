@@ -14,7 +14,7 @@ const BookCard = ({ book }) => {
                 <CardBody>
                     <CardTitle>{ book.name }</CardTitle>
                     <CardSubtitle>
-                        <Link to={ `authors/${book.author._id}` }>{ book.author.firstName + " " + book.author.lastName }</Link>
+                        <Link to={ `/authors/${book.author._id}` }>{ book.author.firstName + " " + book.author.lastName }</Link>
                     </CardSubtitle>
                     <CardText>{ book.averageRating }</CardText>
                     <Link className="btn btn-primary" to={ `books/${book._id}` }>View</Link>

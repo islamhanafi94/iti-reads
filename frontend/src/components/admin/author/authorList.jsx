@@ -15,6 +15,8 @@ import {
 
 import axios from "axios";
 import AuthorItem from "./authorItem";
+import Pagination from "../../common/pagination";
+import { paginate } from "../../../utils/paginate";
 
 const AuthorList = (props) => {
     const [error, setError] = useState(null);
@@ -26,6 +28,8 @@ const AuthorList = (props) => {
     });
     const [authorlist, setAuthorList] = useState([]);
     const [modal, setModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setpageSize] = useState(5);
 
 
     useEffect(() => {
@@ -123,6 +127,13 @@ const AuthorList = (props) => {
         }));
     };
 
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const paginatedAuthorsList = paginate(authorlist, currentPage, pageSize);
+
     return (
         <Container>
             <Container>
@@ -146,7 +157,7 @@ const AuthorList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {authorlist.map((author, index) => {
+                    {paginatedAuthorsList.map((author, index) => {
                         return (
                             <AuthorItem
                                 key={index}
@@ -159,6 +170,13 @@ const AuthorList = (props) => {
                     })}
                 </tbody>
             </Table>
+
+            <Pagination
+                pageSize={pageSize}
+                itemsCount={authorlist.length}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
 
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Add Author</ModalHeader>
