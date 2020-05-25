@@ -27,8 +27,8 @@ const DataList = (props) => {
                     <tr className="thead-dark">
                         <th>Cover</th>
                         <th>Name</th>
-                        <th>Auther</th>
                         <th>Avg Rate</th>
+                        <th>Author</th>
 
                     </tr>
                 </thead>
@@ -42,11 +42,12 @@ const DataList = (props) => {
                                     src="https://picsum.photos/200/300" />
                             </td>
                             <td className='align-middle editable text-dark'>{book.name}</td>
-                            <td className='align-middle text-dark' >{book.author.firstName} {book.author.lastName}</td>
                             <td className='align-middle text-dark' >
-                                {book.avgRate ? book.book.avgRate : 0}
+                                {book.averageRating ? book.averageRating : 0}
                             </td>
-
+                            <td className='align-middle text-dark' >
+                                {book.author.firstname }
+                            </td>
 
                         </tr>
                     )

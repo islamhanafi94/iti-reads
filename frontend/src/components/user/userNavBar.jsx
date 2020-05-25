@@ -95,7 +95,7 @@ const NavBar = (props) => {
 
             </Collapse>
             <Form inline onSubmit={handleClick}>
-                <FormControl type="text" value={searchInput} onChange={handleSearchInput} placeholder="book or author name" className="mr-sm-2" />
+                <FormControl type="text" value={searchInput} onChange={handleSearchInput} placeholder="Search for book " className="mr-sm-2" />
                 <Link to={`/search/${searchInput}`}>
                     <Button variant="outline-primary" onClick={handleClick}>Search</Button>
                 </Link>
