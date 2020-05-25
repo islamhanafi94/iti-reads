@@ -138,7 +138,7 @@ bookController.addRate = async (req, res) => {
         const { averageRating } = req.body;
         const newRate = await Book.create({ averageRating });
         const book = await Book.findOneAndUpdate(req.params.bookId, req.body);
-        book.rates.push(newRate._id);
+        // book.rates.push(newRate._id);
         await book.save();
         console.log("Rating added to book");
         return res.status(201).send(newRate);
