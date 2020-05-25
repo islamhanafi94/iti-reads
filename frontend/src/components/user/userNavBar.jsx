@@ -8,9 +8,9 @@ import {
     NavItem,
     NavLink,
     Button,
-    
+
 } from "reactstrap";
-import { Form, FormControl} from 'react-bootstrap';
+import { Form, FormControl } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 import axios from "axios";
@@ -45,6 +45,8 @@ const NavBar = (props) => {
                 ).then((response) => {
                     if (response.status === 200) {
                         setIsLoggedIn(true);
+                        sessionStorage.setItem("user", JSON.stringify(response.data.user));
+                        sessionStorage.setItem("loggedIn", JSON.stringify(true));
                     }
                 });
 
@@ -85,11 +87,11 @@ const NavBar = (props) => {
 
             </Collapse>
             <Form inline onSubmit={handleSubmit}>
-                    <FormControl type="text" value={searchInput} onChange={handleChange} placeholder="book or author name" className="mr-sm-2" />
-                    <Link to={`/search/${searchInput}`}>
-                        <Button  variant="outline-primary">Search</Button>
-                    </Link>
-                </Form>
+                <FormControl type="text" value={searchInput} onChange={handleChange} placeholder="book or author name" className="mr-sm-2" />
+                <Link to={`/search/${searchInput}`}>
+                    <Button variant="outline-primary">Search</Button>
+                </Link>
+            </Form>
         </Navbar>
     );
 };
