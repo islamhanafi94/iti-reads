@@ -13,7 +13,7 @@ reviewController.addReview = async (req, res) => {
         const book = await Book.findById(req.params.bookId);
         book.reviews.push(newReview._id);
         await book.save();
-        return res.status(201).send(newReview);
+        return res.send(newReview);
     } catch (error) {
         console.log(error)
         return res.send(error);
@@ -32,7 +32,7 @@ reviewController.deleteReview = async (req, res) => {
         });
         await book.save();
         const deletedreview = await Review.findByIdAndDelete(reviewId);
-        return res.status(201).send(deletedreview);
+        return res.send(deletedreview);
     } catch (error) {
         console.log(error)
         return res.send(error);

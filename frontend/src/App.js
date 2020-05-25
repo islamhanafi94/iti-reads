@@ -103,7 +103,7 @@ function App() {
                     <UserNavBar />
                     <Home />
                 </Route>
-                <Route exact path="/register" component={Register} />
+                <Route exact path="/register" component={ Register } />
                 <Route exact path="/categories">
                     <UserNavBar />
                     <Categories />
@@ -131,7 +131,7 @@ function App() {
                 <Route exact path="/books/:bookId">
                     <UserNavBar />
                     <BookPage />
-                </Route>
+                </Route>  
                 <Route>
                     <UserNavBar />
                     <NotFound />

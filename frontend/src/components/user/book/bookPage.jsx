@@ -6,12 +6,15 @@ import {
 } from 'reactstrap';
 import { useParams, Link } from 'react-router-dom';
 
+import AddReview from "../review/addReview";
 
-
-const Login = (props) => {
+const BookPage = (props) => {
     const { bookId } = useParams();
     const [book, setBook] = useState({});
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
     useEffect(() => {
         (async function () {
             try {
@@ -33,6 +36,36 @@ const Login = (props) => {
         })();
     }, []);
 
+    // useEffect(() => {
+    //     (async function () {
+    //         try {
+    //             let response = await axios.get(
+    //                 "http://localhost:5000/users/logincheck", {
+    //                 headers: {
+    //                     'Authorization': 'Bearer ' + localStorage.getItem("token")
+    //                 }
+    //             }
+    //             ).then((response) => {
+    //                 if (response.status === 200) {
+    //                     setIsLoggedIn(true);
+    //                     setIsLoaded(true);
+    //                 }
+    //             });
+
+
+    //         } catch (error) {
+    //             console.log("error is ...", error);
+    //         }
+    //     })();
+    // }, []);
+
+    const renderAddReview = () => {
+        if (isLoaded && isLoggedIn) {
+            return (<AddReview />)
+        }
+        else
+            return null;
+    }
 
     const getAuthor = () => {
         if (isLoaded) {
@@ -49,7 +82,7 @@ const Login = (props) => {
         else
             return {};
     }
-    // console.log("book out :", book);
+
     return (
         <div className="container">
             <Card>
@@ -57,13 +90,14 @@ const Login = (props) => {
                 <CardBody>
                     <CardTitle>Book Name : {book.name}</CardTitle>
                     <CardText> Author : <Link to={`/authors/${getAuthor()._id}`}> {getAuthor().firstName}</Link></CardText>
-
                     <CardText>Category :<Link to={`/categories/${getCategory()._id}`}>{getCategory().name}</Link></CardText>
                     <CardText>Average Rating : {book.averageRating}</CardText>
+                    {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? <AddReview /> : null}
+                    {/* {renderAddReview()} */}
                 </CardBody>
             </Card>
         </div>
     );
 }
 
-export default Login;
+export default BookPage;
