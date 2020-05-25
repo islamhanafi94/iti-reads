@@ -18,13 +18,21 @@ import Login from "../login";
 import Logout from "../user/logout";
 
 const NavBar = (props) => {
-    const [searchInput, setSearchInput] = useState("");
-    const handleChange = (e) => {
-        setSearchInput(e.target.value);
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
+    const [searchInput, setSearchInput] = useState('');
+
+    const handleSearchInput = e => {
+        console.log(e.target.value);
+        
+      setSearchInput(e.target.value);
+    };
+  
+    function handleClick(e) {
+        console.log("CLICKED");
+            
+      e.preventDefault();    
+      window.location.assign('/search/?q='+searchInput);
+      // console.log('The link was clicked.'); 
+     }
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -86,10 +94,10 @@ const NavBar = (props) => {
 
 
             </Collapse>
-            <Form inline onSubmit={handleSubmit}>
-                <FormControl type="text" value={searchInput} onChange={handleChange} placeholder="book or author name" className="mr-sm-2" />
+            <Form inline onSubmit={handleClick}>
+                <FormControl type="text" value={searchInput} onChange={handleSearchInput} placeholder="book or author name" className="mr-sm-2" />
                 <Link to={`/search/${searchInput}`}>
-                    <Button variant="outline-primary">Search</Button>
+                    <Button variant="outline-primary" onClick={handleClick}>Search</Button>
                 </Link>
             </Form>
         </Navbar>
