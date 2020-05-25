@@ -7,16 +7,10 @@ import {
 	Button,
 	Form,
 	FormGroup,
-	Label,
 	Input,
-	Col,
-	Row,
-	Card,
-	CardText,
-	CardTitle,
-	ListGroupItem,
-	ListGroup
+
   } from 'reactstrap';
+
 const Authentication = (props) => {
 	const history = useHistory();
 
@@ -35,6 +29,8 @@ const Authentication = (props) => {
 
 	const handleRegisterSubmit = (e)=> {
 		e.preventDefault();
+		if (passwordRegister === passConfRegister) {
+
 		axios.post(registerUrl,
 			{
 				username:usernameRegister,
@@ -56,10 +52,8 @@ const Authentication = (props) => {
 
 				}	
 			})
-			// .catch(error => {
-			// console.log("login error", error);
-			// });
-		}
+			
+		}}
 
     return (
 		<div className='col-lg-4 col-md-4 col-sm-4 col-xs-4 '>
@@ -68,46 +62,40 @@ const Authentication = (props) => {
 		<Form onSubmit={handleRegisterSubmit}>
 		  <FormGroup>
 			<Input type="text" name="firstName" placeholder="First name"
-				//    value={} pattern='[A-Za-z\\s]*'
-				//    onChange={}
+				 pattern='[A-Za-z\\s]*'
 				{...bindFirstName}
 				/>
 		  </FormGroup>
 		  <FormGroup>
 			<Input type="text" name="lastName" placeholder="Last name"
-				//    value={} pattern='[A-Za-z\\s]*'
-				//    onChange={}
+				    pattern='[A-Za-z\\s]*'
 
 				{...bindLastName}
 				/>
 		  </FormGroup>
 		  <FormGroup>
 			<Input type="text" name="username" placeholder="Username"
-				//    value={} pattern='[A-Za-z\\s]*'
-				//    onChange={}
+				 pattern='[A-Za-z\\s]*'
 				{...bindUsernameRegister}
 				/>
 		  </FormGroup>
 		  <FormGroup>
 			<Input type="email" name="email" placeholder="E-mail"
-				//    value={}
-				//    onChange={}
+				
 				{...bindEmail}
 
 				/>
 		  </FormGroup>
 		  <FormGroup>
 			<Input type="password" name="password" placeholder="password "
-				//    value={}
-				//    onChange={}
+			
 				{...bindPasswordRegister}
 				/>
 
 				 </FormGroup>
 				 <FormGroup>
 			<Input type="password" name="password" placeholder="passwordConfirmation"
-				//    value={}
-				//    onChange={}
+			
 				{...bindPassConfRegister}
 				/>
 
@@ -115,6 +103,9 @@ const Authentication = (props) => {
 
 		  <Button onSubmit={handleRegisterSubmit}> Sign up</Button>
 		</Form>
+		{errorsRegister?<div className="errors-div">
+				  <small> {errorsRegister}</small>
+				</div>:null}
 	  </div>
 
 

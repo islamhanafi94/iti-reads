@@ -4,7 +4,7 @@ import './Home.css';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import Register from "../auth/Register";
-
+import UserPage from '../user/userPage/userPage'
 const Home = () => {
   const [books,setBooks]=useState([]);
   const [popularBooks,setpopulaBooks]=useState([]);
@@ -143,7 +143,11 @@ const Home = () => {
           )
           }) 
       } */}
+
+        { localStorage.getItem("token") ? (<UserPage/>)  : (
       <Register />
+
+        )  }
 
       </div>    
 
