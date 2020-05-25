@@ -56,7 +56,7 @@ const Home = () => {
       popularBooks.map(book => {
           return(
             <li className="popular-list-item">
-              <Link title={`By: ${book.author.firstName}`} key={book.firstName} to="/unauthorized">{book.name}</Link>
+              <Link  key={book.firstName} to={`/books/${book._id}`}>{book.name}</Link>
             </li>
           )
       })   
@@ -72,7 +72,7 @@ const Home = () => {
       popularAuthors.map(author => {
           return(
             <li className="popular-list-item">
-              <Link key={author.firstName} to="/unauthorized">{author.firstName}</Link>
+              <Link key={author.firstName} to={`/authors/${author._id}`}>{author.firstName}</Link>
             </li>
           )
       })   
@@ -84,9 +84,13 @@ const Home = () => {
      <ul>
      {
       poularCategories.map(category => {
+        const id=category._id;
+        const url=`/categories/${id}`
           return(
+
             <li className="popular-list-item">
-              <Link key={category.name} to="/unauthorized">{category.name}</Link>
+            
+              <Link key={category.name} to={url}>{category.name}</Link>
             </li>
           )
       })   
@@ -109,9 +113,14 @@ const Home = () => {
               <h4 
               className="card-title">{book.name}</h4>
             
-            <small>Category : {book.category.name} </small> <br/>
+            <small>Category : {book.category.name} </small> 
             <hr/>
-            <small >By:{book.author.name}</small>
+            {
+        popularAuthors.map(a => {
+          return(
+            <strong >By:{a.firstName}</strong>
+            )
+          })}
             </div>
           </Link>
           )

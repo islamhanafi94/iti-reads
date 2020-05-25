@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^4.2.5",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "cra-template": "1.0.3",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-bootstrap": "^0.32.4",
     "react-dom": "^16.13.1",
     "react-images-upload": "^1.2.8",
     "react-router-dom": "^5.2.0",
@@ -35,5 +37,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }

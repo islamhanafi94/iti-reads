@@ -24,26 +24,6 @@ function App() {
     return (
         // Admin NavBar and routes
 
-<<<<<<< HEAD
-        <Router>
-            <NavBar />
-            <Switch>
-                <Route exact path="/admin">
-                    <AdminLogin />
-                </Route>
-                <Route exact path="/admin/categories">
-                    <CategoryList />
-                </Route>
-                <Route exact path="/admin/books">
-                    <BooksList />
-                </Route>
-                <Route exact path="/admin/authors">
-                    <AuthorList />
-                </Route>
-                <Route exact path="/register">
-                    <Register />
-                </Route>
-=======
         // <Router>
         //     <NavBar />
         //     <Switch>
@@ -132,7 +112,7 @@ function App() {
                 </Route>
                 <Route exact path="/books">
                     <UserNavBar />
-                    <BooksList />
+                    <UserPage />
                 </Route>
                 <Route exact path="/authors">
                     <UserNavBar />
@@ -142,41 +122,14 @@ function App() {
                     <UserNavBar />
                     <AuthorPage />
                 </Route>
-                <Route path="/testUserPage" component={ UserPage } />
->>>>>>> 9cd6842b4b53065bd6b5b883daca0c9981d43aa7
+                {/* <Route path="/testUserPage" /> */}
+                    
                 <Route>
                     <UserNavBar />
                     <NotFound />
                 </Route>
             </Switch>
         </Router>
-
-<<<<<<< HEAD
-
-        // User NavBar And routes.
-        //     <Router>
-        //     <UserNavBar />
-        //     <Switch>
-        //         <Route exact path="/" component={Home}/>
-        //         <Route exact path="/register" component={Register}/>
-        //         <Route exact path="/categories">
-        //             <Categories/>
-        //         </Route>
-        //         <Route exact path="/categories/:catId" component={CategoryPage} />
-        //         <Route exact path="/books">
-        //             <BooksList />
-        //         </Route>
-        //         <Route exact path="/authors">
-                    
-        //         </Route>
-        //         <Route path="/testUserPage" component={UserPage} />
-        //         <Route>
-        //             <NotFound />
-        //         </Route>
-        //     </Switch>
-        // </Router>
-=======
->>>>>>> 9cd6842b4b53065bd6b5b883daca0c9981d43aa7
     );
 }
 

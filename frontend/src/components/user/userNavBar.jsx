@@ -8,13 +8,23 @@ import {
     NavItem,
     NavLink,
     Button,
+    
 } from "reactstrap";
+import { Form, FormControl} from 'react-bootstrap';
+
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import Login from "../login";
 import Logout from "../user/logout";
 
 const NavBar = (props) => {
+    const [searchInput, setSearchInput] = useState("");
+    const handleChange = (e) => {
+        setSearchInput(e.target.value);
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -76,6 +86,12 @@ const NavBar = (props) => {
 
 
             </Collapse>
+            <Form inline onSubmit={handleSubmit}>
+                    <FormControl type="text" value={searchInput} onChange={handleChange} placeholder="book or author name" className="mr-sm-2" />
+                    <Link to={`/search/${searchInput}`}>
+                        <Button  variant="outline-primary">Search</Button>
+                    </Link>
+                </Form>
         </Navbar>
     );
 };

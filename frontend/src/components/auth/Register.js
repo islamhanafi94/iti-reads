@@ -53,13 +53,13 @@ const Authentication = (props) => {
 		
 <div className="login-wrap">
     <div className="login-html">
-    <input id="tab-1" type="radio" name="tab" className="sign-in" />
+    {/* <input id="tab-1" type="radio" name="tab" className="sign-in" />
 	<label htmlFor="tab-1" className="tab">
 	<Link  to="/login">Sign In</Link>
 	
-	</label>
-	<input id="tab-2" type="radio" name="tab" className="sign-up" checked/>
-	<label htmlFor="tab-2" className="tab">Sign Up</label>
+	</label> */}
+	<input id="tab-1" type="radio" name="tab" className="sign-up" checked/>
+	<label htmlFor="tab-1" className="tab">Sign Up</label>
 		<div className="login-form">
 		<div className="sign-up-htm">
 			<form onSubmit={handleRegisterSubmit}>
