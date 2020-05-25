@@ -32,12 +32,9 @@ const NavBar = (props) => {
                     }
                 }
                 ).then((response) => {
-                    console.log(response.status);
                     setIsLoggedIn(true);
-                    console.log("isin : ", isLoggedIn)
                 });
 
-                console.log(response.data);
             } catch (error) {
                 console.log("error is ...", error);
             }

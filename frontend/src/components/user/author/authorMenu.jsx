@@ -51,7 +51,9 @@ const AuthorsMenu = (props) => {
                     })
                 }
             </CardDeck>
-
+            
+            <br />
+            
             <Pagination
                 pageSize={ pageSize }
                 itemsCount={ authorList.length }

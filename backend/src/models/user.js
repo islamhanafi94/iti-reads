@@ -28,19 +28,7 @@ const userSchema = new Schema({
     },
     password: { type: String, required: true }
     ,
-    mybooks: [{
-        book: { type: mongoose.Schema.Types.ObjectId, ref: "book", required: true },
-        shelf: {
-            type: String,
-            enum: ['to-read', 'reading', 'done'],
-        },
-        myRate: {
-            type: Number,
-            min: 0,
-            max: 5,
-            default: 0
-        }
-    }]
+    mybooks: []
 })
 
 

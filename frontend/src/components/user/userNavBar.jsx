@@ -45,9 +45,7 @@ const NavBar = (props) => {
                 ).then((response) => {
                     if (response.status === 200) {
                         setIsLoggedIn(true);
-                        console.log("changed...");
                     }
-                    console.log("isin : ", response.data.user)
                 });
 
 
