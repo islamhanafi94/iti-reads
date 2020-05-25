@@ -10,7 +10,7 @@ import Home from "./components/user/Home";
 
 import Categories from "./components/user/categories/categoriesList";
 import CategoryPage from "./components/user/categories/categoryPage";
-// import BooksList from "./components/admin/book/bookList";
+import BooksMenu from "./components/user/book/booksMenu";
 
 import Register from "./components/auth/Register";
 import Login from "./components/login";
@@ -112,7 +112,7 @@ function App() {
                 </Route>
                 <Route exact path="/books">
                     <UserNavBar />
-                    {/* <UserPage /> */}
+                    <BooksMenu />
                 </Route>
                 <Route exact path="/authors">
                     <UserNavBar />
