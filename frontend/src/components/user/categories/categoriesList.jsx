@@ -15,8 +15,11 @@ const Categories = (props) => {
         (async function () {
             try {
                 let response = await axios.get(
-                    "http://localhost:5000/category"
-                );
+                    "http://localhost:5000/category", {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+                });
                 setIsLoaded(true);
                 setCategoryList(response.data);
             } catch (error) {
@@ -26,8 +29,8 @@ const Categories = (props) => {
     }, []);
 
     const handlePageChange = (page) => {
-        setCurrentPage(page)
-    }
+        setCurrentPage(page);
+    };
 
     const paginatedCategoryList = paginate(categorylist, currentPage, pageSize);
 
@@ -42,20 +45,20 @@ const Categories = (props) => {
             </Container>
 
             <ListGroup>
-                {paginatedCategoryList.map((category) => {
+                { paginatedCategoryList.map((category) => {
                     return (
-                        <ListGroupItem tag="a" href={`categories/${category._id}`}>
-                            {category.name}
+                        <ListGroupItem tag="a" href={ `categories/${category._id}` }>
+                            { category.name }
                         </ListGroupItem>
                     );
-                })}
+                }) }
             </ListGroup>
 
             <Pagination
-                pageSize={pageSize}
-                itemsCount={categorylist.length}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
+                pageSize={ pageSize }
+                itemsCount={ categorylist.length }
+                currentPage={ currentPage }
+                onPageChange={ handlePageChange }
             />
         </Container>
     );

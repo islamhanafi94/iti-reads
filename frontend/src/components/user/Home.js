@@ -18,25 +18,41 @@ const Home = () => {
   const popularCategoryURL = `http://localhost:5000/category/popular`
 
     useEffect(  () => {
-       axios.get(booksURL).then(response => {
+      axios.get(booksURL, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token")
+        }
+      }).then(response => {
         // console.log(response.data);
         setBooks(response.data);
       }).catch(err=>{
         console.log(err);
       });
-        axios.get(popularBooksURL).then(response => {
+      axios.get(popularBooksURL, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token")
+        }
+      }).then(response => {
         // console.log(response.data);
         setpopulaBooks(response.data);
       }).catch(err=>{
         console.log(err);
       });
-       axios.get(popularAuthorsURL).then(response => {
+      axios.get(popularAuthorsURL, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token")
+        }
+      }).then(response => {
         // console.log(response.data);
         setpopularAuthors(response.data);
       }).catch(err=>{
         console.log(err);
       });
-      axios.get(popularCategoryURL).then(response => {
+      axios.get(popularCategoryURL, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token")
+        }
+      }).then(response => {
         // console.log(response.data);
         setpoularCategories(response.data);
       }).catch(err=>{
