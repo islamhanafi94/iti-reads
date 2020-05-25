@@ -125,8 +125,7 @@ function App() {
                 <Route path="/testUserPage" >
                     <UserNavBar />
                     <UserPage />
-                </Route>
-                    
+                </Route>  
                 <Route>
                     <UserNavBar />
                     <NotFound />
