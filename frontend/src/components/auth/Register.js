@@ -3,6 +3,20 @@ import { useInput } from './hooks/input-hooks';
 import axios from 'axios';
 import './Auth.css';
 import { Link, useHistory } from "react-router-dom";
+import {
+	Button,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	Col,
+	Row,
+	Card,
+	CardText,
+	CardTitle,
+	ListGroupItem,
+	ListGroup
+  } from 'reactstrap';
 const Authentication = (props) => {
 	const history = useHistory();
 
@@ -36,83 +50,78 @@ const Authentication = (props) => {
 					setErrorsRegister(response.data.message)
 				}else if(response.status==200){
 					console.log("good");
-					
-					history.push("/login");
+					//Should logged in first by history.push what is the route ?
+					history.push("/books");
+					// window.location = "http://localhost:3000/home";
+
 				}	
 			})
 			// .catch(error => {
 			// console.log("login error", error);
 			// });
 		}
+
     return (
+		<div className='col-lg-4 col-md-4 col-sm-4 col-xs-4 '>
+		<h4>Dont Have an Account ? Create one</h4>
+		<hr/>
+		<Form onSubmit={handleRegisterSubmit}>
+		  <FormGroup>
+			<Input type="text" name="firstName" placeholder="First name"
+				//    value={} pattern='[A-Za-z\\s]*'
+				//    onChange={}
+				{...bindFirstName}
+				/>
+		  </FormGroup>
+		  <FormGroup>
+			<Input type="text" name="lastName" placeholder="Last name"
+				//    value={} pattern='[A-Za-z\\s]*'
+				//    onChange={}
+
+				{...bindLastName}
+				/>
+		  </FormGroup>
+		  <FormGroup>
+			<Input type="text" name="username" placeholder="Username"
+				//    value={} pattern='[A-Za-z\\s]*'
+				//    onChange={}
+				{...bindUsernameRegister}
+				/>
+		  </FormGroup>
+		  <FormGroup>
+			<Input type="email" name="email" placeholder="E-mail"
+				//    value={}
+				//    onChange={}
+				{...bindEmail}
+
+				/>
+		  </FormGroup>
+		  <FormGroup>
+			<Input type="password" name="password" placeholder="password "
+				//    value={}
+				//    onChange={}
+				{...bindPasswordRegister}
+				/>
+
+				 </FormGroup>
+				 <FormGroup>
+			<Input type="password" name="password" placeholder="passwordConfirmation"
+				//    value={}
+				//    onChange={}
+				{...bindPassConfRegister}
+				/>
+
+				 </FormGroup>
+
+		  <Button onSubmit={handleRegisterSubmit}> Sign up</Button>
+		</Form>
+	  </div>
 
 
 
 
+		)
 
-		
-<div className="login-wrap">
-    <div className="login-html">
-    {/* <input id="tab-1" type="radio" name="tab" className="sign-in" />
-	<label htmlFor="tab-1" className="tab">
-	<Link  to="/login">Sign In</Link>
-	
-	</label> */}
-	<input id="tab-1" type="radio" name="tab" className="sign-up" checked/>
-	<label htmlFor="tab-1" className="tab">Sign Up</label>
-		<div className="login-form">
-		<div className="sign-up-htm">
-			<form onSubmit={handleRegisterSubmit}>
-				<div className="group">
-					<label htmlFor="firstName" className="label">First Name</label>
-					<input id="firstName" type="text" name="firstName" className="input"
-					  {...bindFirstName} />
-				</div>
-				<div className="group">
-					<label htmlFor="lastName" className="label">Last Name</label>
-					<input id="lastName" type="text" name="lastName" className="input" 
-						{...bindLastName}
-					/>
-				</div>
-				<div className="group">
-					<label htmlFor="user" className="label">Username</label>
-					<input id="user" type="text" name="username" className="input"
-						{...bindUsernameRegister}
-					/>
-				</div>
-				<div className="group">
-					<label htmlFor="email" className="label">Email Address</label>
-					<input id="email" type="text" name="email" className="input" 
-							{...bindEmail}
-					/>
-				</div>
-				<div className="group">
-					<label htmlFor="password" className="label">Password</label>
-					<input id="password" type="password" name="password" className="input" data-type="password" 
-							{...bindPasswordRegister}
-					/>
-				</div>
-				<div className="group">
-					<label htmlFor="password-confirm" className="label">Repeat Password</label>
-					<input id="password-confirm" type="password" name="password-confirm" className="input" data-type="password" 
-							{...bindPassConfRegister}
-					/>
-				</div>
-				<div className="group">
-					<input type="submit" className="button" value="Sign Up" />
-				</div>
-			</form>
-				<div style={{textAlign:"center"}}>
-					<label htmlFor="tab-1" >Already Member?</label>
-				</div>
-					{errorsRegister?<div className="errors-div">
-				  <small> {errorsRegister}</small>
-				</div>:null}
-			</div>
-		</div>
-	</div>
-</div>
-
-)}
+	}
 
 export default Authentication

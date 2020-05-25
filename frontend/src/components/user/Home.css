@@ -4,7 +4,6 @@
     flex-wrap: wrap;
     flex-direction: row ;
     justify-content: left;
-     /* background-color: rgba(59, 52, 52, 0.4); */
  }
  .left-div{
      width: 20%;
@@ -13,7 +12,6 @@
      flex-wrap: wrap;
      flex-direction: column ;
      justify-content: start;
-     /* background-color: rgb(209, 190, 154,.5); */
      text-align: center;
  }
  .right-div{
@@ -23,7 +21,6 @@
      flex-wrap: wrap;
      flex-direction: row ;
      justify-content: center;
-     /* background-color: rgb(212, 205, 195,0.5); */
  }
  .CardDiv{
      width: 200px;

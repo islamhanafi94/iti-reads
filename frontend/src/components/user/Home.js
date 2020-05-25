@@ -3,7 +3,7 @@ import NavBar from '../admin/adminNavBar';
 import './Home.css';
 import axios from 'axios';
 import { Link } from "react-router-dom";
-
+import Register from "../auth/Register";
 
 const Home = () => {
   const [books,setBooks]=useState([]);
@@ -47,6 +47,7 @@ const Home = () => {
     return (
     <>    
     {/* <NavBar/> */}
+
     <div className="main-container">
     <div key="left-div" className="left-div">
     <fieldset key="books" className="popular">
@@ -102,7 +103,7 @@ const Home = () => {
 
       <div key="right-div"  className="right-div">
     
-        
+{/*         
       {
         books.map(book => {
           return(
@@ -125,10 +126,13 @@ const Home = () => {
           </Link>
           )
           }) 
-      }
+      } */}
+      <Register />
 
       </div>    
+
     </div>
+
     </>
 
 
