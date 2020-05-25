@@ -1,8 +1,11 @@
 import React from "react";
 import { Badge } from "reactstrap";
 import StarRatingComponent from "react-star-rating-component";
+import Shelves from './changeShelf';
 const BookTable = (props) => {
     const { booksList } = props;
+
+
     return (
         <div style={{ paddingTop: 30 }}>
             <h1>
@@ -36,11 +39,16 @@ const BookTable = (props) => {
                                         editing={false}
                                         starCount={5}
                                         value={item.book.averageRating}
-
                                     />
                                 </td>
                                 <td>{item.myRate}</td>
-                                <td>{item.shelf}</td>
+                                <td>
+                                    <Shelves
+                                        currentItemID={item._id}
+                                        currentShelf={item.shelf}
+                                        handleShelfChange={props.handleShelfChange}
+                                    />
+                                </td>
                             </tr>
                         );
                     })}

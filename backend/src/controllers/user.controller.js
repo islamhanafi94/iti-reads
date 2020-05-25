@@ -127,5 +127,9 @@ userController.addUserBook = async (req, res) => {
     return res.status(201).send('successfully created');
 }
 
+userController.updateItem = async (req, res) => {
+    const { itemID, fieldName, fieldValue } = req.body;
+    await UsersBooks.findByIdAndUpdate(itemID, { [fieldName]: fieldValue })
+}
 
 module.exports = userController;
