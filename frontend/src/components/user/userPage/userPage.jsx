@@ -6,11 +6,10 @@ import Pagination from '../../common/pagination';
 
 // BookTable -> users Books list , handler for changing shelve 
 const UserPage = (props) => {
-    const shelves = [{ id: 1, name: "to-read" }, { id: 2, name: "reading" }, { id: 3, name: "done" }];
-    const [selectedShelve, setSelectedShelve] = useState();
+    const shelves = [{ id: 0, name: "All" }, { id: 1, name: "to-read" }, { id: 2, name: "reading" }, { id: 3, name: "done" }];
+    const [selectedShelf, setSelectedShelf] = useState({ id: 1, name: "to-read" });
     const [booksList, setBooksList] = useState([]);
 
-    let allBooks = []
     useEffect(() => {
         (async () => {
             try {
@@ -20,8 +19,6 @@ const UserPage = (props) => {
                             'Authorization': 'Bearer ' + localStorage.getItem("token")
                         }
                     });
-                allBooks = [...mybooks];
-                console.log(allBooks, mybooks);
                 setBooksList(mybooks);
             } catch (error) {
                 console.log(error);
@@ -30,20 +27,18 @@ const UserPage = (props) => {
     }, [])
 
 
-    const handleShelves = (s) => {
-        setBooksList(allBooks)
-        const books = booksList.filter((item) => item.shelf === s.name);
-        console.log(books);
-        setBooksList(books)
+    const handleShelves = (item) => {
+        if (!item) setSelectedShelf('');
+        setSelectedShelf(item);
     }
 
-    // setBooksList()
-    // useEffect
+    const filterdBooks = selectedShelf.id !== 0 ? booksList.filter((item) => item.shelf === selectedShelf.name) : booksList;
+
     return (
         <div className="row">
             <div className="col-2">
                 <ShelvesList
-                    selectedShelve={selectedShelve}
+                    selectedShelf={selectedShelf}
                     items={shelves}
                     textProperty="name"
                     valueProperty="id"
@@ -52,7 +47,7 @@ const UserPage = (props) => {
 
             </div>
             <div className="col">
-                <BookTable booksList={booksList} />
+                <BookTable booksList={filterdBooks} selectedShelf={selectedShelf.name} />
                 {/* <Pagination
                     pageSize={5}
                     itemsCount={20}

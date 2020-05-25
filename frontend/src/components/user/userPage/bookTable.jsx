@@ -4,7 +4,7 @@ const BookTable = (props) => {
     const { booksList } = props
     return (
         <div style={{ paddingTop: 30 }}>
-            <h1><Badge color="secondary">Current Shelve</Badge></h1>
+            <h1><Badge color="secondary">{props.selectedShelf}</Badge></h1>
             <table className="table">
                 <thead>
                     <tr>
