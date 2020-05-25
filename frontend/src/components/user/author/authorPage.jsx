@@ -55,8 +55,6 @@ const AuthorPage = (props) => {
     }
 
 
-    console.log(authorId);
-    console.log(author);
     return (
         <Container>
             <br />
@@ -68,14 +66,14 @@ const AuthorPage = (props) => {
             <br />
             <Container>
                 <Card>
-                    <Breadcrumb>
-                        <BreadcrumbItem active><h4>{author.firstName}'s Books</h4></BreadcrumbItem>
-                    </Breadcrumb>
+                    <div className="alert alert-secondary">
+                        <h2>{author.firstName}'s Books</h2>
+                    </div>
                     <CardBody>
                         {
-                            booksList.map((book, index) => {
+                            booksList.filter((book) => book.author === author._id).map((book, index) => {
                                 console.log(book);
-
+                                
                                 return (
                                     <div>
                                         {/* <div> */}
