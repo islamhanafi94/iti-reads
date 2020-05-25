@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const Book = require('../models/book');
+const Category = require('../models/category');
+const Author = require('../models/author');
 const { response } = require('../middlewares');
 const { user } = require('../routes/user.routes');
 const jwt = require('jsonwebtoken');

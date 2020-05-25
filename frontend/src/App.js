@@ -112,7 +112,7 @@ function App() {
                 </Route>
                 <Route exact path="/books">
                     <UserNavBar />
-                    {/* <UserPage /> */}
+                    <UserPage />
                 </Route>
                 <Route exact path="/authors">
                     <UserNavBar />
