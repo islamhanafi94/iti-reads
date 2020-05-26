@@ -155,7 +155,8 @@ userController.addItem = async (req, res) => {
         });
 
         const avg = result / macrina.length;
-        Book.findByIdAndUpdate(Item.book, { averageRating: avg });
+        console.log(avg);
+        console.log(await Book.findByIdAndUpdate(item.book, { averageRating: avg }));
     }
 };
 
@@ -169,8 +170,6 @@ userController.updateItem = async (req, res) => {
         opitions
     );
 
-    // await UsersBooks.findByIdAndUpdate(itemID, { [fieldName]: fieldValue });
-
     if (fieldName === "myRate") {
         const Item = await UsersBooks.findById(itemID);
         const macrina = await UsersBooks.find({ book: Item.book }).select(
@@ -183,29 +182,17 @@ userController.updateItem = async (req, res) => {
         });
 
         const avg = result / macrina.length;
-        Book.findByIdAndUpdate(Item.book, { averageRating: avg });
+        await Book.findByIdAndUpdate(Item.book, { averageRating: avg });
     }
 };
 
 userController.getBook = async (req, res) => {
-    console.log("======================================");
-    console.log("======================================");
-    console.log("======================================");
-    console.log("======================================");
-    console.log("======================================");
-    
+    const { id } = req.params;
     const UserBook = await UsersBooks.find({
         user: req.user._id,
-        book: req.body.book,
+        book: id,
     });
     console.log(UserBook);
-    
-    console.log("======================================");
-    console.log("======================================");
-    console.log("======================================");
-    console.log("======================================");
-    console.log("======================================");
-
     return res.send(UserBook);
 };
 

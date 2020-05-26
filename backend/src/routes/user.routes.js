@@ -44,8 +44,8 @@ router.get('/logincheck',
 
 
 
+router.get('/mybooks/:id', userController.getBook);
 router.get('/mybooks', userController.getUserBooks);
-router.get('/mybooks/book', userController.getBook);
 router.post('/mybooks/new', userController.addUserBook);
 router.patch('/mybooks/edit', userController.updateItem);
 router.patch('/mybooks/add', userController.addItem);

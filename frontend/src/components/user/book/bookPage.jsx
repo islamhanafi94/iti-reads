@@ -25,7 +25,9 @@ const BookPage = (props) => {
     const [userBook, setUserBook] = useState({ myRate: 0, shelf: "to-read" });
 
     const onStarClick = async (nextValue) => {
-        setRating(nextValue);
+        let temp = { ...userBook };
+        temp.myRate = nextValue;
+        setUserBook(temp);
         console.log(rating, nextValue);
 
         try {
@@ -67,18 +69,26 @@ const BookPage = (props) => {
     }, []);
 
     useEffect(() => {
-       (async function() {
-           try {
-            const res = await axios.get("http://localhost:5000/users/mybooks/book",
-            {book: bookId}) 
-            console.log(res);
-           } 
-           catch(erorr){
-               console.log(erorr);
-               
-           }
-            
-       })();
+        (async function () {
+            try {
+                const res = await axios.get(`http://localhost:5000/users/mybooks/${bookId}`,
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    });
+                console.log(res.data[0]);
+                if (Object.keys(res.data).length !== 0) {
+                    setUserBook(res.data[0]);
+                }                
+            }
+            catch (erorr) {
+                console.log(erorr);
+
+            }
+
+        })();
     }, []);
 
     const getAuthor = () => {
@@ -103,11 +113,10 @@ const BookPage = (props) => {
         } else return [];
     };
 
-    // console.log("book is : ", book);
-    console.log(bookId);
+    console.log(userBook);
     return (
         <div className="container">
-            {/* <Card> */}
+            {/* <Card> */ }
             <CardImg
                 top
                 width="100%"
@@ -117,61 +126,61 @@ const BookPage = (props) => {
                 height="180px"
             />
             <CardBody>
-                <CardTitle>Book Name : {book.name}</CardTitle>
+                <CardTitle>Book Name : { book.name }</CardTitle>
                 <CardText>
-                    {" "}
-                    Author :{" "}
-                    <Link to={`/authors/${getAuthor()._id}`}>
-                        {" "}
-                        {getAuthor().firstName}
+                    { " " }
+                    Author :{ " " }
+                    <Link to={ `/authors/${getAuthor()._id}` }>
+                        { " " }
+                        { getAuthor().firstName }
                     </Link>
                 </CardText>
                 <CardText>
                     Category :
-                    <Link to={`/categories/${getCategory()._id}`}>
-                        {getCategory().name}
+                    <Link to={ `/categories/${getCategory()._id}` }>
+                        { getCategory().name }
                     </Link>
                 </CardText>
                 <CardText>Average Rating :</CardText>
                 <StarRatingComponent
                     name="avgRate"
-                    editing={false}
-                    starCount={5}
-                    value={book.averageRating}
+                    editing={ false }
+                    starCount={ 5 }
+                    value={ book.averageRating }
                 />
                 <CardText>My Rating :</CardText>
                 <StarRatingComponent
                     name="myRate"
-                    starCount={5}
-                    value={rating}
-                    onStarClick={onStarClick}
+                    starCount={ 5 }
+                    value={ userBook.myRate }
+                    onStarClick={ onStarClick }
                 />
-                {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
+                { JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
                     <AddReview />
-                ) : null}
+                ) : null }
 
-                {/* <br /> */}
+                {/* <br /> */ }
                 <hr />
                 <ListGroup>
                     <ListGroupItem color="info">Reviews</ListGroupItem>
-                    {getReviews().map((item) => {
+                    { getReviews().map((item) => {
                         return (
                             <ListGroupItem>
-                                {/* <Badge>{ item.user.username }</Badge>{ " : " + item.review } */}
+                                {/* <Badge>{ item.user.username }</Badge>{ " : " + item.review } */ }
                                 <Card>
                                     <CardHeader>
-                                        <h3>{item.user.username}</h3>
+                                        <h3>{ item.user.username }</h3>
                                     </CardHeader>
                                     <CardBody>
-                                        <CardText>{item.review}</CardText>
+                                        <CardText>{ item.review }</CardText>
                                     </CardBody>
                                 </Card>
                             </ListGroupItem>
                         );
-                    })}
+                    }) }
                 </ListGroup>
             </CardBody>
-            {/* </Card> */}
+            {/* </Card> */ }
         </div>
     );
 };
