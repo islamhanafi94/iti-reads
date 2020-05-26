@@ -16,6 +16,7 @@ import {
 import StarRatingComponent from "react-star-rating-component";
 import AddReview from "../review/addReview";
 import DeleteReview from "../review/deleteReview";
+import Shelves from "../userPage/changeShelf";
 import { useParams, Route, Redirect, Link, withRouter } from 'react-router-dom';
 const BookPage = (props) => {
     const { bookId } = useParams();
@@ -45,6 +46,22 @@ const BookPage = (props) => {
             console.log(error);
         }
     };
+
+    const handleShelfChange = async (newShelf, ID) => {
+        try {
+            await axios.patch('http://localhost:5000/users/mybooks/add',
+                { bookID: ID, fieldName: "shelf", fieldValue: newShelf },
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
+
+                });
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
 
     useEffect(() => {
         (async function () {
@@ -154,27 +171,6 @@ const BookPage = (props) => {
                     starCount={ 5 }
                     value={ book.averageRating }
                 />
-                {/* <CardText>My Rating :</CardText>
-                <StarRatingComponent
-                    name="myRate"
-                    starCount={5}
-                    value={rating}
-                    onStarClick={onStarClick}
-                />
-                {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? <AddReview /> : null}
-
-                <ListGroup>
-                    <ListGroupItem color="info">Reviews</ListGroupItem>
-                    {
-                        getReviews().map((item, index) => {
-                            return (
-                                <ListGroupItem key={index}><Badge>{item.user.username}</Badge>{" : " + item.review}
-                                    {JSON.parse(sessionStorage.getItem("user")).username == item.user.username ? <DeleteReview reviewId={item._id} /> : null}
-
-                                </ListGroupItem>
-                            )
-                        })
-                    }</ListGroup> */}
                 <CardText>My Rating :</CardText>
                 <StarRatingComponent
                     name="myRate"
@@ -182,6 +178,13 @@ const BookPage = (props) => {
                     value={ userBook.myRate }
                     onStarClick={ onStarClick }
                 />
+
+                <Shelves 
+                    currentItemID={book._id}
+                    currentShelf={userBook.shelf}
+                    handleShelfChange={handleShelfChange}
+                />
+
                 { JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
                     <AddReview />
                 ) : null }
@@ -197,11 +200,11 @@ const BookPage = (props) => {
                                 <Card>
                                     <CardHeader>
                                         <h3>{item.user.username}</h3>
-                                        {JSON.parse(sessionStorage.getItem("user")).username === item.user.username ? <DeleteReview reviewId={item._id} /> : null}
                                         {/* <h3>{ item.user.username }</h3> */}
                                     </CardHeader>
                                     <CardBody>
                                         <CardText>{ item.review }</CardText>
+                                        {JSON.parse(sessionStorage.getItem("user")).username === item.user.username ? <DeleteReview reviewId={item._id} /> : null}
                                     </CardBody>
                                 </Card>
                             </ListGroupItem>
@@ -215,104 +218,3 @@ const BookPage = (props) => {
 };
 
 export default BookPage;
-
-
-
-
-
-// {/* <Card> */ }
-// <CardImg
-//     top
-//     width="100%"
-//     src="https://source.unsplash.com/random"
-//     alt="book image"
-//     width="300px"
-//     height="180px"
-// />
-//     <CardBody>
-//         <CardTitle>Book Name : {book.name}</CardTitle>
-//         <CardText>
-//             {" "}
-//     Author :{" "}
-//             <Link to={`/authors/${getAuthor()._id}`}>
-//                 {" "}
-//                 {getAuthor().firstName}
-//             </Link>
-//         </CardText>
-//         <CardText>
-//             Category :
-//     <Link to={`/categories/${getCategory()._id}`}>
-//                 {getCategory().name}
-//             </Link>
-//         </CardText>
-//         <CardText>Average Rating :</CardText>
-//         <StarRatingComponent
-//             name="avgRate"
-//             editing={false}
-//             starCount={5}
-//             value={book.averageRating}
-//         />
-//         <CardBody>
-//             <CardTitle>Book Name : {book.name}</CardTitle>
-//             <CardText> Author : <Link to={`/authors/${getAuthor()._id}`}> {getAuthor().firstName}</Link></CardText>
-//             <CardText>Category :<Link to={`/categories/${getCategory()._id}`}>{getCategory().name}</Link></CardText>
-//             <CardText>Average Rating :</CardText>
-//             <StarRatingComponent
-//                 name="avgRate"
-//                 editing={false}
-//                 starCount={5}
-//                 value={book.averageRating}
-//             />
-//             <CardText>My Rating :</CardText>
-//             <StarRatingComponent
-//                 name="myRate"
-//                 starCount={5}
-//                 value={rating}
-//                 onStarClick={onStarClick}
-//             />
-//             {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? <AddReview /> : null}
-
-//             <ListGroup>
-//                 <ListGroupItem color="info">Reviews</ListGroupItem>
-//                 {
-//                     getReviews().map((item, index) => {
-//                         return (
-//                             <ListGroupItem key={index}><Badge>{item.user.username}</Badge>{" : " + item.review}
-//                                 {JSON.parse(sessionStorage.getItem("user")).username == item.user.username ? <DeleteReview reviewId={item._id} /> : null}
-
-//                             </ListGroupItem>
-//                         )
-//                     })
-//                 }</ListGroup>
-//             <CardText>My Rating :</CardText>
-//             <StarRatingComponent
-//                 name="myRate"
-//                 starCount={5}
-//                 value={rating}
-//                 onStarClick={onStarClick}
-//             />
-//             {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
-//                 <AddReview />
-//             ) : null}
-
-//             {/* <br /> */}
-//             <hr />
-//             <ListGroup>
-//                 <ListGroupItem color="info">Reviews</ListGroupItem>
-//                 {getReviews().map((item) => {
-//                     return (
-//                         <ListGroupItem>
-//                             {/* <Badge>{ item.user.username }</Badge>{ " : " + item.review } */}
-//                             <Card>
-//                                 <CardHeader>
-//                                     <h3>{item.user.username}</h3>
-//                                 </CardHeader>
-//                                 <CardBody>
-//                                     <CardText>{item.review}</CardText>
-//                                 </CardBody>
-//                             </Card>
-//                         </ListGroupItem>
-//                     );
-//                 })}
-//             </ListGroup>
-//         </CardBody>
