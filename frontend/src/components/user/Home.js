@@ -13,9 +13,7 @@ const Home = () => {
 
   // const booksURL = `http://localhost:5000/books`;
   const popularBooksURL = `http://localhost:5000/books/popular`;
-  const popularAuthorsURL = `http://localhost:5000/author/popular`;
-  const popularCategoryURL = `http://localhost:5000/category/popular`;
-
+ 
   useEffect(() => {
     // axios.get(booksURL, {
     //   headers: {
@@ -37,7 +35,7 @@ const Home = () => {
     }).catch(err => {
       console.log(err);
     });
-    axios.get(popularAuthorsURL, {
+    axios.get(popularBooksURL, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token")
       }
@@ -47,7 +45,7 @@ const Home = () => {
     }).catch(err => {
       console.log(err);
     });
-    axios.get(popularCategoryURL, {
+    axios.get(popularBooksURL, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token")
       }
@@ -84,10 +82,10 @@ const Home = () => {
               <legend> <strong>Popular Authors</strong></legend>
               <ul>
                 {
-                  popularAuthors.map(author => {
+                  popularBooks.map(book => {
                     return (
                       <li className="popular-list-item">
-                        <Link key={ author.firstName } to={ `/authors/${author._id}` }>{ author.firstName }</Link>
+                        <Link key={ book.author.firstName } to={ `/authors/${book.author._id}` }>{ book.author.firstName }</Link>
                       </li>
                     );
                   })
@@ -99,13 +97,13 @@ const Home = () => {
               <ul>
                 {
                   poularCategories.map(category => {
-                    const id = category._id;
+                    const id = category.category._id;
                     const url = `/categories/${id}`;
                     return (
 
                       <li className="popular-list-item">
 
-                        <Link key={ category.name } to={ url }>{ category.name }</Link>
+                        <Link key={ category.category.name } to={ url }>{ category.category.name }</Link>
                       </li>
                     );
                   })

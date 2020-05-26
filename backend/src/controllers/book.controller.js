@@ -11,23 +11,15 @@ const bookController = {};
 // const bookController = require('../controllers/book.controller');
 
 //get popular books
-bookController.getPopularBooks = (req, res) => {
+bookController.getPopularBooks =async (req, res) => {
     console.log("in function");
 
-    // Retrieve books sorted by popularity and limited to 3 //desc
-    Book.find({}, null, { sort: { popularity: -1 }, limit: 4 })
-        .populate("author")
-        .populate("category")
-        .then((books) => {
-            console.log("====================================");
-            console.log(books);
-            console.log("====================================");
-            res.status(200).json(books);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).send({ err: err });
-        });
+    try {
+        book = await Book.find({}).sort({ averageRating: -1 }).limit(4).populate('category').populate('author');
+        res.status(200).json(book);
+      } catch (error) {
+        next(error);
+      }
 };
 // Get all books
 bookController.getAllBooks = async (req, res, next) => {

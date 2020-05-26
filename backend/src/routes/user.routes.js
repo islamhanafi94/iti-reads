@@ -42,7 +42,7 @@ router.get('/logincheck',
 
 
 
-router.get('/mybooks/:id', userController.getUserBookByBookId);
+// router.get('/mybooks/:id', userController.getUserBookByBookId);
 router.get('/mybooks', userController.getUserBooks);
 router.patch('/mybooks/add', userController.addUserBook);
 
