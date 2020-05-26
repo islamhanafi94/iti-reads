@@ -103,19 +103,22 @@ const AuthorBookPage = (props) => {
                             </div>
                             <div className="col-4">
                             </div>
-                            <div className="col-4">
-                                <Shelves
-                                    currentItemID={ book._id }
-                                    currentShelf={ userBook.shelf }
-                                    handleShelfChange={ handleShelfChange }
-                                />
-                                <StarRatingComponent
-                                    name="myRate"
-                                    starCount={ 5 }
-                                    value={ userBook.myRate }
-                                    onStarClick={ onStarClick }
-                                />
-                            </div>
+                            { JSON.parse(sessionStorage.getItem("loggedIn")) == true ?
+                                (
+                                    <div className="col-4">
+                                        <Shelves
+                                            currentItemID={ book._id }
+                                            currentShelf={ userBook.shelf }
+                                            handleShelfChange={ handleShelfChange }
+                                        />
+                                        <StarRatingComponent
+                                            name="myRate"
+                                            starCount={ 5 }
+                                            value={ userBook.myRate }
+                                            onStarClick={ onStarClick }
+                                        />
+                                    </div>
+                                ) : null }
                         </div>
                     </div>
                 </CardBody>
