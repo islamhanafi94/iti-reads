@@ -145,17 +145,20 @@ userController.addItem = async (req, res) => {
     );
 
     if (fieldName === "myRate") {
-        const macrina = await UsersBooks.find({ book: item.book }).select(
+        const userBooks = await UsersBooks.find({ book: item.book }).select(
             "myRate"
         );
         let result = 0;
-        macrina.map((rate) => {
+        userBooks.map((rate) => {
             result += rate.myRate;
             return result;
         });
 
-        const avg = result / macrina.length;
+        const avg = result / userBooks.length;
         await Book.findByIdAndUpdate(item.book, { averageRating: avg });
+    }
+    else if (fieldName === "shelf") {
+        await Book.findByIdAndUpdate(bookID, { $inc: { popularity: 1 } }, { new: true });
     }
 };
 
@@ -171,16 +174,16 @@ userController.updateItem = async (req, res) => {
 
     if (fieldName === "myRate") {
         const Item = await UsersBooks.findById(itemID);
-        const macrina = await UsersBooks.find({ book: Item.book }).select(
+        const userBooks = await UsersBooks.find({ book: Item.book }).select(
             "myRate"
         );
         let result = 0;
-        macrina.map((rate) => {
+        userBooks.map((rate) => {
             result += rate.myRate;
             return result;
         });
 
-        const avg = result / macrina.length;
+        const avg = result / userBooks.length;
         await Book.findByIdAndUpdate(Item.book, { averageRating: avg });
     }
 };
