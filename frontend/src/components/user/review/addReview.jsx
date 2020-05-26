@@ -25,7 +25,7 @@ const AddReview = (props) => {
                 'Authorization': 'Bearer ' + localStorage.getItem("token")
             }
         }).then((response) => {
-            // window.location.href = `http://localhost:3000/books/${bookId}`;
+            window.location.href = `http://localhost:3000/books/${bookId}`;
         }, (error) => {
             console.log(error);
         });

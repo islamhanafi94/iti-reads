@@ -75,7 +75,6 @@ const BookPage = (props) => {
                     <CardText>Category :<Link to={`/categories/${getCategory()._id}`}>{getCategory().name}</Link></CardText>
                     <CardText>Average Rating : {book.averageRating}</CardText>
                     {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? <AddReview /> : null}
-                    <CardText></CardText>
                     <ListGroup>
                         <ListGroupItem color="info">Reviews</ListGroupItem>
                         {
