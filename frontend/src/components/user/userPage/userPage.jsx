@@ -57,7 +57,7 @@ const UserPage = (props) => {
 
     return (
         <div className="row">
-            <div className="col-3">
+            <div className="col-2">
                 <ShelvesList
                     selectedShelf={selectedShelf}
                     items={shelves}
@@ -67,7 +67,7 @@ const UserPage = (props) => {
                 />
 
             </div>
-            <div className="col-8">
+            <div className="col">
                 <BookTable
                     booksList={filterdBooks}
                     selectedShelf={selectedShelf.name}

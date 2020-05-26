@@ -10,6 +10,7 @@ import {
     FormGroup,
     Input,
 } from "reactstrap";
+import { checkPropTypes } from "prop-types";
 
 const AuthorItem = ({ author, index, deleteAuthor, updateAuthor }) => {
     const [modal, setModal] = useState(false);
@@ -23,6 +24,12 @@ const AuthorItem = ({ author, index, deleteAuthor, updateAuthor }) => {
             [name]: value,
         }));
     };
+
+    // const getAuthorDate = () => {
+    //     if (checkPropTypes.isLoaded) {
+    //         return author.dateOfBirth.split('T')[0];
+    //     }
+    // }
 
     return (
         <tr>

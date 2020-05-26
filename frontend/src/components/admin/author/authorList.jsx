@@ -62,8 +62,8 @@ const AuthorList = (props) => {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")
                     }
                 });
-                setIsLoaded(true);
                 setAuthorList(response.data);
+                setIsLoaded(true);
             } catch (error) {
                 console.log(error);
             }
@@ -164,7 +164,8 @@ const AuthorList = (props) => {
                                 index={index}
                                 author={author}
                                 updateAuthor={updateAuthor}
-                                deleteAuthor={deleteAuthor}
+                                deleteAuthor={ deleteAuthor }
+                                isLoaded={isLoaded}
                             />
                         );
                     })}

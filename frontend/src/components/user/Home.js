@@ -61,66 +61,66 @@ const Home = () => {
 
   return (
     <>
-      {/* <NavBar/> */ }
+      { localStorage.getItem("token") ? (<UserPage />) : (
+        <div className="main-container">
+          <div key="left-div" className="left-div">
+            <fieldset key="books" className="popular">
+              <legend> <strong>Popular Books</strong></legend>
+              <ul>
+                {
+                  popularBooks.map(book => {
+                    return (
+                      <li className="popular-list-item">
+                        <Link key={ book.name } to={ `/books/${book._id}` }>{ book.name }</Link>
+                      </li>
+                    );
+                  })
+                }
 
-      <div className="main-container">
-        <div key="left-div" className="left-div">
-          <fieldset key="books" className="popular">
-            <legend> <strong>Popular Books</strong></legend>
-            <ul>
-              {
-                popularBooks.map(book => {
-                  return (
-                    <li className="popular-list-item">
-                      <Link key={ book.name } to={ `/books/${book._id}` }>{ book.name }</Link>
-                    </li>
-                  );
-                })
-              }
+              </ul>
+            </fieldset>
 
-            </ul>
-          </fieldset>
+            <fieldset key="authors" className="popular">
+              <legend> <strong>Popular Authors</strong></legend>
+              <ul>
+                {
+                  popularAuthors.map(author => {
+                    return (
+                      <li className="popular-list-item">
+                        <Link key={ author.firstName } to={ `/authors/${author._id}` }>{ author.firstName }</Link>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+            </fieldset>
+            <fieldset key="categories" className="popular">
+              <legend> <strong>Popular Categories</strong></legend>
+              <ul>
+                {
+                  poularCategories.map(category => {
+                    const id = category._id;
+                    const url = `/categories/${id}`;
+                    return (
 
-          <fieldset key="authors" className="popular">
-            <legend> <strong>Popular Authors</strong></legend>
-            <ul>
-              {
-                popularAuthors.map(author => {
-                  return (
-                    <li className="popular-list-item">
-                      <Link key={ author.firstName } to={ `/authors/${author._id}` }>{ author.firstName }</Link>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          </fieldset>
-          <fieldset key="categories" className="popular">
-            <legend> <strong>Popular Categories</strong></legend>
-            <ul>
-              {
-                poularCategories.map(category => {
-                  const id = category._id;
-                  const url = `/categories/${id}`;
-                  return (
+                      <li className="popular-list-item">
 
-                    <li className="popular-list-item">
+                        <Link key={ category.name } to={ url }>{ category.name }</Link>
+                      </li>
+                    );
+                  })
+                }
 
-                      <Link key={ category.name } to={ url }>{ category.name }</Link>
-                    </li>
-                  );
-                })
-              }
+              </ul>
+            </fieldset>
+          </div>
 
-            </ul>
-          </fieldset>
-        </div>
+          <div key="right-div" className="right-div">
+            {/* { localStorage.getItem("token") ? (<UserPage />) : ( <Register /> ) } */ }
+            <Register />
+          </div>
 
-        <div key="right-div" className="right-div">
-          { localStorage.getItem("token") ? (<UserPage />) : ( <Register /> ) }
-        </div>
-
-      </div>
+        </div>) }
 
     </>
   );

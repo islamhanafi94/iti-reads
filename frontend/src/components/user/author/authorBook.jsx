@@ -4,6 +4,7 @@ import { CardBody, CardTitle, CardText, Media } from "reactstrap";
 
 import StarRatingComponent from "react-star-rating-component";
 import Shelves from "../userPage/changeShelf";
+import { Link } from "react-router-dom";
 
 const AuthorBookPage = (props) => {
     const { book } = props;
@@ -74,39 +75,51 @@ const AuthorBookPage = (props) => {
 
     return (
         <div>
-            {/* <div> */}
-            <Media left>
-                <Media
-                    object
-                    src="https://source.unsplash.com/random/64x64"
-                    alt="Book Image"
-                />
-            </Media>
-            <CardBody>
-                <CardTitle h4>{book.name}</CardTitle>
-                <CardText> Avg. Rate</CardText>
-                <StarRatingComponent
-                    name="avgRate"
-                    editing={false}
-                    starCount={5}
-                    value={book.averageRating}
-                />
-                <br />
-                <CardText>My Rate</CardText>
-                <StarRatingComponent
-                    name="myRate"
-                    starCount={5}
-                    value={userBook.myRate}
-                    onStarClick={onStarClick}
-                />
+            <div className="row">
+                <div className="col-1">
+                    <div>
+                        <Media left>
+                            <Media
+                                object
+                                src="https://source.unsplash.com/random/64x64"
+                                alt="Book Image"
+                            />
+                        </Media>
+                        <br />
+                    </div >
+                </div>
+                <CardBody>
+                    <div className="col-11">
+                        <div className="row">
+                            <div className="col-4">
+                                <Link to={ `/books/${book._id}` }><h3>{ book.name }</h3></Link>
+                                <StarRatingComponent
+                                    name="avgRate"
+                                    editing={ false }
+                                    starCount={ 5 }
+                                    value={ book.averageRating }
+                                />
 
-                <Shelves
-                    currentItemID={book._id}
-                    currentShelf={userBook.shelf}
-                    handleShelfChange={handleShelfChange}
-                />
-            </CardBody>
-            {/* </div> */}
+                            </div>
+                            <div className="col-4">
+                            </div>
+                            <div className="col-4">
+                                <Shelves
+                                    currentItemID={ book._id }
+                                    currentShelf={ userBook.shelf }
+                                    handleShelfChange={ handleShelfChange }
+                                />
+                                <StarRatingComponent
+                                    name="myRate"
+                                    starCount={ 5 }
+                                    value={ userBook.myRate }
+                                    onStarClick={ onStarClick }
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </CardBody>
+            </div>
             <hr />
         </div>
     );
