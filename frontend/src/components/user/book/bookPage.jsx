@@ -97,7 +97,7 @@ const BookPage = (props) => {
                     });
                 if (Object.keys(res.data).length !== 0) {
                     setUserBook(res.data[0]);
-                }                
+                }
             }
             catch (erorr) {
                 console.log(erorr);
@@ -133,7 +133,7 @@ const BookPage = (props) => {
     return (
         <div className="container">
 
-            {/* <Card> */ }
+            {/* <Card> */}
             <CardImg
                 top
                 width="100%"
@@ -147,68 +147,75 @@ const BookPage = (props) => {
             <CardBody>
                 <CardTitle>Book Name : {book.name}</CardTitle>
                 <CardText>
-                    { " " }
-                    Author :{ " " }
-                    <Link to={ `/authors/${getAuthor()._id}` }>
-                        { " " }
-                        { getAuthor().firstName }
+                    {" "}
+                    Author :{" "}
+                    <Link to={`/authors/${getAuthor()._id}`}>
+                        {" "}
+                        {getAuthor().firstName}
                     </Link>
                 </CardText>
                 <CardText>
                     Category :
-                    <Link to={ `/categories/${getCategory()._id}` }>
-                        { getCategory().name }
+                    <Link to={`/categories/${getCategory()._id}`}>
+                        {getCategory().name}
                     </Link>
                 </CardText>
                 <CardText>Average Rating :</CardText>
                 <StarRatingComponent
                     name="avgRate"
-                    editing={ false }
-                    starCount={ 5 }
-                    value={ book.averageRating }
+                    editing={false}
+                    starCount={5}
+                    value={book.averageRating}
                 />
-                <CardText>My Rating :</CardText>
-                <StarRatingComponent
-                    name="myRate"
-                    starCount={ 5 }
-                    value={ userBook.myRate }
-                    onStarClick={ onStarClick }
-                />
-                
-                <Shelves 
-                    currentItemID={book._id}
-                    currentShelf={userBook.shelf}
-                    handleShelfChange={handleShelfChange}
-                />
-                <br/>
-                { JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
-                    <AddReview />
-                ) : null }
+                {JSON.parse(sessionStorage.getItem("loggedIn")) == true ?
 
-                {/* <br /> */ }
+                    <div>
+                        <CardText>My Rating :</CardText>
+                        <StarRatingComponent
+                            name="myRate"
+                            starCount={5}
+                            value={userBook.myRate}
+                            onStarClick={onStarClick}
+                        />
+
+                        <Shelves
+                            currentItemID={book._id}
+                            currentShelf={userBook.shelf}
+                            handleShelfChange={handleShelfChange}
+                        />
+                    </div> : null
+
+                }
+
+                <br />
+                {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
+                    <AddReview />
+                ) : null}
+
+                {/* <br /> */}
                 <hr />
                 <ListGroup>
                     <ListGroupItem color="info">Reviews</ListGroupItem>
-                    { getReviews().map((item) => {
+                    {getReviews().map((item) => {
                         return (
                             <ListGroupItem>
-                                {/* <Badge>{ item.user.username }</Badge>{ " : " + item.review } */ }
+                                {/* <Badge>{ item.user.username }</Badge>{ " : " + item.review } */}
                                 <Card>
                                     <CardHeader>
                                         <h3>{item.user.username}</h3>
                                         {/* <h3>{ item.user.username }</h3> */}
                                     </CardHeader>
                                     <CardBody>
-                                        <CardText>{ item.review }</CardText>
-                                        {JSON.parse(sessionStorage.getItem("user")).username === item.user.username ? <DeleteReview reviewId={item._id} /> : null}
+                                        <CardText>{item.review}</CardText>
+                                        {JSON.parse(sessionStorage.getItem("loggedIn")) == true && JSON.parse(sessionStorage.getItem("user")).username === item.user.username ? <DeleteReview reviewId={item._id} /> : null}
                                     </CardBody>
                                 </Card>
                             </ListGroupItem>
                         );
-                    }) }
+                    })}
                 </ListGroup>
             </CardBody>
-            {/* </Card> */ }
+            {/* </Card> */}
         </div>
     );
 };
