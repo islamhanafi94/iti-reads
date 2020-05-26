@@ -6,7 +6,6 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
     Button,
 
 } from "reactstrap";
@@ -90,7 +89,6 @@ const NavBar = (props) => {
                         ) : <Logout />
                     }
                 </Nav>
-                {/* <Button color="info">logout</Button> */}
 
 
             </Collapse>

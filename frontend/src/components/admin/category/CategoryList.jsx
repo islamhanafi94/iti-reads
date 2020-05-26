@@ -18,7 +18,7 @@ import CategoryItem from "./categoryItem";
 import { paginate } from '../../../utils/paginate';
 
 const CategoryList = (props) => {
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [categorylist, setCategoryList] = useState([]);
     const [modal, setModal] = useState(false);

@@ -19,7 +19,7 @@ import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 
 const AuthorList = (props) => {
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [newAuthor, setNewAuthor] = useState({
         firstName: "",

@@ -6,12 +6,9 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    Button,
 } from "reactstrap";
 import { Link } from 'react-router-dom';
 import axios from "axios";
-import Login from "../login";
 import AdminLogout from "./adminLogout";
 
 const NavBar = (props) => {
@@ -47,9 +44,6 @@ const NavBar = (props) => {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
-                    {/* <NavItem>
-                        <Link className="nav-link" to="/admin">Home</Link>
-                    </NavItem> */}
                     <NavItem>
                         <Link className="nav-link" to="/admin/categories">Categories</Link>
                     </NavItem>
@@ -60,7 +54,6 @@ const NavBar = (props) => {
                         <Link className="nav-link" to="/admin/authors">Authors</Link>
                     </NavItem>
                 </Nav>
-                {/* <Button color="info">logout</Button> */}
                 {console.log("is logged in : ", isLoggedIn)}
                 {isLoggedIn === true ? (<AdminLogout />) : null}
 

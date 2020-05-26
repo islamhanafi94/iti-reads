@@ -11,7 +11,7 @@ import {
     Input,
     Media,
 } from "reactstrap";
-import ImageUploader from "react-images-upload";
+// import ImageUploader from "react-images-upload";
 import axios from "axios";
 
 const BookItem = ({ book, index, deleteBook, updateBook }) => {

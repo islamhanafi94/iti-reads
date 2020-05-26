@@ -5,7 +5,7 @@ import axios from "axios";
 import { paginate } from "../../../utils/paginate";
 
 const Categories = (props) => {
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [categorylist, setCategoryList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
