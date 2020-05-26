@@ -134,11 +134,40 @@ userController.addUserBook = async (req, res) => {
     return res.status(201).send("successfully created");
 };
 
+userController.addItem = async (req, res) => {
+    const { bookID, fieldName, fieldValue } = req.body;
+    const query = { book: bookID, user: req.user._id };
+    const opitions = { upsert: true, new: true, setDefaultsOnInsert: true };
+    const item = await UsersBooks.findOneAndUpdate(
+        query,
+        { [fieldName]: fieldValue },
+        opitions
+    );
+
+    if (fieldName === "myRate") {
+        const macrina = await UsersBooks.find({ book: item.book }).select(
+            "myRate"
+        );
+        let result = 0;
+        macrina.map((rate) => {
+            result += rate.myRate;
+            return result;
+        });
+
+        const avg = result / macrina.length;
+        Book.findByIdAndUpdate(Item.book, { averageRating: avg });
+    }
+};
+
 userController.updateItem = async (req, res) => {
     const { itemID, fieldName, fieldValue } = req.body;
     const query = { _id: itemID };
     const opitions = { upsert: true, setDefaultsOnInsert: true };
-    await UsersBooks.findOneAndUpdate(query, { [fieldName]: fieldValue }, opitions);
+    await UsersBooks.findOneAndUpdate(
+        query,
+        { [fieldName]: fieldValue },
+        opitions
+    );
 
     // await UsersBooks.findByIdAndUpdate(itemID, { [fieldName]: fieldValue });
 
@@ -147,15 +176,37 @@ userController.updateItem = async (req, res) => {
         const macrina = await UsersBooks.find({ book: Item.book }).select(
             "myRate"
         );
-        var res = 0;
+        let result = 0;
         macrina.map((rate) => {
-            res += rate.myRate;
-            return res;
+            result += rate.myRate;
+            return result;
         });
 
-        const avg = res / macrina.length;
+        const avg = result / macrina.length;
         Book.findByIdAndUpdate(Item.book, { averageRating: avg });
     }
+};
+
+userController.getBook = async (req, res) => {
+    console.log("======================================");
+    console.log("======================================");
+    console.log("======================================");
+    console.log("======================================");
+    console.log("======================================");
+    
+    const UserBook = await UsersBooks.find({
+        user: req.user._id,
+        book: req.body.book,
+    });
+    console.log(UserBook);
+    
+    console.log("======================================");
+    console.log("======================================");
+    console.log("======================================");
+    console.log("======================================");
+    console.log("======================================");
+
+    return res.send(UserBook);
 };
 
 module.exports = userController;
