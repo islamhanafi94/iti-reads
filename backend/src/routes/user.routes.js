@@ -29,8 +29,6 @@ router.all('*', (req, res, next) => {
 
 //_____________________________Protected route  (all user routes will be here )_____________________________________
 
-router.post('/:user_id/books/:id', userController.manageShelves);
-
 router.get('/admin', adminAuth,
     (req, res, next) => {
         console.log("body : ", req.body)
@@ -44,11 +42,9 @@ router.get('/logincheck',
 
 
 
-router.get('/mybooks/:id', userController.getBook);
+router.get('/mybooks/:id', userController.getUserBookByBookId);
 router.get('/mybooks', userController.getUserBooks);
-router.post('/mybooks/new', userController.addUserBook);
-router.patch('/mybooks/edit', userController.updateItem);
-router.patch('/mybooks/add', userController.addItem);
+router.patch('/mybooks/add', userController.addUserBook);
 
 
 

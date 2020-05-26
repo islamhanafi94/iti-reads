@@ -7,7 +7,9 @@ const { response } = require("../middlewares");
 const { user } = require("../routes/user.routes");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+
 let userController = {};
+
 userController.regesiter = async (req, res, next) => {
     const { username, firstName, lastName, email, password } = req.body;
     const newUser = new User({
@@ -67,51 +69,6 @@ userController.login = async (request, response, next) => {
         next(error);
     }
 };
-// manageShelves
-userController.manageShelves = async (req, res, next) => {
-    const bookId = req.params.id;
-    const userId = req.params.user_id;
-    const { shelf } = req.body;
-    try {
-        const user = await User.findById(userId);
-        //check if the user have the book in his my books array
-        //flag to check the book existeng in the my books :
-        //if book doesn't exist so change shelf and change flag to be existing
-        let bookIsExist = false;
-        // console.log(user.mybooks);
-        user.mybooks = user.mybooks.map((book) => {
-            if (book.book.toString() === bookId) {
-                book.shelf = shelf;
-                bookIsExist = true;
-            }
-            return book;
-        });
-        // console.log("user.mybooks",user.mybooks);
-        //if book doesn't exist and not in mybooks so
-        if (!bookIsExist) {
-            user.mybooks = user.mybooks.concat({
-                book: mongoose.Types.ObjectId(bookId),
-                shelf,
-            });
-            /**
-             *  findOneAndUpdate() returns the document as it was before update was applied.
-             * If you set new: true, findOneAndUpdate() will instead give you the object after update was applied.
-             */
-            Book.findByIdAndUpdate(
-                bookId,
-                { $inc: { popularity: 1 } },
-                { new: true }
-            );
-        }
-        //save user
-        await user.save();
-        return res.send({ message: "your Shelves  successfully added" });
-    } catch (error) {
-        console.log(error);
-
-        return res.status(500).end();
-    }
-};
 
 userController.me = (req, res, next) => {
     const { user } = req;
@@ -129,12 +86,6 @@ userController.getUserBooks = async (req, res) => {
 };
 
 userController.addUserBook = async (req, res) => {
-    const newRecord = { user: req.user._id, ...req.body };
-    const result = await UsersBooks.create(newRecord);
-    return res.status(201).send("successfully created");
-};
-
-userController.addItem = async (req, res) => {
     const { bookID, fieldName, fieldValue } = req.body;
     const query = { book: bookID, user: req.user._id };
     const opitions = { upsert: true, new: true, setDefaultsOnInsert: true };
@@ -162,33 +113,8 @@ userController.addItem = async (req, res) => {
     }
 };
 
-userController.updateItem = async (req, res) => {
-    const { itemID, fieldName, fieldValue } = req.body;
-    const query = { _id: itemID };
-    const opitions = { upsert: true, setDefaultsOnInsert: true };
-    await UsersBooks.findOneAndUpdate(
-        query,
-        { [fieldName]: fieldValue },
-        opitions
-    );
 
-    if (fieldName === "myRate") {
-        const Item = await UsersBooks.findById(itemID);
-        const userBooks = await UsersBooks.find({ book: Item.book }).select(
-            "myRate"
-        );
-        let result = 0;
-        userBooks.map((rate) => {
-            result += rate.myRate;
-            return result;
-        });
-
-        const avg = result / userBooks.length;
-        await Book.findByIdAndUpdate(Item.book, { averageRating: avg });
-    }
-};
-
-userController.getBook = async (req, res) => {
+userController.getUserBookByBookId = async (req, res) => {
     const { id } = req.params;
     const UserBook = await UsersBooks.find({
         user: req.user._id,

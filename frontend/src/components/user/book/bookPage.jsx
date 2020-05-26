@@ -61,7 +61,7 @@ const BookPage = (props) => {
             console.log(error);
 
         }
-    }
+    };
 
     useEffect(() => {
         (async function () {
@@ -97,7 +97,7 @@ const BookPage = (props) => {
                     });
                 if (Object.keys(res.data).length !== 0) {
                     setUserBook(res.data[0]);
-                }                
+                }
             }
             catch (erorr) {
                 console.log(erorr);
@@ -145,7 +145,7 @@ const BookPage = (props) => {
 
 
             <CardBody>
-                <CardTitle>Book Name : {book.name}</CardTitle>
+                <CardTitle>Book Name : { book.name }</CardTitle>
                 <CardText>
                     { " " }
                     Author :{ " " }
@@ -167,20 +167,26 @@ const BookPage = (props) => {
                     starCount={ 5 }
                     value={ book.averageRating }
                 />
-                <CardText>My Rating :</CardText>
-                <StarRatingComponent
-                    name="myRate"
-                    starCount={ 5 }
-                    value={ userBook.myRate }
-                    onStarClick={ onStarClick }
-                />
-                
-                <Shelves 
-                    currentItemID={book._id}
-                    currentShelf={userBook.shelf}
-                    handleShelfChange={handleShelfChange}
-                />
-                <br/>
+                { JSON.parse(sessionStorage.getItem("loggedIn")) == true ?
+                    (
+                        <div>
+                            <CardText>My Rating :</CardText>
+                            <StarRatingComponent
+                                name="myRate"
+                                starCount={ 5 }
+                                value={ userBook.myRate }
+                                onStarClick={ onStarClick }
+                            />
+                            <Shelves
+                                currentItemID={ book._id }
+                                currentShelf={ userBook.shelf }
+                                handleShelfChange={ handleShelfChange }
+                            />
+                        </div>
+                    ) : null }
+
+
+                <br />
                 { JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
                     <AddReview />
                 ) : null }
@@ -195,12 +201,12 @@ const BookPage = (props) => {
                                 {/* <Badge>{ item.user.username }</Badge>{ " : " + item.review } */ }
                                 <Card>
                                     <CardHeader>
-                                        <h3>{item.user.username}</h3>
-                                        {/* <h3>{ item.user.username }</h3> */}
+                                        <h3>{ item.user.username }</h3>
+                                        {/* <h3>{ item.user.username }</h3> */ }
                                     </CardHeader>
                                     <CardBody>
                                         <CardText>{ item.review }</CardText>
-                                        {JSON.parse(sessionStorage.getItem("user")).username === item.user.username ? <DeleteReview reviewId={item._id} /> : null}
+                                        { JSON.parse(sessionStorage.getItem("user")).username === item.user.username ? <DeleteReview reviewId={ item._id } /> : null }
                                     </CardBody>
                                 </Card>
                             </ListGroupItem>
