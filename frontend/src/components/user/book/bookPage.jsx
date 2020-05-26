@@ -11,6 +11,7 @@ import {
     ListGroup,
     ListGroupItem,
     Badge,
+    CardHeader,
 } from "reactstrap";
 import { useParams, Link } from "react-router-dom";
 import StarRatingComponent from "react-star-rating-component";
@@ -90,7 +91,7 @@ const BookPage = (props) => {
 
     return (
         <div className="container">
-            <Card>
+            {/* <Card> */}
                 <CardImg
                     top
                     width="100%"
@@ -119,18 +120,32 @@ const BookPage = (props) => {
                     />
                     {JSON.parse(sessionStorage.getItem("loggedIn")) == true ? <AddReview /> : null}
 
+                    {/* <br /> */}
+                    <hr/>
                     <ListGroup>
                         <ListGroupItem color="info">Reviews</ListGroupItem>
                         {
                             getReviews().map(item => {
                                 return (
-                                    <ListGroupItem><Badge>{item.user.username}</Badge>{" : " + item.review}</ListGroupItem>
+                                    <ListGroupItem>
+                                        {/* <Badge>{ item.user.username }</Badge>{ " : " + item.review } */ }
+                                        <Card>
+                                            <CardHeader>
+                                                <h3>{ item.user.username }</h3>
+                                            </CardHeader>
+                                            <CardBody>
+                                                <CardText>
+                                                    { item.review }
+                                                </CardText>
+                                            </CardBody>
+                                        </Card>
+                                    </ListGroupItem>
                                 )
                             })
                         }</ListGroup>
 
                 </CardBody>
-            </Card>
+            {/* </Card> */}
         </div>
     );
 };
