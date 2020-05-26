@@ -47,6 +47,13 @@ const AddReview = (props) => {
             </Form>
         </div>
 
+        // <Form>
+        //     <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+        //         <Input type="text" name="Review" id="Review" placeholder="add a review" value={review} onChange={hanleReviewChange} />
+        //     </FormGroup>
+        //     <br/>
+        //     <Button onClick={handleSubmit}>Add Review</Button>
+        // </Form>
     );
 }
 
