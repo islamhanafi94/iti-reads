@@ -12,10 +12,10 @@ import {
     ListGroupItem,
     Badge,
 } from "reactstrap";
-import { useParams, Link } from "react-router-dom";
 import StarRatingComponent from "react-star-rating-component";
 import AddReview from "../review/addReview";
-
+import DeleteReview from "../review/deleteReview";
+import { useParams, Route, Redirect, Link, withRouter } from 'react-router-dom';
 const BookPage = (props) => {
     const { bookId } = useParams();
     const [book, setBook] = useState({});
@@ -86,8 +86,6 @@ const BookPage = (props) => {
         } else return [];
     };
 
-    console.log("book is : ", book);
-
     return (
         <div className="container">
             <Card>
@@ -122,9 +120,12 @@ const BookPage = (props) => {
                     <ListGroup>
                         <ListGroupItem color="info">Reviews</ListGroupItem>
                         {
-                            getReviews().map(item => {
+                            getReviews().map((item, index) => {
                                 return (
-                                    <ListGroupItem><Badge>{item.user.username}</Badge>{" : " + item.review}</ListGroupItem>
+                                    <ListGroupItem key={index}><Badge>{item.user.username}</Badge>{" : " + item.review}
+                                        {JSON.parse(sessionStorage.getItem("user")).username == item.user.username ? <DeleteReview reviewId={item._id} /> : null}
+
+                                    </ListGroupItem>
                                 )
                             })
                         }</ListGroup>
