@@ -88,9 +88,6 @@ const BookPage = (props) => {
     useEffect(() => {
         (async function () {
             try {
-                // const res = await axios.get("http://localhost:5000/users/mybooks/book",
-                //     { book: bookId })
-                // console.log(res);
                 const res = await axios.get(`http://localhost:5000/users/mybooks/${bookId}`,
                     {
                         headers: {
@@ -98,7 +95,6 @@ const BookPage = (props) => {
                                 "Bearer " + localStorage.getItem("token"),
                         },
                     });
-                console.log(res.data[0]);
                 if (Object.keys(res.data).length !== 0) {
                     setUserBook(res.data[0]);
                 }                
@@ -133,7 +129,7 @@ const BookPage = (props) => {
         } else return [];
     };
 
-    console.log(userBook);
+    // console.log(userBook);
     return (
         <div className="container">
 
@@ -178,13 +174,13 @@ const BookPage = (props) => {
                     value={ userBook.myRate }
                     onStarClick={ onStarClick }
                 />
-
+                
                 <Shelves 
                     currentItemID={book._id}
                     currentShelf={userBook.shelf}
                     handleShelfChange={handleShelfChange}
                 />
-
+                <br/>
                 { JSON.parse(sessionStorage.getItem("loggedIn")) == true ? (
                     <AddReview />
                 ) : null }
