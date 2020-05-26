@@ -26,7 +26,7 @@ const BookTable = (props) => {
                 <tbody>
                     {booksList.map((item, index) => {
                         return (
-                        <BookData item={item} key={index} index={index}/>
+                        <BookData item={item} key={index} index={index} handleShelfChange={props.handleShelfChange}/>
                         );
                     })}
                 </tbody>

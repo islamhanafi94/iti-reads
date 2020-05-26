@@ -155,8 +155,7 @@ userController.addItem = async (req, res) => {
         });
 
         const avg = result / macrina.length;
-        console.log(avg);
-        console.log(await Book.findByIdAndUpdate(item.book, { averageRating: avg }));
+        await Book.findByIdAndUpdate(item.book, { averageRating: avg });
     }
 };
 
@@ -192,7 +191,6 @@ userController.getBook = async (req, res) => {
         user: req.user._id,
         book: id,
     });
-    console.log(UserBook);
     return res.send(UserBook);
 };
 

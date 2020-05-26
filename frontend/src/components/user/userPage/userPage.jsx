@@ -9,6 +9,7 @@ const UserPage = (props) => {
     const shelves = [{ id: 0, name: "All" }, { id: 1, name: "to-read" }, { id: 2, name: "reading" }, { id: 3, name: "done" }];
     const [selectedShelf, setSelectedShelf] = useState({ id: 0, name: "All" });
     const [booksList, setBooksList] = useState([]);
+    const [ isLoaded, setISLoaded ] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -34,8 +35,8 @@ const UserPage = (props) => {
 
     const handleShelfChange = async (newShelf, ID) => {
         try {
-            await axios.patch('http://localhost:5000/users/mybooks/edit',
-                { itemID: ID, fieldName: "shelf", fieldValue: newShelf },
+            await axios.patch('http://localhost:5000/users/mybooks/add',
+                { bookID: ID, fieldName: "shelf", fieldValue: newShelf },
                 {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")

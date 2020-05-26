@@ -6,6 +6,8 @@ import axios from 'axios';
 const BookData = (props) => {
     const { index, item } = props;
     const [rating, setRating] = useState(item.myRate);
+    // console.log(item);
+    
 
     const onStarClick = async (nextValue) => {
         setRating(nextValue);
@@ -54,7 +56,7 @@ const BookData = (props) => {
             </td>
             <td>
                 <Shelves
-                    currentItemID={item._id}
+                    currentItemID={item.book._id}
                     currentShelf={item.shelf}
                     handleShelfChange={props.handleShelfChange}
                 />
