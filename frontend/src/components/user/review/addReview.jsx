@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { useParams, Link } from 'react-router-dom';
+import { Form, FormGroup, Input, Button } from 'reactstrap';
+import { useParams } from 'react-router-dom';
 
 const AddReview = (props) => {
     const [review, setReview] = useState('');

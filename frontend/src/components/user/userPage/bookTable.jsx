@@ -6,19 +6,21 @@ const BookTable = (props) => {
     const { booksList } = props;
 
     return (
-        <div style={{ paddingTop: 30 }}>
+        // <div style={{ paddingTop: 30 }}>
+        <div>
             <h1>
                 <Badge color="secondary">{props.selectedShelf}</Badge>
             </h1>
-            <table className="table">
+            <table className="table ">
                 <thead>
                     <tr>
-                        <th>Cover</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Avg Rate</th>
-                        <th>Rating</th>
-                        <th>Shelve</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Cover</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Avg Rate</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Shelve</th>
                     </tr>
                 </thead>
                 <tbody>

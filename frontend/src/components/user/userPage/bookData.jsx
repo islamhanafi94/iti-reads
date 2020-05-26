@@ -27,8 +27,9 @@ const BookData = (props) => {
         }
     };
     return (
-        <tr key={index}>
-            <th>{item.book.cover}</th>
+        <tr>
+            <th scope="row">{index + 1}</th>
+            <td>{ item.book.cover }</td>
             <td>{item.book.name}</td>
             <td>
                 {item.book.author.firstName[0].toUpperCase() +
