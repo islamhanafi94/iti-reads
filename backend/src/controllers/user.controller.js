@@ -136,8 +136,11 @@ userController.addUserBook = async (req, res) => {
 
 userController.updateItem = async (req, res) => {
     const { itemID, fieldName, fieldValue } = req.body;
+    const query = { _id: itemID };
+    const opitions = { upsert: true, setDefaultsOnInsert: true };
+    await UsersBooks.findOneAndUpdate(query, { [fieldName]: fieldValue }, opitions);
 
-    await UsersBooks.findByIdAndUpdate(itemID, { [fieldName]: fieldValue });
+    // await UsersBooks.findByIdAndUpdate(itemID, { [fieldName]: fieldValue });
 
     if (fieldName === "myRate") {
         const Item = await UsersBooks.findById(itemID);
