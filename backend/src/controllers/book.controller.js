@@ -59,7 +59,13 @@ bookController.getBookById = async (req, res, next) => {
         const book = await Book.findById(req.params.id)
             .populate("author")
             .populate("category")
-            .populate("reviews");
+            .populate({
+                path: 'reviews',
+                populate: {
+                    path: 'user',
+                    model: 'user'
+                }
+            });
         return res.send({ book });
     } catch (error) {
         if (error.name === "CastError") {
@@ -75,20 +81,20 @@ bookController.createBook = async (req, res, next) => {
     console.log("here---------------------");
     // console.log(req.body);
     // console.log(req.body.image);
-    
+
     try {
         imageUpload(req, res, async () => {
             try {
                 // if (req.body.image == undefined) {
                 //     return res.status(400).send("Entre your image");
                 // } else {
-                    // const image = req.body.image.name;
-                    const { name, author, category } = req.body;
-                    const newBook = new Book({ name, author, category }); // add image
-                    const book = await newBook.save();
-                    // console.log(book);
-                    return res.send({ book });
-                
+                // const image = req.body.image.name;
+                const { name, author, category } = req.body;
+                const newBook = new Book({ name, author, category }); // add image
+                const book = await newBook.save();
+                // console.log(book);
+                return res.send({ book });
+
                 // return res.status(200).send("Record added successfully");
             } catch (error) {
                 if (error.name === "MongoError" && error.code === 11000) {
@@ -98,7 +104,7 @@ bookController.createBook = async (req, res, next) => {
                 }
             }
         });
-    } catch (error) {}
+    } catch (error) { }
 };
 
 // Update specific book

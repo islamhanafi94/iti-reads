@@ -73,7 +73,7 @@ const Home = () => {
       popularBooks.map(book => {
           return(
             <li className="popular-list-item">
-              <Link  key={book.firstName} to={`/books/${book._id}`}>{book.name}</Link>
+              <Link  key={book.name} to={`/books/${book._id}`}>{book.name}</Link>
             </li>
           )
       })   
