@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import Register from "../auth/Register";
 import UserPage from '../user/userPage/userPage';
+// import { popularAuthor } from '../../../../backend/src/controllers/author.controller';
 const Home = () => {
   // const [books, setBooks] = useState([]);
   const [popularBooks, setpopulaBooks] = useState([]);
@@ -11,20 +12,11 @@ const Home = () => {
   const [poularCategories, setpoularCategories] = useState([]);
 
 
-  // const booksURL = `http://localhost:5000/books`;
   const popularBooksURL = `http://localhost:5000/books/popular`;
- 
+  const popularAuthorsURL = `http://localhost:5000/author/popular`;
+  const popularCategoryURL = `http://localhost:5000/category/popular`;
+
   useEffect(() => {
-    // axios.get(booksURL, {
-    //   headers: {
-    //     'Authorization': 'Bearer ' + localStorage.getItem("token")
-    //   }
-    // }).then(response => {
-    //   // console.log(response.data);
-    //   setBooks(response.data);
-    // }).catch(err => {
-    //   console.log(err);
-    // });
     axios.get(popularBooksURL, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token")
@@ -35,17 +27,18 @@ const Home = () => {
     }).catch(err => {
       console.log(err);
     });
-    axios.get(popularBooksURL, {
+    /*=================================*/
+    axios.get(popularAuthorsURL, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token")
       }
     }).then(response => {
-      // console.log(response.data);
       setpopularAuthors(response.data);
     }).catch(err => {
       console.log(err);
     });
-    axios.get(popularBooksURL, {
+    /*=================================*/
+    axios.get(popularCategoryURL, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token")
       }
@@ -82,10 +75,10 @@ const Home = () => {
               <legend> <strong>Popular Authors</strong></legend>
               <ul>
                 {
-                  popularBooks.map(book => {
+                  popularAuthors.map(author => {
                     return (
                       <li className="popular-list-item">
-                        <Link key={ book.author.firstName } to={ `/authors/${book.author._id}` }>{ book.author.firstName }</Link>
+                        <Link key={ author.firstName } to={ `/authors/${author._id}` }>{ author.firstName }</Link>
                       </li>
                     );
                   })
@@ -97,13 +90,13 @@ const Home = () => {
               <ul>
                 {
                   poularCategories.map(category => {
-                    const id = category.category._id;
+                    const id = category._id;
                     const url = `/categories/${id}`;
                     return (
 
                       <li className="popular-list-item">
 
-                        <Link key={ category.category.name } to={ url }>{ category.category.name }</Link>
+                        <Link key={ category.name } to={ url }>{ category.name }</Link>
                       </li>
                     );
                   })
@@ -114,7 +107,6 @@ const Home = () => {
           </div>
 
           <div key="right-div" className="right-div">
-            {/* { localStorage.getItem("token") ? (<UserPage />) : ( <Register /> ) } */ }
             <Register />
           </div>
 

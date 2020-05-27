@@ -68,50 +68,50 @@ userController.login = async (request, response, next) => {
     }
 };
 // manageShelves
-userController.manageShelves = async (req, res, next) => {
-    const bookId = req.params.id;
-    const userId = req.params.user_id;
-    const { shelf } = req.body;
-    try {
-        const user = await User.findById(userId);
-        //check if the user have the book in his my books array
-        //flag to check the book existeng in the my books :
-        //if book doesn't exist so change shelf and change flag to be existing
-        let bookIsExist = false;
-        // console.log(user.mybooks);
-        user.mybooks = user.mybooks.map((book) => {
-            if (book.book.toString() === bookId) {
-                book.shelf = shelf;
-                bookIsExist = true;
-            }
-            return book;
-        });
-        // console.log("user.mybooks",user.mybooks);
-        //if book doesn't exist and not in mybooks so
-        if (!bookIsExist) {
-            user.mybooks = user.mybooks.concat({
-                book: mongoose.Types.ObjectId(bookId),
-                shelf,
-            });
-            /**
-             *  findOneAndUpdate() returns the document as it was before update was applied.
-             * If you set new: true, findOneAndUpdate() will instead give you the object after update was applied.
-             */
-            Book.findByIdAndUpdate(
-                bookId,
-                { $inc: { popularity: 1 } },
-                { new: true }
-            );
-        }
-        //save user
-        await user.save();
-        return res.send({ message: "your Shelves  successfully added" });
-    } catch (error) {
-        console.log(error);
+// userController.manageShelves = async (req, res, next) => {
+//     const bookId = req.params.id;
+//     const userId = req.params.user_id;
+//     const { shelf } = req.body;
+//     try {
+//         const user = await User.findById(userId);
+//         //check if the user have the book in his my books array
+//         //flag to check the book existeng in the my books :
+//         //if book doesn't exist so change shelf and change flag to be existing
+//         let bookIsExist = false;
+//         // console.log(user.mybooks);
+//         user.mybooks = user.mybooks.map((book) => {
+//             if (book.book.toString() === bookId) {
+//                 book.shelf = shelf;
+//                 bookIsExist = true;
+//             }
+//             return book;
+//         });
+//         // console.log("user.mybooks",user.mybooks);
+//         //if book doesn't exist and not in mybooks so
+//         if (!bookIsExist) {
+//             user.mybooks = user.mybooks.concat({
+//                 book: mongoose.Types.ObjectId(bookId),
+//                 shelf,
+//             });
+//             /**
+//              *  findOneAndUpdate() returns the document as it was before update was applied.
+//              * If you set new: true, findOneAndUpdate() will instead give you the object after update was applied.
+//              */
+//             Book.findByIdAndUpdate(
+//                 bookId,
+//                 { $inc: { popularity: 1 } },
+//                 { new: true }
+//             );
+//         }
+//         //save user
+//         await user.save();
+//         return res.send({ message: "your Shelves  successfully added" });
+//     } catch (error) {
+//         console.log(error);
 
-        return res.status(500).end();
-    }
-};
+//         return res.status(500).end();
+//     }
+// };
 
 userController.me = (req, res, next) => {
     const { user } = req;
@@ -129,12 +129,6 @@ userController.getUserBooks = async (req, res) => {
 };
 
 userController.addUserBook = async (req, res) => {
-    const newRecord = { user: req.user._id, ...req.body };
-    const result = await UsersBooks.create(newRecord);
-    return res.status(201).send("successfully created");
-};
-
-userController.addItem = async (req, res) => {
     const { bookID, fieldName, fieldValue } = req.body;
     const query = { book: bookID, user: req.user._id };
     const opitions = { upsert: true, new: true, setDefaultsOnInsert: true };
@@ -145,43 +139,27 @@ userController.addItem = async (req, res) => {
     );
 
     if (fieldName === "myRate") {
-        const macrina = await UsersBooks.find({ book: item.book }).select(
+        const userBooks = await UsersBooks.find({ book: item.book }).select(
             "myRate"
         );
         let result = 0;
-        macrina.map((rate) => {
+        userBooks.map((rate) => {
             result += rate.myRate;
             return result;
         });
 
-        const avg = result / macrina.length;
+        const avg = result / userBooks.length;
         await Book.findByIdAndUpdate(item.book, { averageRating: avg });
+        if (fieldValue >= 3) {
+            let response = await Book.findByIdAndUpdate(bookID, { $inc: { popularity: 1 } }, { new: true });
+            await Author.findByIdAndUpdate(response.author._id, { $inc: { popularity: 1 } }, { new: true });
+            await Category.findByIdAndUpdate(response.category._id, { $inc: { popularity: 1 } }, { new: true });
+        }
     }
-};
-
-userController.updateItem = async (req, res) => {
-    const { itemID, fieldName, fieldValue } = req.body;
-    const query = { _id: itemID };
-    const opitions = { upsert: true, setDefaultsOnInsert: true };
-    await UsersBooks.findOneAndUpdate(
-        query,
-        { [fieldName]: fieldValue },
-        opitions
-    );
-
-    if (fieldName === "myRate") {
-        const Item = await UsersBooks.findById(itemID);
-        const macrina = await UsersBooks.find({ book: Item.book }).select(
-            "myRate"
-        );
-        let result = 0;
-        macrina.map((rate) => {
-            result += rate.myRate;
-            return result;
-        });
-
-        const avg = result / macrina.length;
-        await Book.findByIdAndUpdate(Item.book, { averageRating: avg });
+    else if (fieldName === "shelf" && fieldValue != "to-read") {
+        let response = await Book.findByIdAndUpdate(bookID, { $inc: { popularity: 1 } }, { new: true });
+        await Author.findByIdAndUpdate(response.author._id, { $inc: { popularity: 1 } }, { new: true });
+        await Category.findByIdAndUpdate(response.category._id, { $inc: { popularity: 1 } }, { new: true });
     }
 };
 

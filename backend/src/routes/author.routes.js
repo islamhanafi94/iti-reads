@@ -4,6 +4,10 @@ const passport = require('passport');
 const adminAuth = require("../config/adminAuth");
 
 
+router.get('/', authorController.getAll);
+router.get('/popular', authorController.popularAuthor);
+router.get('/:id', authorController.getOne);
+
 router.all('*', (req, res, next) => {
 
     passport.authenticate('jwt', { session: false }, (err, user) => {
@@ -23,9 +27,7 @@ router.all('*', (req, res, next) => {
 
 
 
-router.get('/', authorController.getAll);
-router.get('/popular', authorController.popularAuthor);
-router.get('/:id', authorController.getOne);
+
 router.post('/', adminAuth, authorController.create);
 router.delete('/:id', adminAuth, authorController.deleteById);
 router.put('/:id', adminAuth, authorController.updateById);

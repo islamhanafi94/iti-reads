@@ -19,6 +19,10 @@ const bookSchema = new mongoose.Schema(
             ref: "author",
             required: true,
         },
+        popularity: {
+            type: Number,
+            default: 0,
+        },
         category: { type: mongoose.Schema.Types.ObjectId, ref: "category" },
         reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "review" }],
     },

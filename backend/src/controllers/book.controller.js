@@ -14,13 +14,29 @@ const bookController = {};
 bookController.getPopularBooks =async (req, res) => {
     console.log("in function");
 
-    try {
-        book = await Book.find({}).sort({ averageRating: -1 }).limit(4).populate('category').populate('author');
-        res.status(200).json(book);
-      } catch (error) {
-        next(error);
-      }
+    // Retrieve books sorted by popularity and limited to 3 //desc
+    Book.find({}, null, { sort: { popularity: -1 }, limit: 4 })
+        .populate("author")
+        .populate("category")
+        .then((books) => {
+            console.log("====================================");
+            console.log(books);
+            console.log("====================================");
+            res.status(200).json(books);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send({ err: err });
+        });
+
+    // try {
+    //     book = await Book.find({}).sort({ averageRating: -1 }).limit(4).populate('category').populate('author');
+    //     res.status(200).json(book);
+    //   } catch (error) {
+    //     next(error);
+    //   }
 };
+
 // Get all books
 bookController.getAllBooks = async (req, res, next) => {
     const allBooks = await Book.find({})
@@ -68,7 +84,7 @@ bookController.getBookById = async (req, res, next) => {
     }
 };
 
-// Abb book
+// Add book
 bookController.createBook = async (req, res, next) => {
     console.log("here---------------------");
     // console.log(req.body);

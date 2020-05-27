@@ -8,7 +8,10 @@ const categorySchema = new mongoose.Schema({
         required: true,
         unique: [true, 'Name must be unique'],
     },
- 
+    popularity: {
+        type: Number,
+        default: 0,
+    },
 
 }, { timestamps: true });
 

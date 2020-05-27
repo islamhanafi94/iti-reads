@@ -7,7 +7,7 @@ const BookTable = (props) => {
 
     return (
         // <div style={{ paddingTop: 30 }}>
-        <div>
+        <div >
             <h1>
                 <Badge color="secondary">{props.selectedShelf}</Badge>
             </h1>

@@ -3,6 +3,11 @@ const categoryController = require('../controllers/category.controller');
 const passport = require('passport');
 const adminAuth = require("../config/adminAuth");
 
+
+router.get('/', categoryController.getAllCategories);
+router.get('/popular', categoryController.popular);
+router.get('/:id', categoryController.getCategoryById);
+
 router.all('*', (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user) => {
         if (err || !user) {
@@ -19,9 +24,7 @@ router.all('*', (req, res, next) => {
     })(req, res, next); //miidleware of passport
 });
 
-router.get('/', categoryController.getAllCategories);
-router.get('/popular', categoryController.popular);
-router.get('/:id', categoryController.getCategoryById);
+
 router.post('/new', adminAuth, categoryController.create);
 router.delete('/:id', adminAuth, categoryController.deleteById);
 router.put('/:id', categoryController.updateById);

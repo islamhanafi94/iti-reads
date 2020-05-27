@@ -6,7 +6,6 @@ import axios from 'axios';
 const BookData = (props) => {
     const { index, item } = props;
     const [rating, setRating] = useState(item.myRate);
-    // console.log(item);
     
 
     const onStarClick = async (nextValue) => {
@@ -14,8 +13,8 @@ const BookData = (props) => {
         console.log(rating, nextValue);
         
         try {
-            await axios.patch('http://localhost:5000/users/mybooks/edit',
-                { itemID: item._id, fieldName: "myRate", fieldValue: nextValue },
+            await axios.patch('http://localhost:5000/users/mybooks/add',
+                { bookID: item.book._id, fieldName: "myRate", fieldValue: nextValue },
                 {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")

@@ -39,6 +39,7 @@ const AuthorPage = (props) => {
     useEffect(() => {
         (async function () {
             try {
+                console.log(authorId)
                 let response = await axios.get(
                     `http://localhost:5000/author/${authorId}`,
                     {
@@ -61,6 +62,10 @@ const AuthorPage = (props) => {
             return author.dateOfBirth.split("T")[0];
         } else return "Loading Date of birth...";
     };
+
+        // const getAuthorName = () => {
+
+        // }
 
     return (
         <Container>
